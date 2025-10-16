@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WorkBreak - Espacios para trabajar y relajarse</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../styles/dashboard-user.css">
+</head>
+
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo-container">
+                <span class="logo-text">PatitasFelices</span>
+            </div>
+
+            <div class="nav-links">
+                <a href="#">Inicio</a>
+                <a href="#" id="dark-mode-toggle">Modo oscuro</a>
+                <a href="../pages/carrito.html" class="carrito-link">
+                    <i class="bi bi-cart3"></i></a>
+                <a href="#" id="logout-btn">Salir</a>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div class="search-bar">
+            <div class="search-container">
+                <div class="input-icon-wrapper">
+                    <i class="fas fa-search"></i>
+                    <input type="text" class="search-input"
+                        placeholder="Buscar espacios de trabajo, relax o creativos..." />
+                </div>
+                <button class="search-btn">Buscar</button>
+                <button class="filter-btn-open" id="abrir-filtros">Filtrar</button>
+            </div>
+        </div>
+
+        <div class="container">
+            <h1>Productos</h1>
+            <div class="properties-grid" id="espacios-populares"></div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-links">
+        </div>
+        <p>© 2025 PatitasFelices. Todos los derechos reservados.</p>
+    </footer>
+
+    <div class="filter-modal" id="modal-filtros">
+        <div class="filter-content">
+            <div class="filter-header">
+                <h2>Filtros</h2>
+                <button class="close-btn" id="cerrar-filtros">✕</button>
+            </div>
+
+            <div class="filter-section">
+                <h3>Tipo de alimentos</h3>
+                <div class="filter-options">
+                    <button class="filter-type-btn" data-tipo="todos">Todos</button>
+                    <button class="filter-type-btn" data-tipo="espacio-trabajo">Grandes</button>
+                    <button class="filter-type-btn" data-tipo="espacio-relax">Medianos</button>
+                    <button class="filter-type-btn" data-tipo="espacio-creativo">Chicos</button>
+                </div>
+            </div>
+
+            <div class="filter-footer">
+                <button class="apply-filter-btn" id="aplicar-filtros">Aplicar filtros</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Usuario - PatitasFelices</title>
+    <link rel="stylesheet" href="../styles/login-user.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <!-- Caja izquierda: formulario -->
+        <div class="login-box">
+            <h1>Bienvenido</h1>
+            <p>¿Cuál es su nombre?</p>
+            <form class="form" id="userForm">
+                <label for="userName">Nombre completo</label>
+                <input type="text" id="userName" placeholder="Ejemplo: Juan Pérez" required />
+                <button type="submit" id="continueBtn" disabled>Continuar</button>
+            </form>
+        </div>
+
+        <!-- Caja derecha: explicación -->
+        <div class="info-box">
+            <h2>Sobre Patitas Felices</h2>
+            <p>
+                Bienvenido a <strong>Patitas Felices</strong>, un espacio creado para elegir y comprar alimento a tus mascotas.
+                Aquí podrás acceder a información sobre nuestros productos.
+            </p>
+            <p>
+                Si sos parte del equipo, podés ingresar al panel de administración desde el siguiente botón:
+            </p>
+            <button class="admin-btn" onclick="window.location.href='login-admin.html'">Ingreso Administrador</button>
+        </div>
+    </div>
+
+</body>
+
+</html>

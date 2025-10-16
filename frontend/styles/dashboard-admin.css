@@ -1,0 +1,185 @@
+:root {
+    /* Colores base */
+    --primary-color: #b3814d; /* Marrón claro encabezado */
+    --primary-light: #c89a64; /* Marrón más suave para degradado */
+    --bg-color: #e6d3b7; /* Fondo más claro y suave */
+    --text-dark: #1f2937;
+    --text-light: #6b7280;
+    --white: #ffffff;
+    --gray-border: #d1d5db;
+    --hover-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* ==================== GLOBAL ==================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-dark);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ==================== HEADER ==================== */
+header {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    padding: 0.5rem 2rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+}
+
+.logo-text {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--white);
+    text-decoration: none;
+    transition: transform 0.3s;
+}
+
+.logo-text:hover {
+    transform: scale(1.02);
+}
+
+/* ==================== NAV TABS ==================== */
+#dashboardTabs {
+    background: rgba(230, 211, 183, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(209, 213, 219, 0.3);
+    border-radius: 16px;
+    padding: 15px;
+    margin: 25px auto;
+    max-width: 95%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+#dashboardTabs .nav-link {
+    background-color: var(--bg-color);
+    color: var(--text-dark);
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: 1px solid var(--gray-border);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+#dashboardTabs .nav-link.active {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    color: var(--white) !important;
+    border-color: transparent;
+    box-shadow: 0 4px 12px var(--primary-light);
+}
+
+#dashboardTabs .nav-link:hover {
+    background-color: rgba(0, 0, 0, 0.03);
+}
+
+/* ==================== CARDS ==================== */
+.card,
+.property-card {
+    background-color: var(--bg-color);
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    border: 1px solid var(--gray-border);
+}
+
+.card:hover,
+.property-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--hover-shadow);
+}
+
+.card-title,
+.property-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--text-dark);
+}
+
+.card-subtitle,
+.property-location {
+    font-size: 1.1rem;
+    color: var(--text-light);
+}
+
+/* ==================== KPIs ==================== */
+.card .fs-1 {
+    font-size: 2.5rem !important;
+    color: var(--primary-color);
+}
+
+/* ==================== BOTONES ==================== */
+#logout-btn,
+.btn-reservar,
+.search-btn,
+.filter-btn-open {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    padding: 0.6rem 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#logout-btn:hover,
+.btn-reservar:hover,
+.search-btn:hover,
+.filter-btn-open:hover {
+    transform: scale(1.05);
+    box-shadow: var(--hover-shadow);
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 992px) {
+    #dashboardTabs {
+        justify-content: flex-start;
+        padding: 8px;
+    }
+
+    #dashboardTabs .nav-link {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .card-title,
+    .property-title {
+        font-size: 1.5rem;
+    }
+
+    .properties-grid {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    }
+
+    .navbar {
+        flex-direction: column;
+        height: auto;
+        gap: 1rem;
+    }
+
+    .search-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}

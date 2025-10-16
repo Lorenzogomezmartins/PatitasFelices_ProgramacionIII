@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login Administrador - PatitasFelices</title>
+  <link rel="stylesheet" href="../styles/login-admin.css" />
+</head>
+
+<body>
+  <div class="container">
+    <!-- Cuadro de login -->
+    <div class="login-box">
+      <h1>Ingreso Administrador</h1>
+      <p>Ingrese sus credenciales</p>
+      <form class="form" id="adminForm">
+        <label for="name">Nombre</label>
+        <input type="text" id="name" placeholder="Tu nombre" required />
+
+        <label for="password">Contraseña</label>
+        <input type="password" id="password" placeholder="••••••••" required />
+
+        <button type="submit" id="loginBtn" disabled>Iniciar sesión</button>
+
+        <div class="info">¿Olvidaste tu contraseña?</div>
+      </form>
+    </div>
+
+    <!-- Cuadro informativo -->
+    <div class="info-box">
+      <h2>Acceso para administradores</h2>
+      <p>Esta sección permite gestionar los datos de la página: usuarios, publicaciones y productos.</p>
+      <div class="test-user">
+        <p><strong>Usuario de prueba:</strong></p>
+        <p>Nombre: <span>admin</span></p>
+        <p>Contraseña: <span>1234</span></p>
+      </div>
+      <button class="alt-btn" onclick="window.location.href='login-user.html'">
+        Ingreso Usuario
+      </button>
+    </div>
+  </div>
+</body>
+</html>
