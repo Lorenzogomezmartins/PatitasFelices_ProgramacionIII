@@ -1,0 +1,6 @@
+# Directorios a ignorar
+node_modules/
+.env
+
+# Archivos a ignorar
+package-lock.json # Algunos equipos deciden ignorarlo, otros lo incluyen
