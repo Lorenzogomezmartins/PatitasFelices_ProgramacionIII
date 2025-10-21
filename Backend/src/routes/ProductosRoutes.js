@@ -2,17 +2,17 @@ const express = require('express');
 const router = express.Router();
 
 // Importar controladores
-const crearProducto = require('../controllers/producto/CrearProducto');
-const obtenerProductos = require('../controllers/producto/ObtenerProductos');
-const obtenerProductoPorCodigo = require('../controllers/producto/ObtenerProductoPorCodigo');
-const actualizarProducto = require('../controllers/producto/ActualizarProducto');
-const eliminarProducto = require('../controllers/producto/EliminarProducto');
+const crearProducto = require('../controllers/productos/CrearProducto');
+const obtenerProductos = require('../controllers/productos/ObtenerProductos');
+const obtenerProductoPorCodigo = require('../controllers/productos/ObtenerProductoPorCodigo');
+const actualizarProducto = require('../controllers/productos/ActualizarProductos');
+const eliminarProducto = require('../controllers/productos/EliminarProducto');
 
 // RUTAS CRUD
-router.get('/', ObtenerProductos);                   // GET → todos los productos
-router.get('/:codigo', ObtenerProductoPorCodigo);   // GET → un producto por código
-router.post('/', CrearProducto);                    // POST → crear producto
-router.put('/:codigo', ActualizarProducto);         // PUT → actualizar producto por código
-router.delete('/:codigo', EliminarProducto);       // DELETE → eliminar producto por código
+router.get('/', obtenerProductos);                   // GET → todos los productos
+router.get('/:codigo', obtenerProductoPorCodigo);   // GET → un producto por código
+router.post('/', crearProducto);                    // POST → crear producto
+router.put('/:codigo', actualizarProducto);         // PUT → actualizar producto por código
+router.delete('/:codigo', eliminarProducto);       // DELETE → eliminar producto por código
 
 module.exports = router;

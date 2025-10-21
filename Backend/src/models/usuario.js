@@ -1,4 +1,3 @@
-
 const mongoose = require('mongoose');
 
 const usuarioSchema = new mongoose.Schema(
@@ -17,13 +16,27 @@ const usuarioSchema = new mongoose.Schema(
     },
     fechaIngreso: {
       type: Date,
-      default: Date.now, // Se guarda automáticamente al crear el documento
-      immutable: true // No se puede modificar después de creado
-    }
+      default: Date.now,
+      immutable: true
+    },
+    carrito: [
+      {
+        producto: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'producto', // referencia al producto
+          required: true
+        },
+        cantidad: {
+          type: Number,
+          required: true,
+          min: [1, 'La cantidad mínima es 1']
+        }
+      }
+    ]
   },
   {
-    timestamps: false, // No se necesitan createdAt / updatedAt
-    versionKey: false // Evita el campo __v de Mongoose
+    timestamps: false,
+    versionKey: false
   }
 );
 
