@@ -183,3 +183,27 @@ header {
         align-items: stretch;
     }
 }
+
+body.dark-mode {
+  background-color: #121212 !important;
+  color: #f5f5f5 !important;
+}
+
+body.dark-mode .card,
+body.dark-mode .table,
+body.dark-mode .nav-tabs,
+body.dark-mode .alert {
+  background-color: #1f1f1f !important;
+  color: #ddd !important;
+  border-color: #333 !important;
+}
+
+body.dark-mode .btn-outline-danger {
+  color: #ffb3b3;
+  border-color: #ffb3b3;
+}
+
+body.dark-mode .btn-outline-danger:hover {
+  background-color: #ffb3b3;
+  color: #000;
+}
