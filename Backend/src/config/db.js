@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const connectDB = async () => {
   try {
     // Conexión a la base de datos PatitasFelices en MongoDB local
-    await mongoose.connect('mongodb://localhost:27017/PatitasFelices', {
+    await mongoose.connect(process.env.MONGO_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });

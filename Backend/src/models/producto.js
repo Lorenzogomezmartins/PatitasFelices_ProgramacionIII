@@ -53,12 +53,6 @@ const productoSchema = new mongoose.Schema({
   activo: {
     type: Boolean,
     default: true
-  },
-  //  Relación: admin que creó o administra el producto
-  admin: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Admin',
-    required: [true, 'El administrador que creó el producto es obligatorio.']
   }
 }, {
   timestamps: true,
