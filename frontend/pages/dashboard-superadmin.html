@@ -10,20 +10,29 @@
   <link rel="stylesheet" href="../styles/dashboard-admin.css" />
 </head>
 
-<body class="bg-light">
+<body>
 
   <header class="bg-white border-bottom py-2 px-4 d-flex justify-content-between align-items-center">
     <div class="d-flex align-items-center">
       <span class="h5 mb-0">PatitasFelices - SuperAdmin</span>
     </div>
     <div class="d-flex gap-2">
-      <button id="dark-mode-toggle" class="btn btn-outline-secondary">🌙 Modo oscuro</button>
+      <button id="dark-mode-toggle" class="btn btn-outline-secondary">Modo oscuro</button>
       <button type="button" class="btn btn-outline-danger ms-2" id="logout-btn">
         <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
       </button>
     </div>
   </header>
-
+  <!-- Dashboard -->
+    
+    <section class="card shadow-sm mt-4 mb-3">
+      <div class="card-body text-center">
+        <h3 class="card-title mb-0">Panel de SuperAdministrador</h3>
+        <h4 class="card-subtitle">Gestión completa de PatitasFelices</h4>
+      </div>
+    </section>
+    
+    
   <ul class="nav nav-tabs mb-3" id="dashboardTabs" role="tablist">
     <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#dashboard"><i class="bi bi-house-door me-1"></i> Dashboard</button></li>
     <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#admins"><i class="bi bi-person-badge me-1"></i> Listado Admins</button></li>
@@ -36,15 +45,7 @@
 
   <div class="tab-content">
 
-    <!-- Dashboard -->
-    <div class="tab-pane fade show active" id="dashboard">
-      <section class="card shadow-sm mt-4 mb-3">
-        <div class="card-body text-center">
-          <h3 class="card-title mb-0">Panel de SuperAdministrador</h3>
-          <h4 class="card-subtitle text-muted">Gestión completa de PatitasFelices</h4>
-        </div>
-      </section>
-    </div>
+    
 
     <!-- Listado de Admins -->
     <div class="tab-pane fade" id="admins">
