@@ -1,4 +1,39 @@
 // =====================
+// Modo Oscuro - Persistencia
+// =====================
+function aplicarModoOscuro() {
+  const modoOscuroGuardado = localStorage.getItem("theme") === "dark";
+  const root = document.documentElement;
+  if (modoOscuroGuardado) {
+    root.style.setProperty("--primary-color", "#756446ff");
+    root.style.setProperty("--primary-light", "#645a49ff");
+    root.style.setProperty("--bg-color", "#000000");
+    root.style.setProperty("--text-dark", "#ffffff");
+    root.style.setProperty("--text-light", "#cccccc");
+    root.style.setProperty("--white", "#000000");
+    root.style.setProperty("--gray-border", "#333333");
+    root.style.setProperty("--hover-shadow", "0 8px 16px rgba(255,255,255,0.1)");
+    document.body.classList.add('dark-mode');
+  } else {
+    root.style.setProperty("--primary-color", "#b3814d");
+    root.style.setProperty("--primary-light", "#b3814d");
+    root.style.setProperty("--bg-color", "#e6d3b7");
+    root.style.setProperty("--text-dark", "#1f2937");
+    root.style.setProperty("--text-light", "#6b7280");
+    root.style.setProperty("--white", "#ffffff");
+    root.style.setProperty("--gray-border", "#d1d5db");
+    root.style.setProperty("--hover-shadow", "0 8px 16px rgba(0, 0, 0, 0.1)");
+
+    document.body.classList.remove('dark-mode');
+  }
+}
+
+// Aplicar modo oscuro al cargar la página
+document.addEventListener('DOMContentLoaded', () => {
+  aplicarModoOscuro();
+});
+
+// =====================
 // Funciones de Carrito
 // =====================
 
@@ -161,7 +196,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // ====== Botón "Seguir comprando" ======
 function volverAlDashboard() {
-  // ⚠️ Cambiá esta ruta según tu dashboard real
   window.location.href = "../pages/dashboard-user.html";
 }
 

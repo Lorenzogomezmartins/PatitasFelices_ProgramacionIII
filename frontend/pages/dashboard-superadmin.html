@@ -1,177 +1,378 @@
 <!DOCTYPE html>
 <html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard SuperAdmin - PatitasFelices</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles/dashboard-admin.css" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="../imagenes/favicon32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="../imagenes/favicon16.png"
+    />
+    <link
+      rel="shortcut icon"
+      href="../imagenes/favicon32.png"
+      type="image/png"
+    />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard SuperAdmin - PatitasFelices</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
-  <link rel="stylesheet" href="../styles/dashboard-admin.css" />
-  <link rel="icon" type="image/png" sizes="32x32" href="../imagenes/favicon32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="../imagenes/favicon16.png">
-<link rel="shortcut icon" href="../imagenes/favicon32.png" type="image/png">
+  <body>
+    <header>
+      <nav class="navbar">
+        <div class="logo-container">
+          <img
+            src="../imagenes/logo.png"
+            alt="Logo Patitas Felices"
+            class="logo"
+          />
+          <span id="text-admin">SuperAdmin</span>
+        </div>
 
-</head>
+        <!-- Botones a la derecha -->
+        <div class="d-flex gap-2">
+          <button id="dark-mode-toggle" class="btn btn-outline-secondary">
+            Modo oscuro
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-danger ms-2"
+            id="logout-btn"
+          >
+            <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
+          </button>
+        </div>
+      </nav>
+    </header>
 
-<body>
+    <!-- Dashboard -->
 
-  <header class="bg-white border-bottom py-2 px-4 d-flex justify-content-between align-items-center">
-    <div class="d-flex align-items-center">
-      <span class="h5 mb-0">PatitasFelices - SuperAdmin</span>
-    </div>
-    <div class="d-flex gap-2">
-      <button id="dark-mode-toggle" class="btn btn-outline-secondary">Modo oscuro</button>
-      <button type="button" class="btn btn-outline-danger ms-2" id="logout-btn">
-        <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
-      </button>
-    </div>
-  </header>
-  <!-- Dashboard -->
-    
     <section class="card shadow-sm mt-4 mb-3">
       <div class="card-body text-center">
         <h3 class="card-title mb-0">Panel de SuperAdministrador</h3>
         <h4 class="card-subtitle">Gestión completa de PatitasFelices</h4>
       </div>
     </section>
-    
-    
-  <ul class="nav nav-tabs mb-3" id="dashboardTabs" role="tablist">
-    <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#dashboard"><i class="bi bi-house-door me-1"></i> Dashboard</button></li>
-    <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#admins"><i class="bi bi-person-badge me-1"></i> Listado Admins</button></li>
-    <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#crear-admin"><i class="bi bi-person-plus me-1"></i> Crear Admin</button></li>
-    <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#productos"><i class="bi bi-box-seam me-1"></i> Productos</button></li>
-    <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#agregar-producto"><i class="bi bi-plus-circle me-1"></i> Agregar Producto</button></li>
-    <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#estadisticas"><i class="bi bi-bar-chart-line me-1"></i> Estadísticas</button></li>
-    <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tickets"><i class="bi bi-receipt-cutoff me-1"></i> Tickets</button></li>
-  </ul>
 
-  <div class="tab-content">
+    <ul class="nav nav-tabs mb-3" id="dashboardTabs" role="tablist">
+      <li class="nav-item">
+        <button
+          class="nav-link active"
+          data-bs-toggle="tab"
+          data-bs-target="#dashboard"
+        >
+          <i class="bi bi-house-door me-1"></i> Dashboard
+        </button>
+      </li>
+      <li class="nav-item">
+        <button
+          class="nav-link"
+          data-bs-toggle="tab"
+          data-bs-target="#usuarios"
+        >
+          <i class="bi bi-person-badge me-1"></i> Usuarios
+        </button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#admins">
+          <i class="bi bi-person-plus me-1"></i> Administradores
+        </button>
+      </li>
+      <li class="nav-item">
+        <button
+          class="nav-link"
+          data-bs-toggle="tab"
+          data-bs-target="#productos"
+        >
+          <i class="bi bi-box-seam me-1"></i> Productos
+        </button>
+      </li>
+      <li class="nav-item">
+        <button
+          class="nav-link"
+          data-bs-toggle="tab"
+          data-bs-target="#estadisticas"
+        >
+          <i class="bi bi-bar-chart-line me-1"></i> Estadísticas
+        </button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tickets">
+          <i class="bi bi-receipt-cutoff me-1"></i> Tickets
+        </button>
+      </li>
+    </ul>
 
-    
+    <div class="tab-content">
+      <!-- Usuarios -->
+      <div class="tab-pane fade" id="usuarios">
+        <div class="row">
+          <div class="col-5 bg-info-subtle">
+            <form
+              id="frmFormulario"
+              class="bg-light p-3 needs-validation"
+              novalidate
+            >
+              <div class="id-image-row">
+                <div class="id-field">
+                  <label for="inputID" class="form-label">ID:</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="inputID"
+                    required
+                    readonly
+                  />
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="inputNombre" class="form-label">Nombre:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="inputNombre"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="inputApellido" class="form-label">Apellido:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="inputApellido"
+                  required
+                />
+              </div>
+              
 
-    <!-- Listado de Admins -->
-    <div class="tab-pane fade" id="admins">
-      <section class="card mt-3">
-        <div class="card-header bg-secondary text-white">
-          <h3 class="mb-0"><i class="bi bi-list-ul me-2"></i>Listado de Administradores</h3>
+              <div class="d-flex align-items-center gap-2">
+                <button type="button" id="btnAgregar">Agregar</button>
+                <button type="reset" id="btnLimpiar">Limpiar</button>
+                <button type="button" id="btnModificar">Modificar</button>
+              </div>
+            </form>
+          </div>
+
+          <div id="divListadoUsuarios" class="col-6 bg-light rounded p-2">
+            Listado de Usuarios aquí
+          </div>
         </div>
-        <div class="card-body">
-          <table class="table table-hover d-none" id="tablaAdmins">
-            <thead class="table-light">
-              <tr><th>ID</th><th>Nombre</th><th>Email</th><th>Rol</th><th>Acciones</th></tr>
-            </thead>
-            <tbody></tbody>
-          </table>
+      </div>
+
+      <!-- Administradores -->
+      <div class="tab-pane fade" id="admins">
+        <div class="row">
+          <div class="col-5 bg-info-subtle">
+            <form
+              id="frmFormulario"
+              class="bg-light p-3 needs-validation"
+              novalidate
+            >
+              <div class="id-image-row">
+                <div class="id-field">
+                  <label for="inputID" class="form-label">ID:</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="inputID"
+                    required
+                    readonly
+                  />
+                </div>
+
+              </div>
+              <div class="mb-3">
+                <label for="inputNombre" class="form-label">Nombre:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="inputNombre"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="inputEmail" class="form-label">Email:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="inputEmail"
+                  required
+                />
+              </div>
+              
+              <div class="mb-3">
+                <label for="inputRol" class="form-label">Rol:</label>
+                <select class="form-control" id="inputRol" required>
+                  <option value="">Seleccione un Rol</option>
+                  <option value="Admin">Admin</option>
+                  <option value="SuperAdmin">SuperAdmin</option>
+                </select>
+              </div>
+              
+
+              <div class="d-flex align-items-center gap-2">
+                <button type="button" id="btnAgregar">Agregar</button>
+                <button type="reset" id="btnLimpiar">Limpiar</button>
+                <button type="button" id="btnModificar">Modificar</button>
+              </div>
+            </form>
+          </div>
+
+          <div id="divListadoAdmins" class="col-6 bg-light rounded p-2">
+            Listado de Administradores aquí
+          </div>
         </div>
-      </section>
+      </div>
+
+      <!-- Productos -->
+      <div class="tab-pane fade" id="productos">
+        <div class="row">
+          <div class="col-5 bg-info-subtle">
+            <form
+              id="frmFormulario"
+              class="bg-light p-3 needs-validation"
+              novalidate
+            >
+              <div class="id-image-row">
+                <div class="id-field">
+                  <label for="inputID" class="form-label">ID:</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="inputID"
+                    required
+                    readonly
+                  />
+                </div>
+
+                <div
+                  class="image-upload-container"
+                  onclick="document.getElementById('inputFoto').click()"
+                >
+                  <button
+                    type="button"
+                    class="remove-image-btn"
+                    onclick="event.stopPropagation(); removeImage()"
+                  >
+                    <i class="bi bi-x"></i>
+                  </button>
+                  <img
+                    src=""
+                    id="foto_img"
+                    style="display: none"
+                    alt="Producto"
+                  />
+                  <div class="upload-placeholder" id="upload-placeholder">
+                    <i class="bi bi-cloud-upload"></i>
+                    <small>Click para subir imagen</small>
+                  </div>
+                  <input
+                    type="file"
+                    id="inputFoto"
+                    accept="image/*"
+                    onchange="handleImageUpload(event)"
+                  />
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="inputNombre" class="form-label">Nombre:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="inputNombre"
+                  required
+                />
+              </div>
+
+              <div class="mb-3">
+                <label for="inputTipo" class="form-label">Tipo:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="inputTipo"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="inputTamaño" class="form-label">Tamaño:</label>
+                <select class="form-control" id="inputTamaño" required>
+                  <option value="">Seleccione un tamaño</option>
+                  <option value="chico">Chico</option>
+                  <option value="mediano">Mediano</option>
+                  <option value="grande">Grande</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="inputPrecio" class="form-label">Precio:</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="inputPrecio"
+                  min="50"
+                  max="500"
+                  step="1"
+                  required
+                />
+              </div>
+
+              <div class="mb-3">
+                <label for="inputStock" class="form-label">Stock:</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="inputStock"
+                  min="1"
+                  max="100"
+                  required
+                />
+              </div>
+
+              <div class="d-flex align-items-center gap-2">
+                <button type="button" id="btnAgregar">Agregar</button>
+                <button type="reset" id="btnLimpiar">Limpiar</button>
+                <button type="button" id="btnModificar">Modificar</button>
+              </div>
+            </form>
+          </div>
+
+          <div id="divListado" class="col-6 bg-light rounded p-2">
+            Listado de productos aquí
+          </div>
+        </div>
+      </div>
+      <!-- Tickets -->
+      <div class="tab-pane fade" id="tickets">
+        <div class="alert alert-warning mt-3">
+          Listado de tickets en construcción...
+        </div>
+      </div>
+
+      <!-- Estadísticas -->
+      <div class="tab-pane fade" id="estadisticas">
+        <div class="alert alert-info mt-3">
+          Sección de estadísticas en construcción...
+        </div>
+      </div>
     </div>
 
-    <!-- Crear Admin -->
-    <div class="tab-pane fade" id="crear-admin">
-      <section class="card mt-3">
-        <div class="card-header bg-dark text-white">
-          <h3 class="mb-0"><i class="bi bi-person-plus me-2"></i>Crear Nuevo Administrador</h3>
-        </div>
-        <div class="card-body">
-          <form id="formCrearAdmin" class="row g-3">
-            <div class="col-md-6">
-              <label class="form-label">Nombre</label>
-              <input type="text" class="form-control" required />
-            </div>
-            <div class="col-md-6">
-              <label class="form-label">Email</label>
-              <input type="email" class="form-control" required />
-            </div>
-            <div class="col-md-6">
-              <label class="form-label">Contraseña</label>
-              <input type="password" class="form-control" required />
-            </div>
-            <div class="col-md-6">
-              <label class="form-label">Rol</label>
-              <select class="form-select">
-                <option value="admin" selected>Admin</option>
-                <option value="superadmin">SuperAdmin</option>
-              </select>
-            </div>
-            <div class="col-12 text-end">
-              <button type="submit" class="btn btn-dark"><i class="bi bi-check-circle me-1"></i> Crear</button>
-            </div>
-          </form>
-        </div>
-      </section>
-    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../scripts/admin.js"></script>
 
-    <!-- Productos -->
-    <div class="tab-pane fade" id="productos">
-      <section class="card mt-3">
-        <div class="card-header bg-primary text-white">
-          <h3 class="mb-0"><i class="bi bi-box-seam me-2"></i>Listado de Productos</h3>
-        </div>
-        <div class="card-body">
-          <table class="table table-hover d-none" id="tablaProductos">
-            <thead class="table-light">
-              <tr><th>ID</th><th>Tipo</th><th>Nombre</th><th>Stock</th><th>Precio</th><th>Tamaño</th><th>Animal</th><th>Acciones</th></tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-        </div>
-      </section>
-    </div>
-
-    <!-- Agregar / Modificar Producto -->
-    <div class="tab-pane fade" id="agregar-producto">
-      <section class="card mt-3">
-        <div class="card-header bg-success text-white">
-          <h3 class="mb-0"><i class="bi bi-plus-circle me-2"></i>Agregar Producto</h3>
-        </div>
-        <div class="card-body">
-          <form id="formProducto" class="row g-3">
-            <div class="col-md-6"><label class="form-label">Nombre</label><input type="text" class="form-control" required /></div>
-            <div class="col-md-6"><label class="form-label">Tipo</label><input type="text" class="form-control" required /></div>
-            <div class="col-md-6"><label class="form-label">Stock</label><input type="number" class="form-control" min="0" required /></div>
-            <div class="col-md-6"><label class="form-label">Precio</label><input type="number" class="form-control" min="1" required /></div>
-            <div class="col-md-6">
-              <label class="form-label">Tamaño</label>
-              <select class="form-select">
-                <option value="chico">Chico</option>
-                <option value="mediano">Mediano</option>
-                <option value="grande">Grande</option>
-              </select>
-            </div>
-            <div class="col-md-6">
-              <label class="form-label">Animal</label>
-              <select class="form-select">
-                <option value="perro">Perro</option>
-                <option value="gato">Gato</option>
-              </select>
-            </div>
-            <div class="col-12 text-end">
-              <button type="submit" class="btn btn-success"><i class="bi bi-save me-1"></i>Guardar</button>
-            </div>
-          </form>
-        </div>
-      </section>
-    </div>
-
-    <!-- Tickets -->
-    <div class="tab-pane fade" id="tickets">
-      <div class="alert alert-warning mt-3">Listado de tickets en construcción...</div>
-    </div>
-
-    <!-- Estadísticas -->
-    <div class="tab-pane fade" id="estadisticas">
-      <div class="alert alert-info mt-3">Sección de estadísticas en construcción...</div>
-    </div>
-
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="../scripts/admin.js"></script>
-  
-  <script src="../scripts/dashboard.js"></script>
-  
-</body>
-
+    <script src="../scripts/dashboard.js"></script>
+  </body>
 </html>

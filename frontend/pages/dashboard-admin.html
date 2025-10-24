@@ -18,10 +18,11 @@
 
   <header>
   <nav class="navbar">
-    <!-- Logo a la izquierda -->
     <div class="logo-container">
       <img src="../imagenes/logo.png" alt="Logo Patitas Felices" class="logo">
+      <span id="text-admin">Admin</span>
     </div>
+
 
     <!-- Botones a la derecha -->
     <div class="d-flex gap-2">
@@ -45,8 +46,8 @@
   <!-- Navegación -->
   <ul class="nav nav-tabs mb-3" id="dashboardTabs" role="tablist">
     <li class="nav-item"><button class="nav-link active" id="inicio-tab" data-bs-toggle="tab" data-bs-target="#inicio" type="button"><i class="bi bi-house-door me-1"></i> Dashboard</button></li>
-    <li class="nav-item"><button class="nav-link" id="productos-tab" data-bs-toggle="tab" data-bs-target="#productos" type="button"><i class="bi bi-box-seam me-1"></i> Productos</button></li>
-    <li class="nav-item"><button class="nav-link" id="agregar-producto-tab" data-bs-toggle="tab" data-bs-target="#agregar-producto" type="button"><i class="bi bi-plus-circle me-1"></i> Agregar Producto</button></li>
+    <li class="nav-item"><button class="nav-link" id="usuarios-tab" data-bs-toggle="tab" data-bs-target="#usuarios" type="button"><i class="bi bi-box-seam me-1"></i> Usuarios</button></li>
+    <li class="nav-item"><button class="nav-link" id="productos-tab" data-bs-toggle="tab" data-bs-target="#productos" type="button"><i class="bi bi-plus-circle me-1"></i> Productos</button></li>
     <li class="nav-item"><button class="nav-link" id="estadisticas-tab" data-bs-toggle="tab" data-bs-target="#estadisticas" type="button"><i class="bi bi-bar-chart-line me-1"></i> Estadísticas</button></li>
     <li class="nav-item"><button class="nav-link" id="tickets-tab" data-bs-toggle="tab" data-bs-target="#tickets" type="button"><i class="bi bi-receipt-cutoff me-1"></i> Tickets</button></li>
   </ul>
@@ -54,83 +55,176 @@
   <!-- Contenido -->
   <div class="tab-content" id="dashboardTabsContent">
 
-   
+    <!-- Usuarios -->
+    <div class="tab-pane fade" id="usuarios">
+        <div class="row">
+          <div class="col-5 bg-info-subtle">
+            <form
+              id="frmFormulario"
+              class="bg-light p-3 needs-validation"
+              novalidate
+            >
+              <div class="id-image-row">
+                <div class="id-field">
+                  <label for="inputID" class="form-label">ID:</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="inputID"
+                    required
+                    readonly
+                  />
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="inputNombre" class="form-label">Nombre:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="inputNombre"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="inputApellido" class="form-label">Apellido:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="inputApellido"
+                  required
+                />
+              </div>
+              
 
-    <!-- Productos -->
-    <div class="tab-pane fade" id="productos" role="tabpanel">
-      <section class="card mt-3">
-        <div class="card-header bg-primary text-white">
-          <h3 class="mb-0"><i class="bi bi-box-seam me-2"></i>Listado de Productos</h3>
-        </div>
-        <div class="card-body">
-          <div class="table-responsive">
-            <table class="table table-hover d-none" id="tablaProductos">
-              <thead class="table-light">
-                <tr>
-                  <th>ID</th>
-                  <th>Tipo Producto</th>
-                  <th>Nombre</th>
-                  <th>Stock</th>
-                  <th>Precio</th>
-                  <th>Tamaño</th>
-                  <th>Animal</th>
-                  <th>Acciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                <!-- Filas dinámicas -->
-              </tbody>
-            </table>
+              <div class="d-flex align-items-center gap-2">
+                <button type="button" id="btnAgregar">Agregar</button>
+                <button type="reset" id="btnLimpiar">Limpiar</button>
+                <button type="button" id="btnModificar">Modificar</button>
+              </div>
+            </form>
+          </div>
+
+          <div id="divListadoUsuarios" class="col-6 bg-light rounded p-2">
+            Listado de Usuarios aquí
           </div>
         </div>
-      </section>
-    </div>
+      </div>
 
-    <!-- Agregar / Modificar Producto -->
-    <div class="tab-pane fade" id="agregar-producto" role="tabpanel">
-      <section class="card mt-3">
-        <div class="card-header bg-success text-white">
-          <h3 class="mb-0"><i class="bi bi-plus-circle me-2"></i>Agregar Producto</h3>
-        </div>
-        <div class="card-body">
-          <form id="formProducto" class="row g-3">
-            <div class="col-md-6">
-              <label class="form-label">Nombre del Producto</label>
-              <input type="text" class="form-control" id="nombreProducto" required />
+    <!-- Productos -->
+    <div class="tab-pane fade" id="productos">
+      <div class="row">
+        <div class="col-5 bg-info-subtle">
+          <form
+            id="frmFormulario"
+            class="bg-light p-3 needs-validation"
+            novalidate
+          >
+            <div class="id-image-row">
+              <div class="id-field">
+                <label for="inputID" class="form-label">ID:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="inputID"
+                  required
+                  readonly
+                />
+              </div>
+
+              <div
+                class="image-upload-container"
+                onclick="document.getElementById('inputFoto').click()"
+              >
+                <button
+                  type="button"
+                  class="remove-image-btn"
+                  onclick="event.stopPropagation(); removeImage()"
+                >
+                  <i class="bi bi-x"></i>
+                </button>
+                <img
+                  src=""
+                  id="foto_img"
+                  style="display: none"
+                  alt="Producto"
+                />
+                <div class="upload-placeholder" id="upload-placeholder">
+                  <i class="bi bi-cloud-upload"></i>
+                  <small>Click para subir imagen</small>
+                </div>
+                <input
+                  type="file"
+                  id="inputFoto"
+                  accept="image/*"
+                  onchange="handleImageUpload(event)"
+                />
+              </div>
             </div>
-            <div class="col-md-6">
-              <label class="form-label">Tipo</label>
-              <input type="text" class="form-control" id="tipoProducto" required />
+            <div class="mb-3">
+              <label for="inputNombre" class="form-label">Nombre:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="inputNombre"
+                required
+              />
             </div>
-            <div class="col-md-6">
-              <label class="form-label">Stock</label>
-              <input type="number" class="form-control" id="stockProducto" min="0" required />
+
+            <div class="mb-3">
+              <label for="inputTipo" class="form-label">Tipo:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="inputTipo"
+                required
+              />
             </div>
-            <div class="col-md-6">
-              <label class="form-label">Precio</label>
-              <input type="number" class="form-control" id="precioProducto" min="1" required />
-            </div>
-            <div class="col-md-6">
-              <label class="form-label">Tamaño</label>
-              <select id="tamanoProducto" class="form-select">
+            <div class="mb-3">
+              <label for="inputTamaño" class="form-label">Tamaño:</label>
+              <select class="form-control" id="inputTamaño" required>
+                <option value="">Seleccione un tamaño</option>
                 <option value="chico">Chico</option>
                 <option value="mediano">Mediano</option>
                 <option value="grande">Grande</option>
               </select>
             </div>
-            <div class="col-md-6">
-              <label class="form-label">Animal</label>
-              <select id="animalProducto" class="form-select">
-                <option value="perro">Perro</option>
-                <option value="gato">Gato</option>
-              </select>
+            <div class="mb-3">
+              <label for="inputPrecio" class="form-label">Precio:</label>
+              <input
+                type="number"
+                class="form-control"
+                id="inputPrecio"
+                min="50"
+                max="500"
+                step="1"
+                required
+              />
             </div>
-            <div class="col-12 text-end">
-              <button type="submit" class="btn btn-success"><i class="bi bi-save me-1"></i>Guardar Producto</button>
+
+            <div class="mb-3">
+              <label for="inputStock" class="form-label">Stock:</label>
+              <input
+                type="number"
+                class="form-control"
+                id="inputStock"
+                min="1"
+                max="100"
+                required
+              />
+            </div>
+
+            <div class="d-flex align-items-center gap-2">
+              <button type="button" id="btnAgregar">Agregar</button>
+              <button type="reset" id="btnLimpiar">Limpiar</button>
+              <button type="button" id="btnModificar">Modificar</button>
             </div>
           </form>
         </div>
-      </section>
+
+        <div id="divListado" class="col-6 bg-light rounded p-2">
+          Listado de productos aquí
+        </div>
+      </div>
     </div>
 
     <!-- Tickets -->

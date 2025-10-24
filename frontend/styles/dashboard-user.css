@@ -46,7 +46,7 @@ header {
 }
 
 .logo {
-    width: 90px;
+    width: 85px;
     height: auto;
     display: block;
 }
@@ -286,33 +286,6 @@ footer {
     padding: 2rem;
     text-align: center;
     margin-top: 3rem;
-}
-
-/* ===== DARK MODE ===== */
-body.dark-mode {
-    background-color: #121212;
-    color: #f5f5f5;
-}
-
-body.dark-mode header,
-body.dark-mode nav {
-    background: #1f1f1f;
-}
-
-body.dark-mode .property-card,
-body.dark-mode .filter-content {
-    background-color: #1f1f1f;
-    color: #f5f5f5;
-}
-
-body.dark-mode .search-input {
-    background-color: #1a1a1a;
-    color: #f5f5f5;
-    border: 1px solid #333;
-}
-
-body.dark-mode footer {
-    background-color: #1f1f1f;
 }
 
 /* ===== RESPONSIVE ===== */
