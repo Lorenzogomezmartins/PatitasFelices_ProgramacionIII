@@ -1,5 +1,5 @@
 function volverAlLogin() {
-  // ⚠️ Cambiá esta ruta según tu dashboard real
+  // Cambiá esta ruta según tu dashboard real
   window.location.href = "../pages/Login-admin.html";
 }
 

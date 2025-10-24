@@ -34,22 +34,20 @@ header {
 
 .navbar {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: space-between; /* logo izquierda, links derecha */
+  align-items: center; /* centrado vertical */
   height: 80px;
 }
 
-.logo-text {
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: var(--white);
-  text-decoration: none;
-  transition: transform 0.3s;
-  cursor: default;
+/* Logo */
+.logo-container {
+  display: flex;
+  align-items: center;
 }
 
-.logo-text:hover {
-  transform: scale(1.02);
+.logo {
+  width: 90px; /* tamaño visible */
+  height: auto;
 }
 
 /* ===== NAV LINKS ===== */
