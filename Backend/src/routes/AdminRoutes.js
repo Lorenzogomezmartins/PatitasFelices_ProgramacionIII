@@ -3,7 +3,7 @@ const router = express.Router();
 
 // Importar controladores
 const CrearAdmin = require('../controllers/admin/CrearAdmin');
-const ObtenerAdmins = require('../controllers/admin/ObtenerAdmins');
+const ObtenerAdmins = require('../controllers/admin/ObtenerAdmin');
 const ObtenerAdminPorId = require('../controllers/admin/ObtenerAdminPorId');
 const ActualizarAdmin = require('../controllers/admin/ActualizarAdmin');
 const EliminarAdmin = require('../controllers/admin/EliminarAdmin');
