@@ -48,12 +48,12 @@ const ticketSchema = new mongoose.Schema(
     fecha_compra: {
       type: Date,
       default: Date.now,
-      immutable: true // No se puede modificar después de creada
+      immutable: true 
     }
   },
   { 
     versionKey: false,
-    timestamps: true // Agrega createdAt y updatedAt para seguimiento
+    timestamps: true 
   }
 );
 

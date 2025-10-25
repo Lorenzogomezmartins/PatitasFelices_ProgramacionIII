@@ -41,7 +41,7 @@ const crearProducto = async (req, res) => {
     }
 
     // Manejo de errores genéricos
-    console.error('❌ Error al crear producto:', error);
+    console.error('Error al crear producto:', error);
     res.status(500).json({ ok: false, error: 'Error interno del servidor' });
   }
 };

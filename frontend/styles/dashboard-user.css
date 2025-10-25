@@ -305,3 +305,82 @@ footer {
         grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Contenedor de las cards */
+#espacios-populares {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+/* Card principal */
+.property-card {
+  width: 250px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  background-color: #fff;
+  transition: transform 0.2s;
+}
+
+.property-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Contenedor interno de la card */
+.property-card-inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Imagen */
+.property-image {
+  width: 100%;
+  height: 200px; /* altura fija */
+  overflow: hidden;
+}
+
+.property-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* ajusta la imagen sin deformar */
+  display: block;
+}
+
+/* Información del producto */
+.property-info {
+  padding: 10px;
+  text-align: left;
+}
+
+.property-title {
+  font-size: 1.1em;
+  margin-bottom: 5px;
+}
+
+.property-stock.en-stock {
+  color: green;
+  font-weight: bold;
+}
+
+.property-stock.sin-stock {
+  color: red;
+  font-weight: bold;
+}

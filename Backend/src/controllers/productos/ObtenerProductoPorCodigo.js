@@ -16,7 +16,7 @@ const obtenerProductoPorCodigo = async (req, res) => {
     // Si se encuentra correctamente
     res.json({ ok: true, producto });
   } catch (error) {
-    console.error('❌ Error al obtener producto:', error);
+    console.error('Error al obtener producto:', error);
     res.status(500).json({ ok: false, error: 'Error al obtener producto' });
   }
 };

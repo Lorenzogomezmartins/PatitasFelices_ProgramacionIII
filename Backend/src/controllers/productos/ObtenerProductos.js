@@ -20,7 +20,7 @@ const obtenerProductos = async (req, res) => {
 
     res.json({ ok: true, total: productos.length, productos });
   } catch (error) {
-    console.error('❌ Error al obtener productos:', error);
+    console.error('Error al obtener productos:', error);
     res.status(500).json({ ok: false, error: 'Error al obtener productos' });
   }
 };

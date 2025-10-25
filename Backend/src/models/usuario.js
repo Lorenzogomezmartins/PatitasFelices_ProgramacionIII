@@ -26,7 +26,7 @@ const usuarioSchema = new mongoose.Schema(
           ref: 'producto', // referencia al producto
           required: true
         },
-        cantidad: {
+        stock: {
           type: Number,
           required: true,
           min: [1, 'La cantidad mínima es 1']

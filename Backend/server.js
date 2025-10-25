@@ -1,33 +1,39 @@
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
-const conectarDB = require('./src/config/db');
+const cors = require('cors');
+const path = require('path');
 const RoutesMain = require('./src/routes/RoutesMain');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 
-// Middleware para parsear JSON y formularios
+// ✅ Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
-// Conectar a MongoDB
-conectarDB()
+// ✅ Conectar a MongoDB
+mongoose
+  .connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB conectado correctamente.'))
   .catch((err) => {
     console.error('Error al conectar con MongoDB:', err.message);
     process.exit(1);
   });
 
-// Usar routes principales
+// ✅ Servir carpeta de imágenes (importante)
+app.use('/resources', express.static(path.join(__dirname, 'src', 'resources')));
+
+// ✅ Usar rutas principales
 app.use('/api', RoutesMain);
 
-// Ruta de prueba
+// ✅ Ruta de prueba
 app.get('/', (req, res) => {
   res.send('Backend de PatitasFelices funcionando!');
 });
 
-// Iniciar servidor
+// ✅ Iniciar servidor
 app.listen(PORT, () => {
   console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
 });
