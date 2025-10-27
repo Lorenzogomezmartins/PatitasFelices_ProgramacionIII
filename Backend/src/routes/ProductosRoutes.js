@@ -13,7 +13,7 @@ const validarProducto = require('../middlewares/validarProducto');
 
 // RUTAS CRUD
 router.get('/', obtenerProductos);
-router.get('/:codigo', obtenerProductoPorCodigo);
+router.get('/obtenerporcodigo/:id', obtenerProductoPorCodigo);       // GET → un producto por _id
 router.post('/', validarProducto, crearProducto); // <-- aplicamos middleware
 router.put('/:codigo', validarProducto, actualizarProducto);
 router.delete('/:codigo', eliminarProducto);

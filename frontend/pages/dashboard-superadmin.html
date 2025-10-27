@@ -160,7 +160,7 @@
               </div>
               
 
-              <div class="d-flex align-items-center gap-2">
+              <div>
                 <button type="button" id="btnAgregar">Agregar</button>
                 <button type="reset" id="btnLimpiar">Limpiar</button>
                 <button type="button" id="btnModificar">Modificar</button>
@@ -219,13 +219,13 @@
                 <label for="inputRol" class="form-label">Rol:</label>
                 <select class="form-control" id="inputRol" required>
                   <option value="">Seleccione un Rol</option>
-                  <option value="admin">admin</option>
-                  <option value="SuperAdmin">superAdmin</option>
+                  <option value="Admin">Admin</option>
+                  <option value="SuperAdmin">SuperAdmin</option>
                 </select>
               </div>
               
 
-              <div class="d-flex align-items-center gap-2">
+              <div>
                 <button type="button" id="btnAgregar">Agregar</button>
                 <button type="reset" id="btnLimpiar">Limpiar</button>
                 <button type="button" id="btnModificar">Modificar</button>
@@ -342,7 +342,7 @@
                 />
               </div>
 
-              <div class="d-flex align-items-center gap-2">
+              <div>
                 <button type="button" id="btnAgregar">Agregar</button>
                 <button type="reset" id="btnLimpiar">Limpiar</button>
                 <button type="button" id="btnModificar">Modificar</button>
@@ -356,10 +356,11 @@
         </div>
       </div>
       <!-- Tickets -->
-      <div class="tab-pane fade" id="tickets">
-        <div class="alert alert-warning mt-3">
-          Listado de tickets en construcción...
-        </div>
+      <div class="tab-pane fade" id="tickets" role="tabpanel">
+        <div id="divListadoTickets"></div>
+          <div class="text-center mt-3">
+            <button id="btnVerMasTickets" class="btn btn-primary btn-sm">Ver más</button>
+          </div>    
       </div>
 
       <!-- Estadísticas -->
@@ -371,10 +372,8 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- API client -->
-<script src="../scripts/api.js"></script>
-
+    <script src="../scripts/admin.js"></script>
     <script src="../scripts/dashboard-admin.js"></script>
-    <script src="../scripts/dashboard.js"></script>
+    <script src="../scripts/darkMode-dashboard.js"></script>
   </body>
 </html>

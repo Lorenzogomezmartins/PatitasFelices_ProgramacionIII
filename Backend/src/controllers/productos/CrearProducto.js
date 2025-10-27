@@ -4,14 +4,16 @@ const crearProducto = async (req, res) => {
   try {
     const datos = { ...req.body };
 
-    // Convertir tipos simples
-    datos.precio = parseFloat(datos.precio);
-    datos.stock = parseInt(datos.stock);
-    datos.activo = datos.activo === 'true' || datos.activo === true;
+    // Convertir tipos si vienen como string
+    if (datos.precio !== undefined) datos.precio = parseFloat(datos.precio);
+    if (datos.stock !== undefined) datos.stock = parseInt(datos.stock);
 
-    // Asegurarse que urls sea un array (si vienen como string desde frontend)
-    if (typeof datos.urls === 'string') datos.urls = [datos.urls];
+    // Manejo de imágenes si se suben archivos
+    if (req.files && req.files.length > 0) {
+      datos.urls = req.files.map(f => `/uploads/${f.filename}`);
+    }
 
+    // Crear producto
     const producto = await Producto.create(datos);
 
     res.status(201).json({
@@ -20,20 +22,21 @@ const crearProducto = async (req, res) => {
       producto
     });
   } catch (error) {
-    console.error('❌ Error al crear producto:', error);
-
-    if (error.code === 11000 && error.keyPattern?.codigo) {
+    // Error por código duplicado (como _id duplicado)
+    if (error.code === 11000 && error.keyPattern?._id) {
       return res.status(400).json({
         ok: false,
-        error: `Ya existe un producto con el código "${error.keyValue.codigo}".`
+        error: `Ya existe un producto con el código "${error.keyValue._id}".`
       });
     }
 
+    // Error de validación
     if (error.name === 'ValidationError') {
       const detalles = Object.values(error.errors).map(err => err.message);
       return res.status(400).json({ ok: false, error: 'Datos inválidos', detalles });
     }
 
+    console.error('Error al crear producto:', error);
     res.status(500).json({ ok: false, error: 'Error interno del servidor' });
   }
 };

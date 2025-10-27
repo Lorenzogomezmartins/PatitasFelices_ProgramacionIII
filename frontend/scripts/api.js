@@ -57,21 +57,39 @@ window.apiClient = {
    * USUARIOS
    * =============================== */
   getUsuarios() {
-    return this.fetchAPI("usuarios");
+    return this.fetchAPI("usuarios"); // GET /usuarios
   },
- getAdmins() { 
-  return this.fetchAPI("admin"); // ✅ coincide
-},
-  registrarUsuario(data) {
-    return this.fetchAPI("usuarios", {
-      method: "POST",
-      body: JSON.stringify(data),
-    });
+
+  getUsuarioPorId(id) {
+    return this.fetchAPI(`usuarios/${id}`); // GET /usuarios/:id
   },
+
   loginUsuario(data) {
-    return this.fetchAPI("usuarios/login", {
-      method: "POST",
-      body: JSON.stringify(data),
-    });
+    return this.fetchAPI("usuarios/login", { method: "POST", body: JSON.stringify(data) }); // POST /usuarios/login
   },
+
+  modificarUsuario(id, data) {
+    return this.fetchAPI(`usuarios/${id}`, { method: "PUT", body: JSON.stringify(data) }); // PUT /usuarios/:id
+  },
+
+  eliminarUsuario(id) {
+    return this.fetchAPI(`usuarios/${id}`, { method: "DELETE" }); // DELETE /usuarios/:id
+  },
+
+
+  crearTicket(usuarioId, data) {
+    return this.fetchAPI(`usuarios/${usuarioId}/tickets`, { method: "POST", body: JSON.stringify(data) }); // POST /usuarios/:id/tickets
+  },
+
+  obtenerTickets(page = 1) {
+  return this.fetchAPI(`usuarios/obtenerTickets?page=${page}`)
+    .catch(async error => {
+      // intentar ver lo que llega si no es JSON
+      const res = await fetch(`${window.API_BASE_URL}/usuarios/obtenerTickets?page=${page}`);
+      const text = await res.text();
+      console.log("Respuesta del servidor:", text);
+      throw error;
+    })
+  },
+
 };

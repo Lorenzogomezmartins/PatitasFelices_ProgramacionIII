@@ -19,17 +19,36 @@ const usuarioSchema = new mongoose.Schema(
       default: Date.now,
       immutable: true
     },
-    carrito: [
+
+    //Lista de tickets (historial de compras)
+    tickets: [
       {
-        producto: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: 'producto', // referencia al producto
-          required: true
-        },
-        stock: {
+        _id: false,
+        productos: [
+          {_id: false,
+            prod: {
+            _id: {
+            type: String,
+            ref: 'Producto', // referencia al modelo Producto
+            required: true
+          },
+          cantidad: {
+            type: Number,
+            required: [true, 'La cantidad es obligatoria.'],
+            min: [0, 'La cantidad no puede ser negativa.']
+          }
+          }
+        }
+        ],
+        total: {
           type: Number,
-          required: true,
-          min: [1, 'La cantidad mínima es 1']
+          required: [true, 'El total es obligatorio.'],
+          min: [0, 'El total no puede ser negativo.']
+        },
+        fechaDeCompra: {
+          type: Date,
+          default: Date.now,
+          required: true
         }
       }
     ]

@@ -58,7 +58,7 @@
     <!-- Usuarios -->
     <div class="tab-pane fade" id="usuarios">
         <div class="row">
-          <div class="col-5 bg-info-subtle">
+          <div class="col-4 bg-info-subtle">
             <form
               id="frmFormulario"
               class="bg-light p-3 needs-validation"
@@ -96,7 +96,7 @@
               </div>
               
 
-              <div class="d-flex align-items-center gap-2">
+              <div>
                 <button type="button" id="btnAgregar">Agregar</button>
                 <button type="reset" id="btnLimpiar">Limpiar</button>
                 <button type="button" id="btnModificar">Modificar</button>
@@ -104,7 +104,7 @@
             </form>
           </div>
 
-          <div id="divListadoUsuarios" class="col-6 bg-light rounded p-2">
+          <div id="divListadoUsuarios" class="col-7 bg-light rounded p-2">
             Listado de Usuarios aquí
           </div>
         </div>
@@ -113,7 +113,7 @@
     <!-- Productos -->
     <div class="tab-pane fade" id="productos">
       <div class="row">
-        <div class="col-5 bg-info-subtle">
+        <div class="col-4 bg-info-subtle">
           <form
             id="frmFormulario"
             class="bg-light p-3 needs-validation"
@@ -238,7 +238,7 @@
                   </div>
 
 
-            <div class="d-flex align-items-center gap-2">
+            <div>
               <button type="button" id="btnAgregar">Agregar</button>
               <button type="reset" id="btnLimpiar">Limpiar</button>
               <button type="button" id="btnModificar">Modificar</button>
@@ -246,7 +246,7 @@
           </form>
         </div>
 
-        <div id="divListado" class="col-6 bg-light rounded p-2">
+        <div id="divListado" class="col-7 bg-light rounded p-2">
           Listado de productos aquí
         </div>
       </div>
@@ -254,7 +254,10 @@
 
     <!-- Tickets -->
     <div class="tab-pane fade" id="tickets" role="tabpanel">
-      <div class="alert alert-warning mt-3">Listado de tickets en construcción...</div>
+      <div id="divListadoTickets"></div>
+        <div class="text-center mt-3">
+          <button id="btnVerMasTickets" class="btn btn-primary btn-sm">Ver más</button>
+        </div>    
     </div>
 
     <!-- Estadísticas -->
@@ -268,7 +271,7 @@
   <script src="../scripts/admin.js"></script>
   
   <script src="../scripts/dashboard-admin.js"></script>
-  <script src="../scripts/dashboard.js"></script>
+  <script src="../scripts/darkMode-dashboard.js"></script>
 
 </body>
 

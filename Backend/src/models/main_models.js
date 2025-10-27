@@ -19,11 +19,10 @@ const Admin = require('./admin');
 const Usuario = require('./usuario');
 const Producto = require('./producto');
 const Carrito = require('./carrito');
-const Ticket = require('./ticket');
 
 module.exports = {
   Admin,
   Usuario,
   Producto,
-  Ticket
+  Carrito
 };

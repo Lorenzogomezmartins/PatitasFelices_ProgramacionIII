@@ -1,10 +1,9 @@
 const mongoose = require('mongoose');
 
 const productoSchema = new mongoose.Schema({
-  codigo: {
+  _id: {
     type: String,
     required: [true, 'El código del producto es obligatorio.'],
-    unique: true,
     minlength: [3, 'El código debe tener al menos 3 caracteres.'],
     maxlength: [20, 'El código no puede superar los 20 caracteres.']
   },
@@ -23,11 +22,6 @@ const productoSchema = new mongoose.Schema({
     type: String,
     enum: ['perro', 'gato'],
     required: [true, 'El tipo de mascota es obligatorio.']
-  },
-  tamaño: {
-    type: String,
-    enum: ['pequeño', 'mediano', 'grande'],
-    default: 'mediano'
   },
   precio: {
     type: Number,

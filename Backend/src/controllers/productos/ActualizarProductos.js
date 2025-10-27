@@ -17,11 +17,11 @@ const crearProducto = async (req, res) => {
     }
 
     // 🔹 Verificar si ya existe un producto con el mismo código
-    const existe = await Producto.findOne({ codigo: datos.codigo });
+    const existe = await Producto.findOne({ id: datos.id });
     if (existe) {
       return res.status(400).json({
         ok: false,
-        error: `Ya existe un producto con el código "${datos.codigo}".`
+        error: `Ya existe un producto con el código "${datos.id}".`
       });
     }
 

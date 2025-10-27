@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
 async function cargarProductos() {
   const contenedor = document.getElementById("espacios-populares");
 
-  // Mensaje mientras se cargan los productos
   contenedor.innerHTML = `<p class="loading">Cargando productos...</p>`;
 
   try {
@@ -30,7 +29,6 @@ async function cargarProductos() {
       const card = document.createElement("div");
       card.classList.add("property-card");
 
-      // 🔹 Imagen del producto
       const imagen = producto.urls?.[0]
         ? `http://localhost:4000${producto.urls[0]}`
         : "../imagenes/no-image.png";
@@ -46,12 +44,20 @@ async function cargarProductos() {
             <p class="property-category"><strong>Categoría:</strong> ${producto.categoria}</p>
             <p class="property-type"><strong>Mascota:</strong> ${producto.tipo_mascota}</p>
             <p class="property-price"><strong>Precio:</strong> $${producto.precio.toLocaleString()}</p>
-            <p class="property-stock ${producto.stock > 0 ? 'en-stock' : 'sin-stock'}">
-              ${producto.stock > 0 ? 'Stock disponible: ' + producto.stock : 'Sin stock'}
+            <p class="property-stock ${producto.stock > 0 ? "en-stock" : "sin-stock"}">
+              ${producto.stock > 0 ? "Stock disponible: " + producto.stock : "Sin stock"}
             </p>
+            <button class="agregar-carrito-btn" ${producto.stock <= 0 ? "disabled" : ""}>
+              Agregar al carrito
+            </button>
           </div>
         </div>
       `;
+
+      // Evento para agregar al carrito
+      card.querySelector(".agregar-carrito-btn").addEventListener("click", () => {
+        agregarAlCarrito(producto, imagen);
+      });
 
       contenedor.appendChild(card);
     });
@@ -59,4 +65,28 @@ async function cargarProductos() {
     console.error("Error al cargar productos:", error);
     contenedor.innerHTML = `<p style="color:red;">Error al cargar productos. Intenta más tarde.</p>`;
   }
+}
+
+/**
+ * Agrega un producto al carrito (localStorage)
+ */
+function agregarAlCarrito(producto, imagen) {
+  let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+  const existente = carrito.find((item) => item._id === producto._id);
+  if (existente) {
+    existente.cantidad += 1;
+  } else {
+    carrito.push({
+      _id: producto._id,
+      nombre: producto.nombre,
+      marca: producto.marca,
+      precio: producto.precio,
+      imagen: imagen,
+      cantidad: 1,
+    });
+  }
+
+  localStorage.setItem("carrito", JSON.stringify(carrito));
+  alert(`"${producto.nombre}" agregado al carrito 🛒`);
 }
