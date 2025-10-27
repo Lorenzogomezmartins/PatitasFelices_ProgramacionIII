@@ -30,29 +30,25 @@ window.apiClient = {
    * PRODUCTOS
    * =============================== */
   getProductos() {
-    return this.fetchAPI("productos"); // GET /productos
+    return this.fetchAPI("productos");
   },
-
-  getProductoPorId(id) {
-    return this.fetchAPI(`productos/${id}`);
+  getProductoPorCodigo(codigo) {
+    return this.fetchAPI(`productos/${codigo}`);
   },
-
   crearProducto(data) {
     return this.fetchAPI("productos", {
       method: "POST",
       body: JSON.stringify(data),
     });
   },
-
-  actualizarProducto(id, data) {
-    return this.fetchAPI(`productos/${id}`, {
+  actualizarProducto(codigo, data) {
+    return this.fetchAPI(`productos/${codigo}`, {
       method: "PUT",
       body: JSON.stringify(data),
     });
   },
-
-  eliminarProducto(id) {
-    return this.fetchAPI(`productos/${id}`, {
+  eliminarProducto(codigo) {
+    return this.fetchAPI(`productos/${codigo}`, {
       method: "DELETE",
     });
   },
@@ -61,28 +57,19 @@ window.apiClient = {
    * USUARIOS
    * =============================== */
   getUsuarios() {
-    return this.fetchAPI("usuarios"); // GET /usuarios
+    return this.fetchAPI("usuarios");
   },
-
+ getAdmins() { 
+  return this.fetchAPI("admin"); // ✅ coincide
+},
   registrarUsuario(data) {
     return this.fetchAPI("usuarios", {
       method: "POST",
       body: JSON.stringify(data),
     });
   },
-
   loginUsuario(data) {
     return this.fetchAPI("usuarios/login", {
-      method: "POST",
-      body: JSON.stringify(data),
-    });
-  },
-
-  /** ===============================
-   * TICKETS
-   * =============================== */
-  crearTicket(data) {
-    return this.fetchAPI("tickets", {
       method: "POST",
       body: JSON.stringify(data),
     });

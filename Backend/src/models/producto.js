@@ -24,6 +24,11 @@ const productoSchema = new mongoose.Schema({
     enum: ['perro', 'gato'],
     required: [true, 'El tipo de mascota es obligatorio.']
   },
+  tamaño: {
+    type: String,
+    enum: ['pequeño', 'mediano', 'grande'],
+    default: 'mediano'
+  },
   precio: {
     type: Number,
     required: [true, 'El precio del producto es obligatorio.'],

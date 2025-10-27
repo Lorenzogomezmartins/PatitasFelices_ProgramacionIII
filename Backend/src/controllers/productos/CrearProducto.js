@@ -1,20 +1,16 @@
-/**
- * Crear un nuevo producto
- */
 const Producto = require('../../models/producto');
 
 const crearProducto = async (req, res) => {
   try {
     const datos = { ...req.body };
 
-    // Convertir tipos si vienen como string
-    if (datos.precio !== undefined) datos.precio = parseFloat(datos.precio);
-    if (datos.stock !== undefined) datos.stock = parseInt(datos.stock);
+    // Convertir tipos simples
+    datos.precio = parseFloat(datos.precio);
+    datos.stock = parseInt(datos.stock);
+    datos.activo = datos.activo === 'true' || datos.activo === true;
 
-    // Manejo de imágenes si se suben archivos
-    if (req.files && req.files.length > 0) {
-      datos.urls = req.files.map(f => `/uploads/${f.filename}`);
-    }
+    // Asegurarse que urls sea un array (si vienen como string desde frontend)
+    if (typeof datos.urls === 'string') datos.urls = [datos.urls];
 
     const producto = await Producto.create(datos);
 
@@ -24,6 +20,8 @@ const crearProducto = async (req, res) => {
       producto
     });
   } catch (error) {
+    console.error('❌ Error al crear producto:', error);
+
     if (error.code === 11000 && error.keyPattern?.codigo) {
       return res.status(400).json({
         ok: false,
@@ -36,7 +34,6 @@ const crearProducto = async (req, res) => {
       return res.status(400).json({ ok: false, error: 'Datos inválidos', detalles });
     }
 
-    console.error('Error al crear producto:', error);
     res.status(500).json({ ok: false, error: 'Error interno del servidor' });
   }
 };

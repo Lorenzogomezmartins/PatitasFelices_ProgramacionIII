@@ -121,13 +121,12 @@
           >
             <div class="id-image-row">
               <div class="id-field">
-                <label for="inputID" class="form-label">ID:</label>
+                <label for="inputCodigo" class="form-label">Codigo:</label>
                 <input
                   type="text"
                   class="form-control"
-                  id="inputID"
+                  id="inputCodigoProducto"
                   required
-                  readonly
                 />
               </div>
 
@@ -161,33 +160,53 @@
               </div>
             </div>
             <div class="mb-3">
-              <label for="inputNombre" class="form-label">Nombre:</label>
+              <label for="inputNombreProducto" class="form-label">Nombre:</label>
               <input
                 type="text"
                 class="form-control"
-                id="inputNombre"
+                id="inputNombreProducto"
                 required
               />
             </div>
 
             <div class="mb-3">
-              <label for="inputTipo" class="form-label">Tipo:</label>
+              <label for="inputMarcaProducto" class="form-label">Marca:</label>
               <input
                 type="text"
                 class="form-control"
-                id="inputTipo"
+                id="inputMarcaProducto"
                 required
               />
             </div>
+
+            <div class="mb-3">
+              <label for="inputCategoria" class="form-label">Categoria:</label>
+              <select class="form-control" id="inputCategoria" required>
+                <option value="">Seleccione un tamaño</option>
+                <option value="chico">Alimento</option>
+                <option value="mediano">Jueguete</option>
+              </select>
+            </div>
+
             <div class="mb-3">
               <label for="inputTamaño" class="form-label">Tamaño:</label>
               <select class="form-control" id="inputTamaño" required>
                 <option value="">Seleccione un tamaño</option>
-                <option value="chico">Chico</option>
+                <option value="chico">Pequeño</option>
                 <option value="mediano">Mediano</option>
                 <option value="grande">Grande</option>
               </select>
             </div>
+
+            <div class="mb-3">
+              <label for="inputTipoDeMascota" class="form-label">Tipo de mascota:</label>
+              <select class="form-control" id="inputTipoDeMascota" required>
+                <option value="">Seleccione un tamaño</option>
+                <option value="chico">Perro</option>
+                <option value="mediano">Gato</option>
+              </select>
+            </div>
+
             <div class="mb-3">
               <label for="inputPrecio" class="form-label">Precio:</label>
               <input
@@ -212,6 +231,12 @@
                 required
               />
             </div>
+
+            <div class="mb-3">
+              <label for="inputActivo" class="form-label">Activo</label>
+                <input type="checkbox" id="inputActivo" checked>
+                  </div>
+
 
             <div class="d-flex align-items-center gap-2">
               <button type="button" id="btnAgregar">Agregar</button>
@@ -243,6 +268,7 @@
   <script src="../scripts/admin.js"></script>
   
   <script src="../scripts/dashboard-admin.js"></script>
+  <script src="../scripts/dashboard.js"></script>
 
 </body>
 

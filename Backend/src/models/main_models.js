@@ -25,6 +25,5 @@ module.exports = {
   Admin,
   Usuario,
   Producto,
-  Carrito,
   Ticket
 };
