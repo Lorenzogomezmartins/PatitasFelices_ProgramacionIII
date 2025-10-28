@@ -9,47 +9,48 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
   <link rel="stylesheet" href="../styles/dashboard-admin.css" />
   <link rel="icon" type="image/png" sizes="32x32" href="../imagenes/favicon32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="../imagenes/favicon16.png">
-<link rel="shortcut icon" href="../imagenes/favicon32.png" type="image/png">
-
+  <link rel="icon" type="image/png" sizes="16x16" href="../imagenes/favicon16.png">
+  <link rel="shortcut icon" href="../imagenes/favicon32.png" type="image/png">
 </head>
 
 <body>
 
   <header>
-  <nav class="navbar">
-    <div class="logo-container">
-      <img src="../imagenes/logo.png" alt="Logo Patitas Felices" class="logo">
-      <span id="text-admin">Admin</span>
-    </div>
-
-
-    <!-- Botones a la derecha -->
-    <div class="d-flex gap-2">
-      <button id="dark-mode-toggle" class="btn btn-outline-secondary">Modo oscuro</button>
-      <button type="button" class="btn btn-outline-danger ms-2" id="logout-btn">
-        <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
-      </button>
-    </div>
-  </nav>
-</header>
-
-   <!-- Dashboard -->
-   
-    <section class="card shadow-sm mt-4 mb-3 rounded-3">
-      <div class="card-body text-center">
-        <h3 class="card-title mb-0">Panel de Administrador</h3>
-        <h4 class="card-subtitle">Gestión de PatitasFelices</h4>
+    <nav class="navbar">
+      <div class="logo-container">
+        <img src="../imagenes/logo.png" alt="Logo Patitas Felices" class="logo">
+        <span id="text-admin">Admin</span>
       </div>
-    </section>
-   
+
+      <div class="d-flex gap-2">
+        <button id="dark-mode-toggle" class="btn btn-outline-secondary">Modo oscuro</button>
+        <button type="button" class="btn btn-outline-danger ms-2" id="logout-btn">
+          <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Dashboard -->
+  <section class="card shadow-sm mt-4 mb-3 rounded-3">
+    <div class="card-body text-center">
+      <h3 class="card-title mb-0">Panel de Administrador</h3>
+      <h4 class="card-subtitle">Gestión de PatitasFelices</h4>
+    </div>
+  </section>
+
   <!-- Navegación -->
   <ul class="nav nav-tabs mb-3" id="dashboardTabs" role="tablist">
-    <li class="nav-item"><button class="nav-link active" id="inicio-tab" data-bs-toggle="tab" data-bs-target="#inicio" type="button"><i class="bi bi-house-door me-1"></i> Dashboard</button></li>
-    <li class="nav-item"><button class="nav-link" id="usuarios-tab" data-bs-toggle="tab" data-bs-target="#usuarios" type="button"><i class="bi bi-box-seam me-1"></i> Usuarios</button></li>
-    <li class="nav-item"><button class="nav-link" id="productos-tab" data-bs-toggle="tab" data-bs-target="#productos" type="button"><i class="bi bi-plus-circle me-1"></i> Productos</button></li>
-    <li class="nav-item"><button class="nav-link" id="estadisticas-tab" data-bs-toggle="tab" data-bs-target="#estadisticas" type="button"><i class="bi bi-bar-chart-line me-1"></i> Estadísticas</button></li>
-    <li class="nav-item"><button class="nav-link" id="tickets-tab" data-bs-toggle="tab" data-bs-target="#tickets" type="button"><i class="bi bi-receipt-cutoff me-1"></i> Tickets</button></li>
+    <li class="nav-item"><button class="nav-link active" id="inicio-tab" data-bs-toggle="tab"
+        data-bs-target="#inicio" type="button"><i class="bi bi-house-door me-1"></i> Dashboard</button></li>
+    <li class="nav-item"><button class="nav-link" id="usuarios-tab" data-bs-toggle="tab"
+        data-bs-target="#usuarios" type="button"><i class="bi bi-box-seam me-1"></i> Usuarios</button></li>
+    <li class="nav-item"><button class="nav-link" id="productos-tab" data-bs-toggle="tab"
+        data-bs-target="#productos" type="button"><i class="bi bi-plus-circle me-1"></i> Productos</button></li>
+    <li class="nav-item"><button class="nav-link" id="estadisticas-tab" data-bs-toggle="tab"
+        data-bs-target="#estadisticas" type="button"><i class="bi bi-bar-chart-line me-1"></i> Estadísticas</button></li>
+    <li class="nav-item"><button class="nav-link" id="tickets-tab" data-bs-toggle="tab"
+        data-bs-target="#tickets" type="button"><i class="bi bi-receipt-cutoff me-1"></i> Tickets</button></li>
   </ul>
 
   <!-- Contenido -->
@@ -57,155 +58,174 @@
 
     <!-- Usuarios -->
     <div class="tab-pane fade" id="usuarios">
-        <div class="row">
-          <div class="col-4 bg-info-subtle">
-            <form
-              id="frmFormulario"
-              class="bg-light p-3 needs-validation"
-              novalidate
-            >
-              <div class="id-image-row">
-                <div class="id-field">
-                  <label for="inputID" class="form-label">ID:</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="inputID"
-                    required
-                    readonly
-                  />
-                </div>
+      <div class="row">
+        <div class="col-4 bg-info-subtle">
+          <form id="frmFormulario" class="bg-light p-3 needs-validation" novalidate>
+            <div class="id-image-row">
+              <div class="id-field">
+                <label for="inputID" class="form-label">ID:</label>
+                <input type="text" class="form-control" id="inputID" required readonly />
               </div>
-              <div class="mb-3">
-                <label for="inputNombre" class="form-label">Nombre:</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="inputNombre"
-                  required
-                />
-              </div>
-              <div class="mb-3">
-                <label for="inputApellido" class="form-label">Apellido:</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="inputApellido"
-                  required
-                />
-              </div>
-              
+            </div>
+            <div class="mb-3">
+              <label for="inputNombre" class="form-label">Nombre:</label>
+              <input type="text" class="form-control" id="inputNombre" required />
+            </div>
+            <div class="mb-3">
+              <label for="inputApellido" class="form-label">Apellido:</label>
+              <input type="text" class="form-control" id="inputApellido" required />
+            </div>
+            <div>
+              <button type="button" id="btnAgregar">Agregar</button>
+              <button type="reset" id="btnLimpiar">Limpiar</button>
+              <button type="button" id="btnModificar">Modificar</button>
+            </div>
+          </form>
+        </div>
 
-              <div>
-                <button type="button" id="btnAgregar">Agregar</button>
-                <button type="reset" id="btnLimpiar">Limpiar</button>
-                <button type="button" id="btnModificar">Modificar</button>
-              </div>
-            </form>
+        <div id="divListadoUsuarios" class="col-7 bg-light rounded p-2">
+          Listado de Usuarios aquí
+        </div>
+      </div>
+    </div>
+
+    <!-- Productos -->
+    <div class="tab-pane fade" id="productos">
+
+      <!-- 🔹 FILTROS COMPACTOS (encima del formulario y listado) -->
+      <div class="container mb-3">
+        <div class="d-flex flex-wrap justify-content-center align-items-center gap-2 p-2 bg-light rounded shadow-sm border">
+          <input type="text" id="buscarCodigo" class="form-control form-control-sm w-auto" placeholder="Buscar por código...">
+
+          <div class="d-flex align-items-center gap-1">
+            <label class="small mb-0">Mascota:</label>
+            <select id="filtroMascota" class="form-select form-select-sm w-auto">
+              <option value="todos">Todos</option>
+              <option value="perro">Perro</option>
+              <option value="gato">Gato</option>
+            </select>
           </div>
 
-          <div id="divListadoUsuarios" class="col-7 bg-light rounded p-2">
-            Listado de Usuarios aquí
+          <div class="d-flex align-items-center gap-1">
+            <label class="small mb-0">Tamaño:</label>
+            <select id="filtroTamaño" class="form-select form-select-sm w-auto">
+              <option value="todos">Todos</option>
+              <option value="pequeño">Pequeño</option>
+              <option value="mediano">Mediano</option>
+              <option value="grande">Grande</option>
+            </select>
           </div>
+
+          <div class="d-flex align-items-center gap-1">
+            <label class="small mb-0">Categoría:</label>
+            <select id="filtroCategoria" class="form-select form-select-sm w-auto">
+              <option value="todos">Todos</option>
+              <option value="alimento">Alimentos</option>
+              <option value="juguete">Juguetes</option>
+            </select>
+          </div>
+
+          <button id="btnLimpiarFiltros" class="btn btn-outline-secondary btn-sm">
+            <i class="bi bi-x-circle"></i> Limpiar
+          </button>
         </div>
       </div>
 
-    <!-- Productos -->
-<div class="tab-pane fade" id="productos">
-  <div class="row">
-    <div class="col-4 bg-info-subtle">
-      <form id="frmFormulario" class="bg-light p-3 needs-validation" novalidate>
-        <div class="id-image-row">
-          <div class="id-field">
-            <label for="inputCodigoProducto" class="form-label">Código:</label>
-            <input type="text" class="form-control" id="inputCodigoProducto" required />
-          </div>
+      <div class="row">
+        <div class="col-4 bg-info-subtle">
+          <form id="frmFormulario" class="bg-light p-3 needs-validation" novalidate>
+            <div class="id-image-row">
+              <div class="id-field">
+                <label for="inputCodigoProducto" class="form-label">Código:</label>
+                <input type="text" class="form-control" id="inputCodigoProducto" required />
+              </div>
 
-          <div class="image-upload-container" onclick="document.getElementById('inputFoto').click()">
-            <button type="button" class="remove-image-btn" onclick="event.stopPropagation(); removeImage()">
-              <i class="bi bi-x"></i>
-            </button>
-            <img src="" id="foto_img" style="display: none" alt="Producto" />
-            <div class="upload-placeholder" id="upload-placeholder">
-              <i class="bi bi-cloud-upload"></i>
-              <small>Click para subir imagen</small>
+              <div class="image-upload-container" onclick="document.getElementById('inputFoto').click()">
+                <button type="button" class="remove-image-btn" onclick="event.stopPropagation(); removeImage()">
+                  <i class="bi bi-x"></i>
+                </button>
+                <img src="" id="foto_img" style="display: none" alt="Producto" />
+                <div class="upload-placeholder" id="upload-placeholder">
+                  <i class="bi bi-cloud-upload"></i>
+                  <small>Click para subir imagen</small>
+                </div>
+                <input type="file" id="inputFoto" accept="image/*" onchange="handleImageUpload(event)" />
+              </div>
             </div>
-            <input type="file" id="inputFoto" accept="image/*" onchange="handleImageUpload(event)" />
-          </div>
+
+            <div class="mb-3">
+              <label for="inputNombreProducto" class="form-label">Nombre:</label>
+              <input type="text" class="form-control" id="inputNombreProducto" required />
+            </div>
+
+            <div class="mb-3">
+              <label for="inputMarca" class="form-label">Marca:</label>
+              <input type="text" class="form-control" id="inputMarca" required />
+            </div>
+
+            <div class="mb-3">
+              <label for="inputCategoria" class="form-label">Categoría:</label>
+              <select class="form-control" id="inputCategoria" required>
+                <option value="">Seleccione una categoría</option>
+                <option value="alimento">Alimento</option>
+                <option value="juguete">Juguete</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label for="inputTamaño" class="form-label">Tamaño:</label>
+              <select class="form-control" id="inputTamaño" required>
+                <option value="">Seleccione un tamaño</option>
+                <option value="pequeño">Pequeño</option>
+                <option value="mediano">Mediano</option>
+                <option value="grande">Grande</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label for="inputTipoDeMascota" class="form-label">Tipo de mascota:</label>
+              <select class="form-control" id="inputTipoDeMascota" required>
+                <option value="">Seleccione un tipo</option>
+                <option value="perro">Perro</option>
+                <option value="gato">Gato</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label for="inputPrecio" class="form-label">Precio:</label>
+              <input type="number" class="form-control" id="inputPrecio" min="0" step="0.01" required />
+            </div>
+
+            <div class="mb-3">
+              <label for="inputStock" class="form-label">Stock:</label>
+              <input type="number" class="form-control" id="inputStock" min="0" required />
+            </div>
+
+            <div class="mb-3">
+              <label for="inputActivo" class="form-label">Activo:</label>
+              <input type="checkbox" id="inputActivo" checked />
+            </div>
+
+            <div>
+              <button type="button" id="btnAgregarProducto">Agregar</button>
+              <button type="reset" id="btnLimpiar">Limpiar</button>
+              <button type="button" id="btnModificar">Modificar</button>
+            </div>
+          </form>
         </div>
 
-        <div class="mb-3">
-          <label for="inputNombreProducto" class="form-label">Nombre:</label>
-          <input type="text" class="form-control" id="inputNombreProducto" required />
+        <div id="divListado" class="col-7 bg-light rounded p-2">
+          Listado de productos aquí
         </div>
-
-        <div class="mb-3">
-          <label for="inputMarca" class="form-label">Marca:</label>
-          <input type="text" class="form-control" id="inputMarca" required />
-        </div>
-
-        <div class="mb-3">
-          <label for="inputCategoria" class="form-label">Categoría:</label>
-          <select class="form-control" id="inputCategoria" required>
-            <option value="">Seleccione una categoría</option>
-            <option value="alimento">Alimento</option>
-            <option value="juguete">Juguete</option>
-          </select>
-        </div>
-
-        <div class="mb-3">
-          <label for="inputTamaño" class="form-label">Tamaño:</label>
-          <select class="form-control" id="inputTamaño" required>
-            <option value="">Seleccione un tamaño</option>
-            <option value="pequeño">Pequeño</option>
-            <option value="mediano">Mediano</option>
-            <option value="grande">Grande</option>
-          </select>
-        </div>
-
-        <div class="mb-3">
-          <label for="inputTipoDeMascota" class="form-label">Tipo de mascota:</label>
-          <select class="form-control" id="inputTipoDeMascota" required>
-            <option value="">Seleccione un tipo</option>
-            <option value="perro">Perro</option>
-            <option value="gato">Gato</option>
-          </select>
-        </div>
-
-        <div class="mb-3">
-          <label for="inputPrecio" class="form-label">Precio:</label>
-          <input type="number" class="form-control" id="inputPrecio" min="0" step="0.01" required />
-        </div>
-
-        <div class="mb-3">
-          <label for="inputStock" class="form-label">Stock:</label>
-          <input type="number" class="form-control" id="inputStock" min="0" required />
-        </div>
-
-        <div class="mb-3">
-          <label for="inputActivo" class="form-label">Activo:</label>
-          <input type="checkbox" id="inputActivo" checked />
-        </div>
-
-        <div>
-          <button type="button" id="btnAgregarProducto">Agregar</button>
-          <button type="reset" id="btnLimpiar">Limpiar</button>
-          <button type="button" id="btnModificar">Modificar</button>
-        </div>
-      </form>
+      </div>
     </div>
 
-    <div id="divListado" class="col-7 bg-light rounded p-2">
-      Listado de productos aquí
-    </div>
-  </div>
-</div>
     <!-- Tickets -->
     <div class="tab-pane fade" id="tickets" role="tabpanel">
       <div id="divListadoTickets"></div>
-        <div class="text-center mt-3">
-          <button id="btnVerMasTickets" class="btn btn-primary btn-sm">Ver más</button>
-        </div>    
+      <div class="text-center mt-3">
+        <button id="btnVerMasTickets" class="btn btn-primary btn-sm">Ver más</button>
+      </div>
     </div>
 
     <!-- Estadísticas -->
@@ -216,10 +236,9 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  
+  <script src="../scripts/Usuarios.js"></script>
   <script src="../scripts/dashboard-admin.js"></script>
   <script src="../scripts/darkMode-dashboard.js"></script>
 
 </body>
-
 </html>
