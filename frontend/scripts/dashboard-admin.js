@@ -11,15 +11,12 @@ document.addEventListener("DOMContentLoaded", () => {
   inicializarLogout();
 
 
-  // Botón Agregar producto
   const btnAgregarProducto = document.querySelector("#productos #btnAgregar");
   if (btnAgregarProducto) btnAgregarProducto.addEventListener("click", crearProducto);
 
-  // Manejo de imagen
   const inputFoto = document.getElementById("inputFoto");
   if (inputFoto) inputFoto.addEventListener("change", handleImageUpload);
 
-  // Botón Ver más tickets
   const btnVerMas = document.getElementById("btnVerMasTickets");
   if (btnVerMas) btnVerMas.addEventListener("click", cargarTickets);
 });
@@ -53,6 +50,7 @@ async function cargarProductosAdmin() {
           <th>Marca</th>
           <th>Categoría</th>
           <th>Mascota</th>
+          <th>Tamaño</th>
           <th>Precio</th>
           <th>Stock</th>
           <th>Activo</th>
@@ -71,6 +69,7 @@ async function cargarProductosAdmin() {
         <td>${prod.marca}</td>
         <td>${prod.categoria}</td>
         <td>${prod.tipo_mascota || "-"}</td>
+        <td>${prod.tamaño}</td>
         <td>$${prod.precio?.toLocaleString() || "-"}</td>
         <td>${prod.stock ?? "-"}</td>
         <td>${prod.activo ? "Sí" : "No"}</td>
@@ -84,10 +83,8 @@ async function cargarProductosAdmin() {
         </td>
       `;
 
-      // Editar producto
       tr.querySelector(".editar-btn").addEventListener("click", () => abrirFormularioEdicion(prod));
 
-      // Eliminar producto
       tr.querySelector(".eliminar-btn").addEventListener("click", () => eliminarProducto(prod._id));
 
       tbody.appendChild(tr);
@@ -143,7 +140,6 @@ async function crearProducto() {
   try {
     const res = await fetch(API_PRODUCTOS, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(datos)
     });
     const data = await res.json();
@@ -162,18 +158,21 @@ async function crearProducto() {
 /* ==========================================
    ELIMINAR PRODUCTO
 ========================================== */
-async function eliminarUsuarioFrontend(id) {
-  if (!confirm("¿Desea eliminar este usuario?")) return;
+async function eliminarProducto(id) {
+  if (!id) return mostrarMensaje("⚠️ ID inválido", "error");
+  if (!confirm("¿Desea eliminar este producto?")) return;
 
   try {
-    // Usamos apiClient
-    await apiClient.eliminarUsuario(id);
-    mostrarMensaje("✅ Usuario eliminado correctamente", "success");
-    cargarUsuarios();
-  } catch (err) {
-    console.error(err);
-    // Mostrar mensaje con detalle
-    mostrarMensaje(`❌ ${err.message}`, "error");
+    const res = await fetch(`${API_PRODUCTOS}/${id}`, { method: "DELETE" });
+    const data = await res.json();
+
+    if (!res.ok || !data.ok) throw new Error(data.error || "Error al eliminar producto");
+
+    mostrarMensaje("✅ Producto eliminado correctamente", "success");
+    cargarProductosAdmin();
+  } catch (error) {
+    console.error("❌ Error al eliminar producto:", error);
+    mostrarMensaje(`❌ ${error.message}`, "error");
   }
 }
 
@@ -248,11 +247,13 @@ async function eliminarUsuarioFrontend(id) {
   try {
     const res = await fetch(`${API_USUARIOS}/${id}`, { method: "DELETE" });
     const data = await res.json();
+
     if (!res.ok || !data.ok) throw new Error(data.error || "Error al eliminar usuario");
-    mostrarMensaje(`✅ Usuario eliminado`, "success");
+
+    mostrarMensaje("✅ Usuario eliminado correctamente", "success");
     cargarUsuarios();
   } catch (error) {
-    console.error(error);
+    console.error("❌ Error al eliminar usuario:", error);
     mostrarMensaje(`❌ ${error.message}`, "error");
   }
 }

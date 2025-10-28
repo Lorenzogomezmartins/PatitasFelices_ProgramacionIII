@@ -9,78 +9,65 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="../styles/dashboard-user.css">
     <link rel="icon" type="image/png" sizes="32x32" href="../imagenes/favicon32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="../imagenes/favicon16.png">
-<link rel="shortcut icon" href="../imagenes/favicon32.png" type="image/png">
-
+    <link rel="icon" type="image/png" sizes="16x16" href="../imagenes/favicon16.png">
+    <link rel="shortcut icon" href="../imagenes/favicon32.png" type="image/png">
 </head>
 
 <body>
     <header>
         <nav class="navbar">
-        <!-- Logo a la izquierda -->
-        <div class="logo-container">
-            <img src="../imagenes/logo.png" alt="Logo Patitas Felices" class="logo">
-        </div>
-
+            <div class="logo-container">
+                <img src="../imagenes/logo.png" alt="Logo Patitas Felices" class="logo">
+            </div>
             <div class="nav-links">
                 <a href="#">Inicio</a>
                 <a href="#" id="dark-mode-toggle">Modo oscuro</a>
                 <a href="../pages/carrito.html" class="carrito-link">
-                    <i class="bi bi-cart3"></i></a>
+                    <i class="bi bi-cart3"></i>
+                </a>
                 <a href="#" id="logout-btn">Salir</a>
             </div>
         </nav>
     </header>
-    <main>
-        <div class="search-bar">
-            <div class="search-container">
-                <div class="input-icon-wrapper">
-                    <i class="fas fa-search"></i>
-                    <input type="text" class="search-input"
-                        placeholder="Buscar espacios de trabajo, relax o creativos..." />
-                </div>
-                <button class="search-btn">Buscar</button>
-                <button class="filter-btn-open" id="abrir-filtros">Filtrar</button>
-            </div>
-        </div>
 
-        <div class="container">
-            <h1>Productos</h1>
-            <div class="properties-grid" id="espacios-populares"></div>
+>
+
+        <div class="container main-content">
+            <!-- Sidebar de filtros -->
+            <aside class="sidebar-filtros">
+                <h2>Filtros</h2>
+
+                <h3>Tipo de mascota</h3>
+                <button class="filter-mascota-btn selected" data-mascota="todos">Todos</button>
+                <button class="filter-mascota-btn" data-mascota="perro">Perro</button>
+                <button class="filter-mascota-btn" data-mascota="gato">Gato</button>
+
+                <h3>Tamaño</h3>
+                <button class="filter-tamaño-btn selected" data-tamaño="todos">Todos</button>
+                <button class="filter-tamaño-btn" data-tamaño="pequeño">Pequeño</button>
+                <button class="filter-tamaño-btn" data-tamaño="mediano">Mediano</button>
+                <button class="filter-tamaño-btn" data-tamaño="grande">Grande</button>
+
+                <h3>Categoría</h3>
+                <button class="filter-categoria-btn selected" data-categoria="todos">Todos</button>
+                <button class="filter-categoria-btn" data-categoria="alimento">Alimentos</button>
+                <button class="filter-categoria-btn" data-categoria="juguete">Juguetes</button>
+            </aside>
+
+            <!-- Productos -->
+            <div class="properties-grid" id="espacios-populares">
+                <!-- Aquí se generan los productos dinámicamente -->
+            </div>
         </div>
     </main>
 
     <footer>
-        <div class="footer-links">
-        </div>
+        <div class="footer-links"></div>
         <p>© 2025 PatitasFelices. Todos los derechos reservados.</p>
     </footer>
 
-    <div class="filter-modal" id="modal-filtros">
-        <div class="filter-content">
-            <div class="filter-header">
-                <h2>Filtros</h2>
-                <button class="close-btn" id="cerrar-filtros">✕</button>
-            </div>
-
-            <div class="filter-section">
-                <h3>Tipo de alimentos</h3>
-                <div class="filter-options">
-                    <button class="filter-type-btn" data-tipo="todos">Todos</button>
-                    <button class="filter-type-btn" data-tipo="espacio-trabajo">Grandes</button>
-                    <button class="filter-type-btn" data-tipo="espacio-relax">Medianos</button>
-                    <button class="filter-type-btn" data-tipo="espacio-creativo">Chicos</button>
-                </div>
-            </div>
-
-            <div class="filter-footer">
-                <button class="apply-filter-btn" id="aplicar-filtros">Aplicar filtros</button>
-            </div>
-        </div>
-    </div>
     <script src="../scripts/dashboard-user.js"></script>
     <script src="../scripts/darkMode-dashboard.js"></script>
-    
 </body>
 
 </html>

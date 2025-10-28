@@ -140,33 +140,46 @@ async function confirmarCompra() {
     return;
   }
 
-  let total = carrito.reduce((sum, item) => sum + item.precio * item.cantidad, 0);
+  const usuario = JSON.parse(localStorage.getItem("usuarioLoggeado"));
+  if (!usuario || !usuario._id) {
+    alert("No hay un usuario loggeado.");
+    return;
+  }
 
-  const ticket = {
-    productos: carrito.map((item) => ({
-      prod: item._id,
-      cantidad: item.cantidad,
-    })),
-    total,
-  };
+  const productos = carrito.map(item => ({
+    prod: {
+      _id: String(item._id),
+      cantidad: Number(item.cantidad)
+    }
+  }));
+
+  const total = carrito.reduce((sum, item) => sum + Number(item.precio) * Number(item.cantidad), 0);
+  console.log("💰 Total calculado:", total);
 
   try {
-    const userId = localStorage.getItem("userId"); // guardalo al hacer login
-    if (!userId) {
-      alert("Usuario no identificado.");
-      return;
+    const respuesta = await fetch(
+      `http://localhost:4000/api/usuarios/agregarTicket/${usuario._id}`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(
+                              {productos, 
+                              total}
+                              ),
+      }
+    );
+
+    const data = await respuesta.json();
+
+    if (!data.ok) {
+      throw new Error(data.error || "Error al agregar el ticket");
     }
 
-    const resp = await fetch("http://localhost:4000/api/usuarios/agregarTicket", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userId, ticket }),
-    });
+    alert("¡Compra confirmada!");
 
-    const data = await resp.json();
-    if (!resp.ok) throw new Error(data.message || "Error al guardar ticket");
+    usuario.tickets = data.tickets;
+    localStorage.setItem("usuarioLoggeado", JSON.stringify(usuario));
 
-    alert("¡Compra confirmada! 🎉 Ticket guardado correctamente.");
     vaciarCarrito();
     mostrarCarrito();
   } catch (error) {
@@ -174,7 +187,6 @@ async function confirmarCompra() {
     alert("Error al confirmar compra. Intenta nuevamente.");
   }
 }
-
 // =====================
 // Otros
 // =====================

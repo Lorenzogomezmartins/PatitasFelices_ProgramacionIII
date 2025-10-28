@@ -10,11 +10,12 @@ const eliminarProducto = require('../controllers/productos/EliminarProducto');
 
 // Middleware de validación
 const validarProducto = require('../middlewares/validarProducto');
+const upload = require('../middlewares/multerUpload');
 
 // RUTAS CRUD
 router.get('/', obtenerProductos);
 router.get('/obtenerporcodigo/:id', obtenerProductoPorCodigo);       // GET → un producto por _id
-router.post('/', validarProducto, crearProducto); // <-- aplicamos middleware
+router.post('/', validarProducto, upload, crearProducto); // <-- aplicamos middleware
 router.put('/:codigo', validarProducto, actualizarProducto);
 router.delete('/:codigo', eliminarProducto);
 

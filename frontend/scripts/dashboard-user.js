@@ -3,19 +3,31 @@ const API_URL = "http://localhost:4000/api/productos";
 document.addEventListener("DOMContentLoaded", () => {
   cargarProductos();
   inicializarLogout();
-
+  inicializarFiltros();
 });
 
-/**
- * Obtiene los productos del backend y los muestra en la grilla
- */
+// Variables de filtros seleccionados
+let filtroCategoria = "todos";
+let filtroTipoMascota = "todos";
+let filtroTamano = "todos";
+
+// Función para normalizar textos (minúscula, sin tildes)
+function normalizar(texto) {
+  return texto?.toString().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+
+/* ===== CARGAR PRODUCTOS ===== */
 async function cargarProductos() {
   const contenedor = document.getElementById("espacios-populares");
-
   contenedor.innerHTML = `<p class="loading">Cargando productos...</p>`;
 
   try {
-    const respuesta = await fetch(API_URL);
+    const params = new URLSearchParams();
+    if (filtroCategoria !== "todos") params.append("categoria", filtroCategoria);
+    if (filtroTipoMascota !== "todos") params.append("tipo_mascota", filtroTipoMascota);
+    if (filtroTamano !== "todos") params.append("tamaño", filtroTamano);
+
+    const respuesta = await fetch(`${API_URL}?${params.toString()}`);
     const data = await respuesta.json();
 
     if (!data.ok) throw new Error("Error al obtener productos");
@@ -28,6 +40,13 @@ async function cargarProductos() {
     }
 
     data.productos.forEach((producto) => {
+      // Filtrado adicional por JS (por si algo falla)
+      const coincideCategoria = filtroCategoria === "todos" || normalizar(producto.categoria) === normalizar(filtroCategoria);
+      const coincideTipo = filtroTipoMascota === "todos" || normalizar(producto.tipo_mascota) === normalizar(filtroTipoMascota);
+      const coincideTamano = filtroTamano === "todos" || normalizar(producto.tamaño) === normalizar(filtroTamano);
+
+      if (!coincideCategoria || !coincideTipo || !coincideTamano) return;
+
       const card = document.createElement("div");
       card.classList.add("property-card");
 
@@ -45,18 +64,18 @@ async function cargarProductos() {
             <p class="property-brand"><strong>Marca:</strong> ${producto.marca}</p>
             <p class="property-category"><strong>Categoría:</strong> ${producto.categoria}</p>
             <p class="property-type"><strong>Mascota:</strong> ${producto.tipo_mascota}</p>
+            <p class="property-size"><strong>Tamaño:</strong> ${producto.tamaño || "N/A"}</p>
             <p class="property-price"><strong>Precio:</strong> $${producto.precio.toLocaleString()}</p>
             <p class="property-stock ${producto.stock > 0 ? "en-stock" : "sin-stock"}">
               ${producto.stock > 0 ? "Stock disponible: " + producto.stock : "Sin stock"}
             </p>
-            <button class="agregar-carrito-btn" ${producto.stock <= 0 ? "disabled" : ""}>
-              Agregar al carrito
+            <button class="agregar-carrito-btn btn btn-success" ${producto.stock <= 0 ? "disabled" : ""}>
+              <i class="fas fa-cart-plus"></i> Agregar al carrito
             </button>
           </div>
         </div>
       `;
 
-      // Evento para agregar al carrito
       card.querySelector(".agregar-carrito-btn").addEventListener("click", () => {
         agregarAlCarrito(producto, imagen);
       });
@@ -90,7 +109,7 @@ function agregarAlCarrito(producto, imagen) {
   }
 
   localStorage.setItem("carrito", JSON.stringify(carrito));
-  alert(`"${producto.nombre}" agregado al carrito 🛒`);
+  alert(`"${producto.nombre}" agregado al carrito`);
 }
 
 function inicializarLogout() {
@@ -103,4 +122,41 @@ function inicializarLogout() {
       window.location.href ="../pages/login-user.html";
     });
   }
+}
+
+/* ===== FILTROS ===== */
+function inicializarFiltros() {
+  const btnCategoria = document.querySelectorAll(".filter-categoria-btn");
+  const btnTipo = document.querySelectorAll(".filter-mascota-btn");
+  const btnTamano = document.querySelectorAll(".filter-tamaño-btn");
+
+  // Filtro categoría
+  btnCategoria.forEach(btn => {
+    btn.addEventListener("click", () => {
+      btnCategoria.forEach(b => b.classList.remove("selected"));
+      btn.classList.add("selected");
+      filtroCategoria = btn.dataset.categoria;
+      cargarProductos();
+    });
+  });
+
+  // Filtro tipo de mascota
+  btnTipo.forEach(btn => {
+    btn.addEventListener("click", () => {
+      btnTipo.forEach(b => b.classList.remove("selected"));
+      btn.classList.add("selected");
+      filtroTipoMascota = btn.dataset.mascota;
+      cargarProductos();
+    });
+  });
+
+  // Filtro tamaño
+  btnTamano.forEach(btn => {
+    btn.addEventListener("click", () => {
+      btnTamano.forEach(b => b.classList.remove("selected"));
+      btn.classList.add("selected");
+      filtroTamano = btn.dataset.tamaño;
+      cargarProductos();
+    });
+  });
 }

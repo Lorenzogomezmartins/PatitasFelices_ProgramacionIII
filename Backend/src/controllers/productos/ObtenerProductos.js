@@ -1,10 +1,3 @@
-/**
- * Obtener todos los productos
- * Opcionalmente se pueden filtrar por:
- * - categoria: 'alimento' | 'juguete'
- * - tipo_mascota: 'perro' | 'gato'
- * - activo: true | false
- */
 const Producto = require('../../models/producto');
 
 const obtenerProductos = async (req, res) => {
@@ -12,9 +5,18 @@ const obtenerProductos = async (req, res) => {
     const filtros = {};
 
     // Filtrado opcional por query params
-    if (req.query.categoria) filtros.categoria = req.query.categoria;
-    if (req.query.tipo_mascota) filtros.tipo_mascota = req.query.tipo_mascota;
-    if (req.query.activo !== undefined) filtros.activo = req.query.activo === 'true';
+    if (req.query.categoria && req.query.categoria !== 'todos') {
+      filtros.categoria = req.query.categoria; // Debe coincidir exactamente
+    }
+    if (req.query.tipo_mascota && req.query.tipo_mascota !== 'todos') {
+      filtros.tipo_mascota = req.query.tipo_mascota;
+    }
+    if (req.query.tamaño && req.query.tamaño !== 'todos') {
+      filtros.tamaño = req.query.tamaño;
+    }
+    if (req.query.activo !== undefined) {
+      filtros.activo = req.query.activo === 'true';
+    }
 
     const productos = await Producto.find(filtros);
 
