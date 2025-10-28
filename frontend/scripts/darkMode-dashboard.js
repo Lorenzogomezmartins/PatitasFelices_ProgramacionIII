@@ -137,14 +137,5 @@ function toggleDarkMode() {
   actualizarTextoBotonDark();
 }
 
-function inicializarLogout(rutaLogin) {
-  const logoutBtn = document.getElementById("logout-btn");
-  if (logoutBtn) {
-    logoutBtn.addEventListener("click", () => {
-      localStorage.clear();
-      window.location.href = rutaLogin;
-    });
-  }
-}
 
 document.addEventListener("DOMContentLoaded", inicializarModoOscuro);

@@ -7,6 +7,9 @@ const API_USUARIOS = "http://localhost:4000/api/usuarios";
 document.addEventListener("DOMContentLoaded", () => {
   cargarProductosAdmin();
   cargarUsuarios();
+  cargarTickets();
+  inicializarLogout();
+
 
   // Botón Agregar producto
   const btnAgregarProducto = document.querySelector("#productos #btnAgregar");
@@ -398,5 +401,13 @@ async function cargarTickets() {
   }
 }
 
-// Carga inicial
-cargarTickets();
+function inicializarLogout() {
+  const logoutBtn = document.getElementById("logout-btn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", () => {
+      localStorage.removeItem("adminLogeado");
+
+      window.location.href = "../pages/Login-admin.html";
+    });
+  }
+}

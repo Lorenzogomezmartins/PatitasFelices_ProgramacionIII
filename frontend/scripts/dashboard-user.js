@@ -2,6 +2,8 @@ const API_URL = "http://localhost:4000/api/productos";
 
 document.addEventListener("DOMContentLoaded", () => {
   cargarProductos();
+  inicializarLogout();
+
 });
 
 /**
@@ -89,4 +91,16 @@ function agregarAlCarrito(producto, imagen) {
 
   localStorage.setItem("carrito", JSON.stringify(carrito));
   alert(`"${producto.nombre}" agregado al carrito 🛒`);
+}
+
+function inicializarLogout() {
+  const logoutBtn = document.getElementById("logout-btn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", () => {
+      localStorage.clear();
+      localStorage.removeItem("usuarioLoggeado");
+
+      window.location.href ="../pages/login-user.html";
+    });
+  }
 }

@@ -7,8 +7,10 @@ const ObtenerAdmins = require('../controllers/admin/ObtenerAdmin');
 const ObtenerAdminPorId = require('../controllers/admin/ObtenerAdminPorId');
 const ActualizarAdmin = require('../controllers/admin/ActualizarAdmin');
 const EliminarAdmin = require('../controllers/admin/EliminarAdmin');
+const LoginAdmin = require('../controllers/admin/LoginAdmin'); // ✅ nuevo
 
-// RUTAS CRUD
+// Rutas
+router.post('/login', LoginAdmin);             // POST → login de admin/superadmin
 router.get('/', ObtenerAdmins);                // GET → todos los administradores
 router.get('/:id', ObtenerAdminPorId);         // GET → un administrador por ID
 router.post('/', CrearAdmin);                  // POST → crear administrador

@@ -7,11 +7,6 @@ const path = require('path');
 // Importar rutas principales
 const RoutesMain = require('./src/routes/RoutesMain');
 
-// Modelos (opcional si los necesitas aquí)
-const Producto = require('./src/models/producto');
-const Usuario = require('./src/models/usuario');
-const Admin = require('./src/models/admin');
-
 const app = express();
 const PORT = process.env.PORT || 4000;
 
