@@ -110,58 +110,6 @@ function mostrarUsuarios(user) {
     divListado.appendChild(tabla);
 }
 
-function mostrarAdmins(Adm) {
-    const divListado = document.getElementById("divListado");
-    divListado.innerHTML = "";
-
-    const tabla = document.createElement("table");
-    tabla.className = "table table-striped table-hover align-middle";
-
-    const thead = document.createElement("thead");
-    thead.innerHTML = `
-        <tr>
-          <th>ID</th>
-          <th>Nombre</th>
-          <th>Email</th>
-          <th>Rol</th>
-          <th>Fecha Creación</th>
-          <th>Acciones</th>
-        </tr>`;
-    tabla.appendChild(thead);
-
-    const tbody = document.createElement("tbody");
-
-    Adm.forEach(p => {
-        const tr = document.createElement("tr");
-
-        tr.innerHTML = `
-            <td>${a.id}</td>
-            <td>${a.nombre}</td>
-            <td>${a.email}</td>
-            <td>${rolBadge}</td>
-            <td>${a.fechaCreacion || 'N/A'}</td>
-            <td>
-                <button class="btn btn-outline-primary btn-sm btnSeleccionar" title="Seleccionar">
-                    <i class="bi bi-pencil-square"></i>
-                </button>
-                <button class="btn btn-outline-danger btn-sm btnEliminar" title="Eliminar">
-                    <i class="bi bi-trash"></i>
-                </button>
-            </td>
-        `;
-
-        const btnSel = tr.querySelector(".btnSeleccionar");
-        const btnDel = tr.querySelector(".btnEliminar");
-
-        btnSel.addEventListener("click", () => modificarProducto(p));
-        btnDel.addEventListener("click", () => eliminarProducto(p));
-
-        tbody.appendChild(tr);
-    });
-
-    tabla.appendChild(tbody);
-    divListado.appendChild(tabla);
-}
 
 
 function handleImageUpload(event) {

@@ -12,16 +12,20 @@ const obtenerUsuarioPorNombreApellido = require('../controllers/usuario/ObtenerU
 
 // Crear usuario al hacer login
 router.post('/login', crearUsuario);
+
+// Listado de todos los usuarios
 router.get('/', listadoUsuarios);
 
 // Búsqueda por nombre y apellido
 router.get('/buscar/:nombre/:apellido', obtenerUsuarioPorNombreApellido);
 
-// Otras rutas
+// Tickets
 router.get('/obtenerTickets', obtenerTickets);
-router.get('/:id', obtenerUsuarioPorId);
-router.delete('/eliminarUsuario', eliminarUsuario);
-router.put('/modificarUsuario', modificarUsuario);
 router.put('/agregarTicket/:id', agregarTicket);
+
+// Usuarios individuales
+router.get('/:id', obtenerUsuarioPorId);
+router.put('/:id', modificarUsuario);
+router.delete('/:id', eliminarUsuario);
 
 module.exports = router;

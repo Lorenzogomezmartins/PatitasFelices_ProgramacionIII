@@ -7,7 +7,6 @@ const API_USUARIOS = "http://localhost:4000/api/usuarios";
 document.addEventListener("DOMContentLoaded", () => {
   cargarProductosAdmin();
   cargarUsuarios();
-  cargarAdmins();
 
   // Botón Agregar producto
   const btnAgregarProducto = document.querySelector("#productos #btnAgregar");
@@ -16,6 +15,10 @@ document.addEventListener("DOMContentLoaded", () => {
   // Manejo de imagen
   const inputFoto = document.getElementById("inputFoto");
   if (inputFoto) inputFoto.addEventListener("change", handleImageUpload);
+
+  // Botón Ver más tickets
+  const btnVerMas = document.getElementById("btnVerMasTickets");
+  if (btnVerMas) btnVerMas.addEventListener("click", cargarTickets);
 });
 
 /* ==========================================
@@ -23,16 +26,15 @@ document.addEventListener("DOMContentLoaded", () => {
 ========================================== */
 async function cargarProductosAdmin() {
   const contenedor = document.getElementById("divListado");
-  if (!contenedor) return console.error("No existe el contenedor 'divListado'");
+  if (!contenedor) return console.error("❌ No existe el contenedor 'divListado'");
 
   contenedor.innerHTML = `<p>Cargando productos...</p>`;
 
   try {
-    const res = await fetch(API_PRODUCTOS);
-    const data = await res.json();
+    const response = await fetch(API_PRODUCTOS);
+    const data = await response.json();
 
     if (!data.ok) throw new Error(data.message || "Error al obtener productos");
-
     if (!data.productos || data.productos.length === 0) {
       contenedor.innerHTML = `<p style="color:red;">No hay productos disponibles.</p>`;
       return;
@@ -43,12 +45,11 @@ async function cargarProductosAdmin() {
     table.innerHTML = `
       <thead class="table-dark">
         <tr>
-          <th>Código</th>
+          <th>ID</th>
           <th>Nombre</th>
           <th>Marca</th>
           <th>Categoría</th>
-          <th>Tamaño</th>
-          <th>Tipo mascota</th>
+          <th>Mascota</th>
           <th>Precio</th>
           <th>Stock</th>
           <th>Activo</th>
@@ -62,24 +63,30 @@ async function cargarProductosAdmin() {
     data.productos.forEach(prod => {
       const tr = document.createElement("tr");
       tr.innerHTML = `
-        <td>${prod.codigo}</td>
+        <td>${prod._id}</td>
         <td>${prod.nombre}</td>
-        <td>${prod.marca || "-"}</td>
-        <td>${prod.categoria || "-"}</td>
-        <td>${prod.tamaño || "-"}</td>
+        <td>${prod.marca}</td>
+        <td>${prod.categoria}</td>
         <td>${prod.tipo_mascota || "-"}</td>
         <td>$${prod.precio?.toLocaleString() || "-"}</td>
         <td>${prod.stock ?? "-"}</td>
         <td>${prod.activo ? "Sí" : "No"}</td>
         <td>
-          <div class="d-flex justify-content-center gap-1">
-            <button class="btn btn-sm btn-primary editar-btn"><i class="bi bi-pencil"></i></button>
-            <button class="btn btn-sm btn-danger eliminar-btn"><i class="bi bi-trash"></i></button>
-          </div>
+          <button class="btn btn-sm btn-primary editar-btn" title="Editar producto">
+            <i class="bi bi-pencil"></i>
+          </button>
+          <button class="btn btn-sm btn-danger eliminar-btn" title="Eliminar producto">
+            <i class="bi bi-trash"></i>
+          </button>
         </td>
       `;
+
+      // Editar producto
       tr.querySelector(".editar-btn").addEventListener("click", () => abrirFormularioEdicion(prod));
-      tr.querySelector(".eliminar-btn").addEventListener("click", () => eliminarProducto(prod.codigo));
+
+      // Eliminar producto
+      tr.querySelector(".eliminar-btn").addEventListener("click", () => eliminarProducto(prod._id));
+
       tbody.appendChild(tr);
     });
 
@@ -88,12 +95,12 @@ async function cargarProductosAdmin() {
 
   } catch (error) {
     console.error("❌ Error al cargar productos:", error);
-    contenedor.innerHTML = `<p style="color:red;">❌ Error al cargar productos: ${error.message}</p>`;
+    contenedor.innerHTML = `<p style="color:red; font-weight:bold;">❌ Error al cargar productos: ${error.message}</p>`;
   }
 }
 
 /* ==========================================
-   CREAR PRODUCTO (sin Multer, usando Base64)
+   CREAR PRODUCTO
 ========================================== */
 async function crearProducto() {
   const codigo = document.getElementById("inputCodigoProducto").value.trim();
@@ -107,11 +114,11 @@ async function crearProducto() {
   const activo = document.getElementById("inputActivo")?.checked ?? true;
 
   if (!codigo || !nombre) {
-    mostrarMensaje("⚠️ Código y Nombre son obligatorios", "error");
+    mostrarMensaje("Código y Nombre son obligatorios", "error");
     return;
   }
 
-  // Convertimos la imagen a Base64
+  // Imagen Base64
   const inputFoto = document.getElementById("inputFoto");
   let fotoBase64 = null;
   if (inputFoto?.files?.length > 0) {
@@ -124,15 +131,11 @@ async function crearProducto() {
   }
 
   if (!fotoBase64) {
-    mostrarMensaje("⚠️ Debe incluir una imagen del producto", "error");
+    mostrarMensaje("Debe incluir una imagen del producto", "error");
     return;
   }
 
-  // JSON completo a enviar al backend
-  const datos = {
-    codigo, nombre, marca, categoria, tamaño, tipo_mascota,
-    precio, stock, activo, urls: [fotoBase64]
-  };
+  const datos = { codigo, nombre, marca, categoria, tamaño, tipo_mascota, precio, stock, activo, urls: [fotoBase64] };
 
   try {
     const res = await fetch(API_PRODUCTOS, {
@@ -140,7 +143,6 @@ async function crearProducto() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(datos)
     });
-
     const data = await res.json();
     if (!res.ok || !data.ok) throw new Error(data.error || "Error al crear producto");
 
@@ -157,25 +159,24 @@ async function crearProducto() {
 /* ==========================================
    ELIMINAR PRODUCTO
 ========================================== */
-async function eliminarProducto(codigo) {
-  if (!codigo) return mostrarMensaje("⚠️ Código inválido", "error");
-  if (!confirm("¿Desea eliminar este producto?")) return;
+async function eliminarUsuarioFrontend(id) {
+  if (!confirm("¿Desea eliminar este usuario?")) return;
 
   try {
-    const res = await fetch(`${API_PRODUCTOS}/${codigo}`, { method: "DELETE" });
-    const data = await res.json();
-
-    if (!res.ok || !data.ok) throw new Error(data.error || "Error al eliminar");
-    mostrarMensaje(`✅ Producto ${codigo} eliminado`, "success");
-    cargarProductosAdmin();
-  } catch (error) {
-    console.error(error);
-    mostrarMensaje(`❌ ${error.message}`, "error");
+    // Usamos apiClient
+    await apiClient.eliminarUsuario(id);
+    mostrarMensaje("✅ Usuario eliminado correctamente", "success");
+    cargarUsuarios();
+  } catch (err) {
+    console.error(err);
+    // Mostrar mensaje con detalle
+    mostrarMensaje(`❌ ${err.message}`, "error");
   }
 }
 
+
 /* ==========================================
-   USUARIOS
+   CARGAR USUARIOS
 ========================================== */
 async function cargarUsuarios() {
   const contenedor = document.getElementById("divListadoUsuarios");
@@ -201,6 +202,7 @@ async function cargarUsuarios() {
           <th>Nombre</th>
           <th>Apellido</th>
           <th>Fecha de ingreso</th>
+          <th>Acciones</th>
         </tr>
       </thead>
       <tbody></tbody>
@@ -214,16 +216,41 @@ async function cargarUsuarios() {
         <td>${user.nombre}</td>
         <td>${user.apellido}</td>
         <td>${user.fechaIngreso ? new Date(user.fechaIngreso).toLocaleDateString() : "-"}</td>
+        <td>
+          <button class="btn btn-sm btn-danger eliminar-btn" title="Eliminar usuario">
+            <i class="bi bi-trash"></i>
+          </button>
+        </td>
       `;
+
+      // Eliminar usuario
+      tr.querySelector(".eliminar-btn").addEventListener("click", () => eliminarUsuarioFrontend(user._id));
+
       tbody.appendChild(tr);
     });
 
     contenedor.innerHTML = "";
     contenedor.appendChild(table);
-
   } catch (error) {
     console.error("❌ Error al cargar usuarios:", error);
     contenedor.innerHTML = `<p style="color:red; font-weight:bold;">❌ Error al cargar usuarios: ${error.message}</p>`;
+  }
+}
+
+// Función frontend para eliminar usuario
+async function eliminarUsuarioFrontend(id) {
+  if (!id) return mostrarMensaje("⚠️ ID inválido", "error");
+  if (!confirm("¿Desea eliminar este usuario?")) return;
+
+  try {
+    const res = await fetch(`${API_USUARIOS}/${id}`, { method: "DELETE" });
+    const data = await res.json();
+    if (!res.ok || !data.ok) throw new Error(data.error || "Error al eliminar usuario");
+    mostrarMensaje(`✅ Usuario eliminado`, "success");
+    cargarUsuarios();
+  } catch (error) {
+    console.error(error);
+    mostrarMensaje(`❌ ${error.message}`, "error");
   }
 }
 
@@ -248,59 +275,6 @@ function abrirFormularioEdicion(producto) {
     document.getElementById("upload-placeholder").style.display = "none";
   }
 }
-
-/**
- * Carga los administradores desde el backend
- */
-async function cargarAdmins() {
-  const contenedor = document.getElementById("divListadoAdmins");
-  if (!contenedor) return console.error("No existe el contenedor 'divListadoAdmins'");
-
-  contenedor.innerHTML = `<p>Cargando administradores...</p>`;
-
-  try {
-    const data = await apiClient.getAdmins(); // usamos tu apiClient
-
-    if (!data.ok || !data.usuarios || data.usuarios.length === 0) {
-      contenedor.innerHTML = `<p style="color:red;">No hay administradores disponibles.</p>`;
-      return;
-    }
-
-    const table = document.createElement("table");
-    table.className = "table table-striped table-hover table-sm";
-    table.innerHTML = `
-      <thead class="table-dark">
-        <tr>
-          <th>ID</th>
-          <th>Nombre</th>
-          <th>Email</th>
-          <th>Rol</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    `;
-    const tbody = table.querySelector("tbody");
-
-    data.usuarios.forEach(admin => {
-      const tr = document.createElement("tr");
-      tr.innerHTML = `
-        <td>${admin._id}</td>
-        <td>${admin.nombre}</td>
-        <td>${admin.email}</td>
-        <td>${admin.rol}</td>
-      `;
-      tbody.appendChild(tr);
-    });
-
-    contenedor.innerHTML = "";
-    contenedor.appendChild(table);
-
-  } catch (error) {
-    console.error("❌ Error al cargar administradores:", error);
-    contenedor.innerHTML = `<p style="color:red;">❌ Error al cargar administradores: ${error.message}</p>`;
-  }
-}
-
 
 /* ==========================================
    MENSAJES
@@ -352,7 +326,6 @@ function removeImage() {
 /* ==========================================
    Tickets
 ========================================== */
-
 let currentPage = 1;
 
 async function cargarTickets() {
@@ -361,11 +334,9 @@ async function cargarTickets() {
 
   if (!contenedor) return console.error("No existe el contenedor 'divListadoTickets'");
 
-  // Mostrar mensaje de carga solo la primera vez
   if (currentPage === 1) contenedor.innerHTML = `<p>Cargando tickets...</p>`;
 
   try {
-    // Fetch a tu endpoint: GET /usuarios/obtenerTickets?page=#
     const response = await fetch(`http://localhost:4000/api/usuarios/obtenerTickets?page=${currentPage}`);
     const data = await response.json();
 
@@ -373,13 +344,14 @@ async function cargarTickets() {
       if (currentPage === 1) {
         contenedor.innerHTML = `<p style="color:red;">No hay tickets registrados.</p>`;
       } else {
-        btnVerMas.disabled = true;
-        btnVerMas.textContent = "No hay más tickets";
+        if (btnVerMas) {
+          btnVerMas.disabled = true;
+          btnVerMas.textContent = "No hay más tickets";
+        }
       }
       return;
     }
 
-    // Si es la primera página, crear tabla
     if (currentPage === 1) {
       contenedor.innerHTML = "";
       const table = document.createElement("table");
@@ -401,17 +373,14 @@ async function cargarTickets() {
 
     const tbody = document.querySelector("#tablaTickets tbody");
 
-    // Agregar los nuevos tickets a la tabla
     data.tickets.forEach(ticket => {
       const tr = document.createElement("tr");
-
       const usuario = `${ticket.nombreUsuario} ${ticket.apellidoUsuario}`;
       const fecha = new Date(ticket.fechaDeCompra).toLocaleString();
       const total = `${ticket.total}`;
       const productos = ticket.productos
         .map(p => `${p.prod?._id || "?"} (x${p.prod?.cantidad || 0})`)
         .join(", ");
-
       tr.innerHTML = `
         <td>${usuario}</td>
         <td>${fecha}</td>
@@ -429,5 +398,5 @@ async function cargarTickets() {
   }
 }
 
-document.getElementById("btnVerMasTickets").addEventListener("click", cargarTickets);
+// Carga inicial
 cargarTickets();
