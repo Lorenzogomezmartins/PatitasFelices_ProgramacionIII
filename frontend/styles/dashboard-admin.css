@@ -391,6 +391,24 @@ header {
   background-color: transparent !important;
 }
 
+.filtros-container {
+  background-color: #000000;
+  border: 1px solid var(--gray-border);
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  margin: 1.5rem auto;
+  max-width: 95%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+.form-control{
+  background-color: #ffffff00;
+}
+
 /* ========== DARK MODE ========== */
 body.dark-mode {
   background-color: #000000 !important;
@@ -400,14 +418,15 @@ body.dark-mode {
 body.dark-mode header,
 body.dark-mode nav,
 body.dark-mode footer,
-body.dark-mode #dashboardTabs {
+body.dark-mode #dashboardTabs,
+body.dark-mode .bg-light {
   background-color: #00000000 !important;
   border-color: #333 !important;
   color: #ffffff !important;
 }
 
 body.dark-mode .card {
-  background-color: #0f0f0f !important;
+  background-color: #000000 !important;
   border-color: #333 !important;
   color: #ffffff !important;
 }
@@ -429,10 +448,9 @@ body.dark-mode #frmFormulario .form-label {
 
 body.dark-mode #frmFormulario .form-control {
   background-color: #1a1a1a;
-  color: #ffffff;
-  border-color: #333;
+  color: #000000;
+  border-color: #747474;
 }
-
 body.dark-mode #frmFormulario .form-control:focus {
   border-color: #c89a64;
   box-shadow: 0 0 0 0.2rem rgba(200, 154, 100, 0.25);

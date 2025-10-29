@@ -12,6 +12,7 @@ function aplicarModoOscuro(activar) {
   const labels = document.querySelectorAll("label, .form-label, .label-text");
   const inputs = document.querySelectorAll("input, select, textarea");
   const subtitle = document.querySelector(".card-subtitle");
+  const forms = document.querySelector("frmFormulario");
 
   if (activar) {
     // 🟣 Activar modo oscuro
