@@ -16,7 +16,7 @@ function normalizar(texto) {
   return texto?.toString().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
 
-/* ===== CARGAR PRODUCTOS ===== */
+//* ===== CARGAR PRODUCTOS ===== */
 async function cargarProductos() {
   const contenedor = document.getElementById("espacios-populares");
   contenedor.innerHTML = `<p class="loading">Cargando productos...</p>`;
@@ -25,7 +25,10 @@ async function cargarProductos() {
     const params = new URLSearchParams();
     if (filtroCategoria !== "todos") params.append("categoria", filtroCategoria);
     if (filtroTipoMascota !== "todos") params.append("tipo_mascota", filtroTipoMascota);
-    if (filtroTamano !== "todos") params.append("tamaño", filtroTamano);
+    if (filtroTamano !== "todos") params.append("tamano", filtroTamano); // coincide con tu backend
+
+    // Solo productos activos
+    params.append("activo", "true");
 
     const respuesta = await fetch(`${API_URL}?${params.toString()}`);
     const data = await respuesta.json();
@@ -39,11 +42,14 @@ async function cargarProductos() {
       return;
     }
 
+    // Contenedor en grid
+    const grid = document.createElement("div");
+    grid.classList.add("properties-grid");
+
     data.productos.forEach((producto) => {
-      // Filtrado adicional por JS (por si algo falla)
       const coincideCategoria = filtroCategoria === "todos" || normalizar(producto.categoria) === normalizar(filtroCategoria);
       const coincideTipo = filtroTipoMascota === "todos" || normalizar(producto.tipo_mascota) === normalizar(filtroTipoMascota);
-      const coincideTamano = filtroTamano === "todos" || normalizar(producto.tamaño) === normalizar(filtroTamano);
+      const coincideTamano = filtroTamano === "todos" || normalizar(producto.tamano) === normalizar(filtroTamano);
 
       if (!coincideCategoria || !coincideTipo || !coincideTamano) return;
 
@@ -55,24 +61,20 @@ async function cargarProductos() {
         : "../imagenes/no-image.png";
 
       card.innerHTML = `
-        <div class="property-card-inner">
-          <div class="property-image">
-            <img src="${imagen}" alt="${producto.nombre}" loading="lazy">
-          </div>
-          <div class="property-info">
-            <h2 class="property-title">${producto.nombre}</h2>
-            <p class="property-brand"><strong>Marca:</strong> ${producto.marca}</p>
-            <p class="property-category"><strong>Categoría:</strong> ${producto.categoria}</p>
-            <p class="property-type"><strong>Mascota:</strong> ${producto.tipo_mascota}</p>
-            <p class="property-size"><strong>Tamaño:</strong> ${producto.tamaño || "N/A"}</p>
-            <p class="property-price"><strong>Precio:</strong> $${producto.precio.toLocaleString()}</p>
-            <p class="property-stock ${producto.stock > 0 ? "en-stock" : "sin-stock"}">
-              ${producto.stock > 0 ? "Stock disponible: " + producto.stock : "Sin stock"}
-            </p>
-            <button class="agregar-carrito-btn btn btn-success" ${producto.stock <= 0 ? "disabled" : ""}>
-              <i class="fas fa-cart-plus"></i> Agregar al carrito
-            </button>
-          </div>
+        <div class="property-image">
+          <img src="${imagen}" alt="${producto.nombre}" loading="lazy">
+        </div>
+        <div class="property-info">
+          <h2 class="property-title">${producto.nombre}</h2>
+          <p class="property-price">Precio: $${producto.precio.toLocaleString()}</p>
+          <p class="property-stock ${producto.stock > 0 ? "en-stock" : "sin-stock"}">
+            ${producto.stock > 0 ? "Stock: " + producto.stock : "Sin stock"}
+          </p>
+          <p class="property-brand">Marca: ${producto.marca}</p>
+          <p class="property-size">Tamaño: ${producto.tamano || "N/A"}</p>
+          <button class="agregar-carrito-btn" ${producto.stock <= 0 ? "disabled" : ""}>
+            <i class="fas fa-cart-plus"></i> Agregar al carrito
+          </button>
         </div>
       `;
 
@@ -80,8 +82,11 @@ async function cargarProductos() {
         agregarAlCarrito(producto, imagen);
       });
 
-      contenedor.appendChild(card);
+      grid.appendChild(card);
     });
+
+    contenedor.appendChild(grid);
+
   } catch (error) {
     console.error("Error al cargar productos:", error);
     contenedor.innerHTML = `<p style="color:red;">Error al cargar productos. Intenta más tarde.</p>`;
@@ -118,7 +123,6 @@ function inicializarLogout() {
     logoutBtn.addEventListener("click", () => {
       localStorage.clear();
       localStorage.removeItem("usuarioLoggeado");
-
       window.location.href ="../pages/login-user.html";
     });
   }
@@ -155,7 +159,7 @@ function inicializarFiltros() {
     btn.addEventListener("click", () => {
       btnTamano.forEach(b => b.classList.remove("selected"));
       btn.classList.add("selected");
-      filtroTamano = btn.dataset.tamaño;
+      filtroTamano = btn.dataset["tamaño"]; // <- CORRECTO: usar ["tamaño"]
       cargarProductos();
     });
   });

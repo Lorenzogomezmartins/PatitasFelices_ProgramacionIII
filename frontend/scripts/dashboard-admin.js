@@ -19,10 +19,15 @@ document.addEventListener("DOMContentLoaded", () => {
   inicializarLogout();
   cargarEstadisticas();
 
-
   // Botón Agregar producto
   const btnAgregarProducto = document.getElementById("btnAgregarProducto");
-  if (btnAgregarProducto) btnAgregarProducto.addEventListener("click", crearProducto);
+  if (btnAgregarProducto) {
+    btnAgregarProducto.type = "button";
+    btnAgregarProducto.addEventListener("click", async function(event) {
+      event.preventDefault();
+      await crearProducto();
+    });
+  }
 
   // Manejo de imagen
   const inputFoto = document.getElementById("inputFoto");
@@ -83,11 +88,10 @@ async function cargarProductosAdmin() {
 
     const codigoBusqueda = document.getElementById("buscarCodigo")?.value.trim().toLowerCase();
 
-    // Filtrar productos según filtros y búsqueda por código
     const productosFiltrados = data.productos.filter(prod => {
       const catOk = filtroCategoria === "todos" || normalizar(prod.categoria) === normalizar(filtroCategoria);
       const tipoOk = filtroTipoMascota === "todos" || normalizar(prod.tipo_mascota) === normalizar(filtroTipoMascota);
-      const tamOk = filtroTamano === "todos" || normalizar(prod.tamaño) === normalizar(filtroTamano);
+      const tamOk = filtroTamano === "todos" || normalizar(prod.tamano) === normalizar(filtroTamano);
       const codigoOk = !codigoBusqueda || prod._id.toLowerCase().includes(codigoBusqueda);
       return catOk && tipoOk && tamOk && codigoOk;
     });
@@ -115,7 +119,7 @@ async function cargarProductosAdmin() {
       const tr = document.createElement("tr");
       tr.innerHTML = `
         <td>${prod._id}</td><td>${prod.nombre}</td><td>${prod.marca || "-"}</td>
-        <td>${prod.categoria}</td><td>${prod.tipo_mascota || "-"}</td><td>${prod.tamaño || "-"}</td>
+        <td>${prod.categoria}</td><td>${prod.tipo_mascota || "-"}</td><td>${prod.tamano || "-"}</td>
         <td>$${prod.precio?.toLocaleString() || "-"}</td><td>${prod.stock ?? "-"}</td>
         <td>${prod.activo ? "Sí" : "No"}</td>
         <td>
@@ -137,47 +141,64 @@ async function cargarProductosAdmin() {
   }
 }
 
-
 /* ==========================================
    CREAR PRODUCTO
 ========================================== */
 async function crearProducto() {
-  const codigo = document.getElementById("inputCodigoProducto").value.trim();
+  const _id = document.getElementById("inputCodigoProducto")?.value.trim();
   const nombre = document.getElementById("inputNombreProducto")?.value.trim();
   const marca = document.getElementById("inputMarca")?.value.trim();
-  const categoria = document.getElementById("inputCategoria")?.value;
-  const tamaño = document.getElementById("inputTamaño")?.value;
-  const tipo_mascota = document.getElementById("inputTipoDeMascota")?.value;
-  const precio = parseFloat(document.getElementById("inputPrecio")?.value);
-  const stock = parseInt(document.getElementById("inputStock")?.value) || 0;
-  const activo = document.getElementById("inputActivo")?.checked ?? true;
+  const categoria = document.getElementById("inputCategoria")?.value?.trim();
+  const tamano = document.getElementById("inputTamaño")?.value?.trim();
+  const tipo_mascota = document.getElementById("inputTipoDeMascota")?.value?.trim();
+  const precioStr = document.getElementById("inputPrecio")?.value;
+  const stockStr = document.getElementById("inputStock")?.value;
 
-  if (!codigo || !nombre) { mostrarMensaje("Código y Nombre son obligatorios", "error"); return; }
-
-  const inputFoto = document.getElementById("inputFoto");
-  let fotoBase64 = null;
-  if (inputFoto?.files?.length > 0) {
-    fotoBase64 = await new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = () => reject("Error al leer la imagen");
-      reader.readAsDataURL(inputFoto.files[0]);
-    });
+  // Validación de campos obligatorios
+  if (!_id || !nombre || !marca || !categoria || !tamano || !tipo_mascota) {
+    mostrarMensaje("⚠️ Todos los campos son obligatorios", "error");
+    return;
   }
-  if (!fotoBase64) { mostrarMensaje("Debe incluir una imagen del producto", "error"); return; }
 
-  const datos = { codigo, nombre, marca, categoria, tamaño, tipo_mascota, precio, stock, activo, urls: [fotoBase64] };
+  // Parsear valores numéricos
+  const precio = parseFloat(precioStr);
+  const stock = parseInt(stockStr) || 0;
+  if (isNaN(precio)) {
+    mostrarMensaje("⚠️ El precio debe ser un número válido", "error");
+    return;
+  }
 
+  // Checkbox activo
+  const activoInput = document.getElementById("inputActivo");
+  const activo = activoInput?.checked ?? true;
+
+  // Validar que se haya seleccionado una imagen
+  const inputFoto = document.getElementById("inputFoto");
+  if (!inputFoto?.files?.length) {
+    mostrarMensaje("⚠️ Debe seleccionar una imagen", "error");
+    return;
+  }
+
+  // Preparar FormData
+  const formData = new FormData();
+  formData.append("_id", _id);
+  formData.append("nombre", nombre);
+  formData.append("marca", marca);
+  formData.append("categoria", categoria);
+  formData.append("tamano", tamano);
+  formData.append("tipo_mascota", tipo_mascota);
+  formData.append("precio", precio.toString());
+  formData.append("stock", stock.toString());
+  formData.append("activo", activo.toString());
+  formData.append("url", inputFoto.files[0]);
+
+  // Enviar al backend
   try {
-    const res = await fetch(API_PRODUCTOS, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(datos)
-    });
+    const res = await fetch(API_PRODUCTOS, { method: "POST", body: formData });
     const data = await res.json();
-    if (!res.ok || !data.ok) throw new Error(data.error || "Error al crear producto");
+    if (!res.ok) throw new Error(data.mensaje || "Error al crear producto");
 
-    mostrarMensaje(`✅ Producto ${codigo} agregado correctamente`, "success");
+    mostrarMensaje("✅ Producto agregado correctamente", "success");
     document.getElementById("frmFormulario").reset();
     removeImage();
     cargarProductosAdmin();
@@ -211,7 +232,7 @@ async function eliminarProducto(id) {
    FORMULARIO EDICIÓN
 ========================================== */
 function abrirFormularioEdicion(producto) {
-  document.getElementById("inputCodigoProducto").value = producto.codigo;
+  document.getElementById("inputCodigoProducto").value = producto._id; // CORREGIDO
   document.getElementById("inputNombreProducto").value = producto.nombre;
   document.getElementById("inputMarca").value = producto.marca || "";
   document.getElementById("inputCategoria").value = producto.categoria || "";
@@ -240,8 +261,9 @@ function mostrarMensaje(texto, tipo) {
   div.style.top = "20px";
   div.style.right = "20px";
   div.style.zIndex = "9999";
+  div.style.cursor = "pointer";
+  div.addEventListener("click", () => div.remove());
   document.body.appendChild(div);
-  setTimeout(() => div.remove(), 3000);
 }
 
 /* ==========================================
@@ -347,7 +369,6 @@ async function cargarEstadisticas() {
   contenedor.innerHTML = `<p>Cargando estadísticas...</p>`;
 
   try {
-    // Obtener productos
     const responseProd = await fetch(API_PRODUCTOS);
     const dataProd = await responseProd.json();
     if (!dataProd.ok || !dataProd.productos) throw new Error(dataProd.message || "Error al obtener productos");
@@ -357,32 +378,21 @@ async function cargarEstadisticas() {
       return;
     }
 
-    // Precio promedio
     const totalPrecios = productos.reduce((sum, p) => sum + (p.precio || 0), 0);
     const promedioPrecio = totalPrecios / productos.length;
-
-    // Producto más caro
     const prodMasCaro = productos.reduce((max, p) => p.precio > max.precio ? p : max, productos[0]);
-
-    // Producto más barato
     const prodMasBarato = productos.reduce((min, p) => p.precio < min.precio ? p : min, productos[0]);
-
-    // Producto más vendido
     const prodMasVendido = productos.reduce((max, p) => (p.vendidos || 0) > (max.vendidos || 0) ? p : max, productos[0]);
-
-    // Total de ventas
     const totalVentas = productos.reduce((sum, p) => sum + (p.vendidos || 0), 0);
 
-    // Obtener cantidad de usuarios
     const responseUsers = await fetch("http://localhost:4000/api/usuarios");
     const dataUsers = await responseUsers.json();
     const cantidadUsuarios = dataUsers.ok && dataUsers.usuarios ? dataUsers.usuarios.length : 0;
 
-    // Construir tarjetas de estadísticas
     const stats = [
       { titulo: "Precio promedio", valor: `$${promedioPrecio.toFixed(2)}` },
-      { titulo: "Producto más caro", valor: `${prodMasCaro.nombre} ($${prodMasCaro.precio.toLocaleString()})` },
-      { titulo: "Producto más barato", valor: `${prodMasBarato.nombre} ($${prodMasBarato.precio.toLocaleString()})` },
+      { titulo: "Producto más caro", valor: `${prodMasCaro.nombre} ($${prodMasCaro.precio?.toLocaleString()})` },
+      { titulo: "Producto más barato", valor: `${prodMasBarato.nombre} ($${prodMasBarato.precio?.toLocaleString()})` },
       { titulo: "Más vendido", valor: `${prodMasVendido.nombre} (${prodMasVendido.vendidos || 0} ventas)` },
       { titulo: "Total de ventas", valor: `${totalVentas}` },
       { titulo: "Cantidad de usuarios", valor: `${cantidadUsuarios}` }
@@ -413,8 +423,6 @@ async function cargarEstadisticas() {
     contenedor.innerHTML = `<p style="color:red; font-weight:bold;">Error al cargar estadísticas: ${error.message}</p>`;
   }
 }
-
-
 
 /* ==========================================
    LOGOUT

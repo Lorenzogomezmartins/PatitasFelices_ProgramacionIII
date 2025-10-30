@@ -1,23 +1,38 @@
-
 const multer = require('multer');
 const path = require('path');
+const fs = require('fs');
 
-// 1. Configuración de almacenamiento local
+// Carpeta donde se guardarán las imágenes localmente
+const uploadDir = path.join(__dirname, '../../uploads');
+
+// Si no existe, la crea
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir);
+}
+
+// Configuración del almacenamiento local
 const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        // Carpeta donde se guardarán las imágenes
-        // Asegúrate de que esta carpeta exista: /src/resources/uploads/
-        cb(null, path.join(__dirname, '../resources/uploads')); 
-    },
-    filename: (req, file, cb) => {
-        // Renombrar el archivo para evitar conflictos
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
-    }
+  destination: (req, file, cb) => {
+    cb(null, uploadDir);
+  },
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname);
+    const nombreArchivo = `${Date.now()}-${Math.round(Math.random() * 1e9)}${ext}`;
+    cb(null, nombreArchivo);
+  }
 });
 
-// 2. Inicialización de Multer
-// El campo 'fotoProducto' debe coincidir con el nombre usado en FormData (Paso 1)
-const upload = multer({ storage: storage }).single('fotoProducto'); 
+// Filtro de archivos permitidos
+const fileFilter = (req, file, cb) => {
+  const tipos = /jpeg|jpg|png|webp/;
+  const ext = path.extname(file.originalname).toLowerCase();
+  if (tipos.test(ext)) {
+    cb(null, true);
+  } else {
+    cb(new Error('Solo se permiten imágenes (JPEG, JPG, PNG, WEBP)'));
+  }
+};
 
+// Exportar la instancia
+const upload = multer({ storage, fileFilter });
 module.exports = upload;

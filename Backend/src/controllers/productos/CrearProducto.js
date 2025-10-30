@@ -1,75 +1,86 @@
-// C:\...\PatitasFelices_ProgramacionIII\Backend\src\controllers\productos\CrearProducto.js
-
-// 1. Dependencias globales (SIEMPRE usando require)
-const cloudinary = require('cloudinary').v2;
 const Producto = require('../../models/producto');
 
-// 2. Configuración de Cloudinary (Debe ir fuera de la función, pero no debe usar await)
-// ⚠️ Asegúrate de tener estas variables de entorno configuradas
-cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET
-});
-
 /**
- * Controlador para crear un nuevo producto, subiendo la imagen Base64 a Cloudinary.
+ * Crear un nuevo producto con soporte para una imagen subida con Multer.
  */
 const crearProducto = async (req, res) => {
-    try {
-        const datos = { ...req.body };
-        const base64Urls = datos.urls; // Esto es ['data:image/...']
+  try {
+    // Extraer datos del cuerpo y limpiar strings
+    let { _id, nombre, categoria, tipo_mascota, precio, marca, stock, activo, tamano } = req.body;
 
-        // 1. Manejo y Subida de Base64 a Cloudinary
-        // Este bloque contiene el 'await' y está correctamente dentro de la función async.
-        if (base64Urls && Array.isArray(base64Urls) && base64Urls.length > 0) {
-            const uploadedUrls = [];
-            
-            for (const base64String of base64Urls) {
-                const uploadResponse = await cloudinary.uploader.upload(base64String, {
-                    folder: "productos-ecom", // Carpeta en Cloudinary
-                });
-                console.log("2. Subida a Cloudinary exitosa. URL:", uploadResponse.secure_url);
-                uploadedUrls.push(uploadResponse.secure_url);
-            }
-            
-            // Reemplazamos el Base64 con las URLS públicas
-            datos.urls = uploadedUrls;
-        }
-        console.log("3. Datos enviados a Mongoose:", datos.urls);
-        // 🔹 Conversión de tipos numéricos
-        if (datos.precio !== undefined) datos.precio = parseFloat(datos.precio);
-        if (datos.stock !== undefined) datos.stock = parseInt(datos.stock);
+_id = _id?.trim();
+nombre = nombre?.trim();
+marca = marca?.trim();
+categoria = categoria?.trim();
+tipo_mascota = tipo_mascota?.trim();
+tamano = tamano?.trim();
 
-        // 🔹 Verificar si ya existe un producto con el mismo código (o ID)
-        const existe = await Producto.findOne({ codigo: datos.codigo });
-        if (existe) {
-             return res.status(400).json({
-                 ok: false,
-                 error: `Ya existe un producto con el código "${datos.codigo}".`
-             });
-        }
-        
-        // 3. Crear producto con las URLs públicas
-        const producto = await Producto.create(datos);
 
-        res.status(201).json({
-            ok: true,
-            mensaje: 'Producto creado correctamente',
-            producto
-        });
-    } catch (error) {
-        // Manejo de errores de validación de Mongoose
-        if (error.name === 'ValidationError') {
-            const detalles = Object.values(error.errors).map(err => err.message);
-            return res.status(400).json({ ok: false, error: 'Datos inválidos', detalles });
-        }
-        
-        // Manejar otros errores (incluyendo los de Cloudinary)
-        console.error('Error al crear producto o subir imagen:', error);
-        res.status(500).json({ ok: false, error: 'Error interno del servidor o al subir imagen' });
+    // Parsear valores numéricos
+    precio = parseFloat(precio);
+    stock = parseInt(stock) || 0;
+
+    // Si no viene activo, asumir true
+    activo = activo === undefined ? true : (activo === "true" || activo === true);
+
+    // Validaciones estrictas
+    if (
+      !_id || !_id.length ||
+      !nombre || !nombre.length ||
+      !marca || !marca.length ||
+      !categoria || !categoria.length ||
+      !tipo_mascota || !tipo_mascota.length ||
+      !tamano || !tamano.length ||
+      isNaN(precio)
+    ) {
+      console.warn("⚠️ Campos inválidos:", { _id, nombre, marca, categoria, tipo_mascota, tamano, precio });
+      return res.status(400).json({ mensaje: 'Todos los campos son obligatorios.' });
     }
+
+    // Verificar que se haya subido una imagen
+    if (!req.file) {
+      console.warn("⚠️ No se recibió imagen en la solicitud.");
+      return res.status(400).json({ mensaje: 'Debe subir al menos una imagen del producto.' });
+    }
+
+    // Construir URL de la imagen
+    const url = `/uploads/${req.file.filename}`;
+
+    // Crear instancia del producto
+    const nuevoProducto = new Producto({
+      _id,
+      nombre,
+      categoria,
+      tipo_mascota,
+      precio,
+      marca,
+      urls: [url],
+      stock,
+      activo,
+      tamano,
+    });
+
+    // Guardar en la base de datos
+    await nuevoProducto.save();
+
+    console.log("✅ Producto guardado correctamente:", nuevoProducto);
+
+    res.status(201).json({
+      ok: true,
+      mensaje: '✅ Producto creado correctamente.',
+      producto: nuevoProducto,
+    });
+
+  } catch (error) {
+    console.error('❌ Error al crear producto:', error);
+
+    if (error.name === 'ValidationError') {
+      const errores = Object.values(error.errors).map(err => err.message).join(', ');
+      return res.status(400).json({ mensaje: `Error de validación: ${errores}` });
+    }
+
+    res.status(500).json({ mensaje: 'Error al crear producto', error: error.message });
+  }
 };
 
-// 3. Exportación (CommonJS)
 module.exports = crearProducto;

@@ -8,15 +8,29 @@ const obtenerProductoPorCodigo = require('../controllers/productos/ObtenerProduc
 const actualizarProducto = require('../controllers/productos/ActualizarProductos');
 const eliminarProducto = require('../controllers/productos/EliminarProducto');
 
-// Middleware de validación
+// Middlewares
 const validarProducto = require('../middlewares/validarProducto');
-const upload = require('../middlewares/multerUpload');
+const upload = require('../middlewares/multerUpload'); // 👈 Multer configurado para guardado local
 
-// RUTAS CRUD
+// ===============================
+// RUTAS CRUD DE PRODUCTOS
+// ===============================
+
+// Obtener todos los productos
 router.get('/', obtenerProductos);
-router.get('/obtenerporcodigo/:id', obtenerProductoPorCodigo);       // GET → un producto por _id
-router.post('/', validarProducto, upload, crearProducto); // <-- aplicamos middleware
-router.put('/:codigo', validarProducto, actualizarProducto);
-router.delete('/:codigo', eliminarProducto);
+
+// Obtener un producto por su código (_id)
+router.get('/obtenerporcodigo/:id', obtenerProductoPorCodigo);
+
+// Crear producto con imagen local
+router.post('/', upload.single('url'), crearProducto);
+
+// Actualizar producto (si querés reemplazar imagen, se hace también con multer)
+router.put('/:codigo', upload.single('url'), validarProducto, actualizarProducto);
+
+
+// RUTA DELETE CORRECTA
+router.delete('/:id', eliminarProducto);
+
 
 module.exports = router;

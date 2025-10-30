@@ -1,11 +1,8 @@
-/**
- * Eliminar un producto por su código
- */
 const Producto = require('../../models/producto');
 
 const eliminarProducto = async (req, res) => {
   try {
-    const producto = await Producto.findOneAndDelete({ codigo: req.params.id });
+    const producto = await Producto.findOneAndDelete({ _id: req.params.id }); // 👈 usar _id
 
     if (!producto) {
       return res.status(404).json({ ok: false, error: 'Producto no encontrado con ese código' });

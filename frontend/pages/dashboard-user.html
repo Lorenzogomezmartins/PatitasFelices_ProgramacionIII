@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WorkBreak - Espacios para trabajar y relajarse</title>
+    <title>PatitasFelices - Dashboard Admin</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="../styles/dashboard-user.css">
@@ -30,36 +30,42 @@
         </nav>
     </header>
 
->
+    <!-- Dashboard -->
+<section class="dashboard-panel card">
+    <div class="card-body text-center">
+        <h3 class="card-title mb-0">Panel de Usuarios</h3>
+        <h4 class="card-subtitle">Gestión de PatitasFelices</h4>
+    </div>
+</section>
 
-        <div class="container main-content">
-            <!-- Sidebar de filtros -->
-            <aside class="sidebar-filtros">
-                <h2>Filtros</h2>
 
-                <h3>Tipo de mascota</h3>
-                <button class="filter-mascota-btn selected" data-mascota="todos">Todos</button>
-                <button class="filter-mascota-btn" data-mascota="perro">Perro</button>
-                <button class="filter-mascota-btn" data-mascota="gato">Gato</button>
+    <div class="container main-content">
+        <!-- Sidebar de filtros -->
+        <aside class="sidebar-filtros">
+            <h2>Filtros</h2>
 
-                <h3>Tamaño</h3>
-                <button class="filter-tamaño-btn selected" data-tamaño="todos">Todos</button>
-                <button class="filter-tamaño-btn" data-tamaño="pequeño">Pequeño</button>
-                <button class="filter-tamaño-btn" data-tamaño="mediano">Mediano</button>
-                <button class="filter-tamaño-btn" data-tamaño="grande">Grande</button>
+            <h3>Tipo de mascota</h3>
+            <button class="filter-mascota-btn selected" data-mascota="todos">Todos</button>
+            <button class="filter-mascota-btn" data-mascota="perro">Perro</button>
+            <button class="filter-mascota-btn" data-mascota="gato">Gato</button>
 
-                <h3>Categoría</h3>
-                <button class="filter-categoria-btn selected" data-categoria="todos">Todos</button>
-                <button class="filter-categoria-btn" data-categoria="alimento">Alimentos</button>
-                <button class="filter-categoria-btn" data-categoria="juguete">Juguetes</button>
-            </aside>
+            <h3>Tamaño</h3>
+            <button class="filter-tamaño-btn selected" data-tamaño="todos">Todos</button>
+            <button class="filter-tamaño-btn" data-tamaño="pequeño">Pequeño</button>
+            <button class="filter-tamaño-btn" data-tamaño="mediano">Mediano</button>
+            <button class="filter-tamaño-btn" data-tamaño="grande">Grande</button>
 
-            <!-- Productos -->
-            <div class="properties-grid" id="espacios-populares">
-                <!-- Aquí se generan los productos dinámicamente -->
-            </div>
+            <h3>Categoría</h3>
+            <button class="filter-categoria-btn selected" data-categoria="todos">Todos</button>
+            <button class="filter-categoria-btn" data-categoria="alimento">Alimentos</button>
+            <button class="filter-categoria-btn" data-categoria="juguete">Juguetes</button>
+        </aside>
+
+        <!-- Productos -->
+        <div class="properties-grid" id="espacios-populares">
+            <!-- Aquí se generan los productos dinámicamente -->
         </div>
-    </main>
+    </div>
 
     <footer>
         <div class="footer-links"></div>

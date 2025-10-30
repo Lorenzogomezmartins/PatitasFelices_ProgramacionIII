@@ -2,20 +2,17 @@ const Producto = require('../../models/producto');
 
 const obtenerProductos = async (req, res) => {
   try {
-    const filtros = {};
+    const filtros = { activo: true }; // 👈 Solo productos activos por defecto
 
     // Filtrado opcional por query params
     if (req.query.categoria && req.query.categoria !== 'todos') {
-      filtros.categoria = req.query.categoria; // Debe coincidir exactamente
+      filtros.categoria = req.query.categoria;
     }
     if (req.query.tipo_mascota && req.query.tipo_mascota !== 'todos') {
       filtros.tipo_mascota = req.query.tipo_mascota;
     }
-    if (req.query.tamaño && req.query.tamaño !== 'todos') {
-      filtros.tamaño = req.query.tamaño;
-    }
-    if (req.query.activo !== undefined) {
-      filtros.activo = req.query.activo === 'true';
+    if (req.query.tamano && req.query.tamano !== 'todos') {
+      filtros.tamano = req.query.tamano;
     }
 
     const productos = await Producto.find(filtros);

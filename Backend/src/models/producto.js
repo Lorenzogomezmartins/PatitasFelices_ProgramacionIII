@@ -53,7 +53,7 @@ const productoSchema = new mongoose.Schema({
     type: Boolean,
     default: true
   },
-  tamaño: {
+  tamano: {
     type: String,
     enum: ['pequeño', 'mediano', 'grande'],
     required: [true, 'El tamaño del producto es obligatorio.']
