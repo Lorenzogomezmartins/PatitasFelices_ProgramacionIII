@@ -16,7 +16,9 @@ function normalizar(texto) {
   return texto?.toString().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
 
-//* ===== CARGAR PRODUCTOS ===== */
+/* ==========================================
+   CARGAR PRODUCTOS
+========================================== */
 async function cargarProductos() {
   const contenedor = document.getElementById("espacios-populares");
   contenedor.innerHTML = `<p class="loading">Cargando productos...</p>`;
@@ -25,31 +27,29 @@ async function cargarProductos() {
     const params = new URLSearchParams();
     if (filtroCategoria !== "todos") params.append("categoria", filtroCategoria);
     if (filtroTipoMascota !== "todos") params.append("tipo_mascota", filtroTipoMascota);
-    if (filtroTamano !== "todos") params.append("tamano", filtroTamano); // coincide con tu backend
-
-    // Solo productos activos
-    params.append("activo", "true");
+    if (filtroTamano !== "todos") params.append("tamano", filtroTamano);
+    params.append("activo", "true"); // Solo productos activos
 
     const respuesta = await fetch(`${API_URL}?${params.toString()}`);
     const data = await respuesta.json();
 
     if (!data.ok) throw new Error("Error al obtener productos");
 
-    contenedor.innerHTML = "";
+    const productos = data.productos || [];
+    contenedor.innerHTML = ""; // Limpia antes de renderizar
 
-    if (data.productos.length === 0) {
+    if (productos.length === 0) {
       contenedor.innerHTML = `<p>No hay productos disponibles.</p>`;
       return;
     }
 
-    // Contenedor en grid
-    const grid = document.createElement("div");
-    grid.classList.add("properties-grid");
-
-    data.productos.forEach((producto) => {
-      const coincideCategoria = filtroCategoria === "todos" || normalizar(producto.categoria) === normalizar(filtroCategoria);
-      const coincideTipo = filtroTipoMascota === "todos" || normalizar(producto.tipo_mascota) === normalizar(filtroTipoMascota);
-      const coincideTamano = filtroTamano === "todos" || normalizar(producto.tamano) === normalizar(filtroTamano);
+    productos.forEach((producto) => {
+      const coincideCategoria =
+        filtroCategoria === "todos" || normalizar(producto.categoria) === normalizar(filtroCategoria);
+      const coincideTipo =
+        filtroTipoMascota === "todos" || normalizar(producto.tipo_mascota) === normalizar(filtroTipoMascota);
+      const coincideTamano =
+        filtroTamano === "todos" || normalizar(producto.tamano) === normalizar(filtroTamano);
 
       if (!coincideCategoria || !coincideTipo || !coincideTamano) return;
 
@@ -82,20 +82,17 @@ async function cargarProductos() {
         agregarAlCarrito(producto, imagen);
       });
 
-      grid.appendChild(card);
+      contenedor.appendChild(card);
     });
-
-    contenedor.appendChild(grid);
-
   } catch (error) {
     console.error("Error al cargar productos:", error);
     contenedor.innerHTML = `<p style="color:red;">Error al cargar productos. Intenta más tarde.</p>`;
   }
 }
 
-/**
- * Agrega un producto al carrito (localStorage)
- */
+/* ==========================================
+   AGREGAR PRODUCTO AL CARRITO
+========================================== */
 function agregarAlCarrito(producto, imagen) {
   let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
@@ -117,18 +114,23 @@ function agregarAlCarrito(producto, imagen) {
   alert(`"${producto.nombre}" agregado al carrito`);
 }
 
+/* ==========================================
+   LOGOUT
+========================================== */
 function inicializarLogout() {
   const logoutBtn = document.getElementById("logout-btn");
   if (logoutBtn) {
     logoutBtn.addEventListener("click", () => {
       localStorage.clear();
       localStorage.removeItem("usuarioLoggeado");
-      window.location.href ="../pages/login-user.html";
+      window.location.href = "../pages/login-user.html";
     });
   }
 }
 
-/* ===== FILTROS ===== */
+/* ==========================================
+   FILTROS
+========================================== */
 function inicializarFiltros() {
   const btnCategoria = document.querySelectorAll(".filter-categoria-btn");
   const btnTipo = document.querySelectorAll(".filter-mascota-btn");
@@ -159,8 +161,9 @@ function inicializarFiltros() {
     btn.addEventListener("click", () => {
       btnTamano.forEach(b => b.classList.remove("selected"));
       btn.classList.add("selected");
-      filtroTamano = btn.dataset["tamaño"]; // <- CORRECTO: usar ["tamaño"]
+      filtroTamano = btn.dataset["tamaño"]; // usar ["tamaño"] por la ñ
       cargarProductos();
     });
   });
 }
+

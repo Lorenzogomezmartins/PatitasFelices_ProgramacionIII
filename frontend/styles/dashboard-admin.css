@@ -147,6 +147,23 @@ header {
   transform: scale(1.05);
   box-shadow: var(--hover-shadow);
 }
+/* Estilo para el botón de agregar producto usando su ID */
+#btnAgregarProducto {
+  background: linear-gradient(135deg, #b3814d, #d4a470);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#btnAgregarProducto:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
 
 /* ========== FORMULARIO DE PRODUCTOS ========== */
 #frmFormulario {

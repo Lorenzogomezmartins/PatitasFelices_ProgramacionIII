@@ -2,20 +2,15 @@ const Producto = require('../../models/producto');
 
 const obtenerProductos = async (req, res) => {
   try {
-    const filtros = { activo: true }; // 👈 Solo productos activos por defecto
+    // Traer todos los productos, sin filtrar por activo
+    const filtros = {};
 
     // Filtrado opcional por query params
-    if (req.query.categoria && req.query.categoria !== 'todos') {
-      filtros.categoria = req.query.categoria;
-    }
-    if (req.query.tipo_mascota && req.query.tipo_mascota !== 'todos') {
-      filtros.tipo_mascota = req.query.tipo_mascota;
-    }
-    if (req.query.tamano && req.query.tamano !== 'todos') {
-      filtros.tamano = req.query.tamano;
-    }
+    if (req.query.categoria && req.query.categoria !== 'todos') filtros.categoria = req.query.categoria;
+    if (req.query.tipo_mascota && req.query.tipo_mascota !== 'todos') filtros.tipo_mascota = req.query.tipo_mascota;
+    if (req.query.tamano && req.query.tamano !== 'todos') filtros.tamano = req.query.tamano;
 
-    const productos = await Producto.find(filtros);
+    const productos = await Producto.find(filtros); // <-- sin filtrar activo
 
     res.json({ ok: true, total: productos.length, productos });
   } catch (error) {

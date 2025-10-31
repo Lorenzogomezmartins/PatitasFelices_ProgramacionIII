@@ -131,7 +131,7 @@ function vaciarCarrito() {
 }
 
 // =====================
-// Confirmar Compra (Guarda Ticket en Backend)
+// Confirmar Compra (Guarda Ticket en Backend y Muestra Ticket)
 // =====================
 async function confirmarCompra() {
   const carrito = obtenerCarrito();
@@ -154,7 +154,6 @@ async function confirmarCompra() {
   }));
 
   const total = carrito.reduce((sum, item) => sum + Number(item.precio) * Number(item.cantidad), 0);
-  console.log("💰 Total calculado:", total);
 
   try {
     const respuesta = await fetch(
@@ -162,10 +161,7 @@ async function confirmarCompra() {
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(
-                              {productos, 
-                              total}
-                              ),
+        body: JSON.stringify({ productos, total }),
       }
     );
 
@@ -175,18 +171,73 @@ async function confirmarCompra() {
       throw new Error(data.error || "Error al agregar el ticket");
     }
 
-    alert("¡Compra confirmada!");
-
+    // Actualizamos los tickets en localStorage
     usuario.tickets = data.tickets;
     localStorage.setItem("usuarioLoggeado", JSON.stringify(usuario));
 
+    // Mostrar ticket en pantalla
+    mostrarTicket(usuario, carrito, total);
+
+    // Vaciar carrito
     vaciarCarrito();
     mostrarCarrito();
+
   } catch (error) {
     console.error("Error al confirmar compra:", error);
     alert("Error al confirmar compra. Intenta nuevamente.");
   }
 }
+
+// =====================
+// Función para mostrar ticket
+// =====================
+function mostrarTicket(usuario, carrito, total) {
+  const overlay = document.getElementById("overlay");
+  const ticket = document.getElementById("ticket");
+  const ticketContenido = document.getElementById("ticket-contenido");
+
+  // Fecha actual
+  const fecha = new Date().toLocaleString();
+
+  // Construir HTML del ticket
+  let html = `
+    <p><strong>Nombre:</strong> ${usuario.nombre}</p>
+    <p><strong>Fecha:</strong> ${fecha}</p>
+    <table style="width:100%; border-collapse: collapse; margin-top: 10px;">
+      <thead>
+        <tr>
+          <th style="border-bottom: 1px solid #000;">Producto</th>
+          <th style="border-bottom: 1px solid #000;">Cantidad</th>
+          <th style="border-bottom: 1px solid #000;">Precio</th>
+        </tr>
+      </thead>
+      <tbody>
+  `;
+
+  carrito.forEach(item => {
+    html += `
+      <tr>
+        <td>${item.nombre}</td>
+        <td>${item.cantidad}</td>
+        <td>ARS ${(Number(item.precio) * Number(item.cantidad)).toFixed(2)}</td>
+      </tr>
+    `;
+  });
+
+  html += `
+      </tbody>
+    </table>
+    <p style="margin-top:10px;"><strong>Total:</strong> ARS ${total.toFixed(2)}</p>
+  `;
+
+  ticketContenido.innerHTML = html;
+
+  // Mostrar overlay y ticket
+  overlay.style.display = "block";
+  ticket.style.display = "block";
+  document.getElementById("descargar-pdf-btn").style.display = "inline-block";
+}
+
 // =====================
 // Otros
 // =====================
@@ -198,6 +249,10 @@ function cerrarTicket() {
 
 function descargarPDF() {
   const element = document.getElementById("ticket");
+
+  // Forzar que esté visible temporalmente
+  element.style.display = "block";
+
   html2pdf()
     .set({
       margin: 0.5,
@@ -207,8 +262,14 @@ function descargarPDF() {
       jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
     })
     .from(element)
-    .save();
+    .save()
+    .then(() => {
+      // Restaurar display original
+      element.style.display = "none";
+    });
 }
+
+
 
 // ====== Botón "Seguir comprando" ======
 function volverAlDashboard() {
