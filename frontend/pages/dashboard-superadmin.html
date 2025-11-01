@@ -37,7 +37,7 @@
 
   <ul class="nav nav-tabs mb-3" id="dashboardTabs" role="tablist">
     <li class="nav-item">
-      <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#dashboard">
+      <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#inicio">
         <i class="bi bi-house-door me-1"></i> Dashboard
       </button>
     </li>
@@ -69,7 +69,71 @@
   </ul>
 
   <div class="tab-content">
-    <!-- Usuarios -->
+    <!-- 🔹 DASHBOARD PRINCIPAL -->
+    <div class="tab-pane fade show active" id="inicio" role="tabpanel">
+      <div class="container py-4">
+
+        <!-- Texto de bienvenida -->
+        <div class="card shadow-sm mb-4 p-4">
+          <h2 class="text-center mb-3" style="color:#b3814d;">Bienvenidos al Panel de Super Administradores</h2>
+          <p class="text-center mb-0">
+            Desde este panel podrás gestionar todo lo relacionado con PatitasFelices y sus actores. 
+            A continuación, se describen las funciones de cada sección:
+          </p>
+        </div>
+
+        <!-- Panel de usuarios -->
+        <div class="card shadow-sm mb-3 p-3">
+          <h4 style="color:#b3814d;">Panel Usuarios</h4>
+          <ul class="mb-0">
+            <li>Listar todos los usuarios registrados.</li>
+            <li>Agregar nuevos usuarios.</li>
+            <li>Eliminar usuarios existentes.</li>
+          </ul>
+        </div>
+
+        <!-- Panel de Administradores -->
+        <div class="card shadow-sm mb-3 p-3">
+          <h4 style="color:#b3814d;">Panel Administradores</h4>
+          <ul class="mb-0">
+            <li>Listar Administradores activos.</li>
+            <li>Agregar nuevosa dministradores y superadministradores.</li>
+            <li>Editar o eliminar  administradores existentes.</li>
+          </ul>
+        </div>
+
+        <!-- Panel de productos -->
+        <div class="card shadow-sm mb-3 p-3">
+          <h4 style="color:#b3814d;">Panel Productos</h4>
+          <ul class="mb-0">
+            <li>Listar productos disponibles.</li>
+            <li>Agregar nuevos productos con imágenes, precio y stock.</li>
+            <li>Editar o eliminar productos existentes.</li>
+            <li>Aplicar Filtros de Tamaño, Tipo de mascota y Categoría.</li>
+          </ul>
+        </div>
+
+        <!-- Panel de estadísticas -->
+        <div class="card shadow-sm mb-3 p-3">
+          <h4 style="color:#b3814d;">Panel Estadísticas</h4>
+          <ul class="mb-0">
+            <li>Visualizar estadísticas de ventas y usuarios.</li>
+          </ul>
+        </div>
+
+        <!-- Panel de tickets -->
+        <div class="card shadow-sm mb-3 p-3">
+          <h4 style="color:#b3814d;">Panel Tickets</h4>
+          <ul class="mb-0">
+            <li>Listar todos los tickets de compras.</li>
+            <li>Ver detalles de cada ticket.</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 🔹 USUARIOS -->
     <div class="tab-pane fade" id="usuarios">
       <div class="row">
         <div class="col-5 bg-info-subtle">
@@ -101,49 +165,47 @@
       </div>
     </div>
 
-    <!-- Administradores -->
-<div class="tab-pane fade" id="admins">
-  <div class="row">
-    <div class="col-5 bg-info-subtle">
-      <form id="frmAdmins" class="bg-light p-3 needs-validation" novalidate>
-        <div class="mb-3">
-          <label for="inputNombreAdmin" class="form-label">Nombre:</label>
-          <input type="text" class="form-control" id="inputNombreAdmin" required />
+    <!-- 🔹 ADMINISTRADORES -->
+    <div class="tab-pane fade" id="admins">
+      <div class="row">
+        <div class="col-5 bg-info-subtle">
+          <form id="frmAdmins" class="bg-light p-3 needs-validation" novalidate>
+            <div class="mb-3">
+              <label for="inputNombreAdmin" class="form-label">Nombre:</label>
+              <input type="text" class="form-control" id="inputNombreAdmin" required />
+            </div>
+            <div class="mb-3">
+              <label for="inputEmailAdmin" class="form-label">Email:</label>
+              <input type="email" class="form-control" id="inputEmailAdmin" required />
+            </div>
+            <div class="mb-3">
+              <label for="inputPasswordAdmin" class="form-label">Contraseña:</label>
+              <input type="password" class="form-control" id="inputPasswordAdmin" required />
+            </div>
+            <div class="mb-3">
+              <label for="inputRolAdmin" class="form-label">Rol:</label>
+              <select class="form-control" id="inputRolAdmin" required>
+                <option value="">Seleccione un Rol</option>
+                <option value="admin">Admin</option>
+                <option value="superadmin">SuperAdmin</option>
+              </select>
+            </div>
+            <div>
+              <button type="button" id="btnAgregarAdmin" class="btn btn-primary">Agregar</button>
+              <button type="reset" class="btn btn-secondary">Limpiar</button>
+              <button type="button" id="btnActualizarAdmin" class="btn btn-warning">Modificar</button>
+            </div>
+          </form>
         </div>
-        <div class="mb-3">
-          <label for="inputEmailAdmin" class="form-label">Email:</label>
-          <input type="email" class="form-control" id="inputEmailAdmin" required />
+        <div id="divListadoAdmins" class="col-6 bg-light rounded p-2">
+          Listado de Administradores aquí
         </div>
-        <div class="mb-3">
-          <label for="inputPasswordAdmin" class="form-label">Contraseña:</label>
-          <input type="password" class="form-control" id="inputPasswordAdmin" required />
-        </div>
-        <div class="mb-3">
-          <label for="inputRolAdmin" class="form-label">Rol:</label>
-          <select class="form-control" id="inputRolAdmin" required>
-            <option value="">Seleccione un Rol</option>
-            <option value="admin">Admin</option>
-            <option value="superadmin">SuperAdmin</option>
-          </select>
-        </div>
-        <div>
-          <button type="button" id="btnAgregarAdmin" class="btn btn-primary">Agregar</button>
-          <button type="reset" class="btn btn-secondary">Limpiar</button>
-          <button type="button" id="btnActualizarAdmin" class="btn btn-warning">Modificar</button>
-        </div>
-      </form>
+      </div>
     </div>
-    <div id="divListadoAdmins" class="col-6 bg-light rounded p-2">
-      Listado de Administradores aquí
-    </div>
-  </div>
-</div>
 
-
-    <!-- Productos -->
+    <!-- 🔹 PRODUCTOS -->
     <div class="tab-pane fade" id="productos">
-
-      <!-- 🔹 FILTROS COMPACTOS (encima del formulario y listado) -->
+      <!-- Filtros -->
       <div class="container mb-3">
         <div class="d-flex flex-wrap justify-content-center align-items-center gap-2 p-2 bg-light rounded shadow-sm border">
           <input type="text" id="buscarCodigo" class="form-control form-control-sm w-auto" placeholder="Buscar por código...">
@@ -201,7 +263,6 @@
                   <small>Click para subir imagen</small>
                 </div>
                 <input type="file" id="inputFoto" name="url" accept="image/*" onchange="handleImageUpload(event)" />
-
               </div>
             </div>
 
@@ -271,7 +332,8 @@
         </div>
       </div>
     </div>
-    <!-- Tickets -->
+
+    <!-- 🔹 TICKETS -->
     <div class="tab-pane fade" id="tickets" role="tabpanel">
       <div id="divListadoTickets"></div>
       <div class="text-center mt-3">
@@ -279,7 +341,7 @@
       </div>
     </div>
 
-    <!-- Estadísticas -->
+    <!-- 🔹 ESTADÍSTICAS -->
     <div class="tab-pane fade" id="estadisticas">
       <div class="alert alert-info mt-3">
         Sección de estadísticas en construcción...

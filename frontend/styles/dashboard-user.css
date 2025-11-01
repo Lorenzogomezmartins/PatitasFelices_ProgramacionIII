@@ -146,6 +146,15 @@ header {
     cursor: pointer;
     transition: all 0.3s ease;
 }
+.productos-titulo {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #b3814d;
+    text-align: left;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #b3814d;
+    padding-bottom: 5px;
+}
 
 /* ===== GRID DE PRODUCTOS ===== */
 .properties-grid {
@@ -156,67 +165,113 @@ header {
     padding: 20px 0;
 }
 
-/* ===== TARJETAS ===== */
+/* ===== TARJETAS MODERNAS ===== */
 .property-card {
     display: flex;
     flex-direction: column;
-    background-color: #d4a373;
-    border: 2px solid var(--primary-color);
-    border-radius: 12px;
+    background: linear-gradient(to bottom, #f3e5d0, #d4a373); /* degradado suave */
+    border-radius: 16px;
     overflow: hidden;
-    transition: transform 0.3s, box-shadow 0.3s;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
-    color: var(--text-dark);
-    min-height: 420px;
+    color: #333;
+    min-height: auto; /* que se adapte al contenido */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .property-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--hover-shadow);
+    transform: translateY(-8px);
+    box-shadow: 0 12px 20px rgba(0,0,0,0.15);
 }
 
 .property-image {
-    height: 250px;
+    height: 200px;
     overflow: hidden;
-    border-bottom: 2px solid var(--primary-color);
+    border-bottom: 2px solid #b3814d; /* separa la imagen del contenido */
+    border-radius: 16px 16px 0 0; /* bordes superiores redondeados */
 }
 
 .property-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.property-card:hover .property-image img {
+    transform: scale(1.05); /* zoom suave */
 }
 
 .property-info {
-    padding: 12px;
+    padding: 15px;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 6px;
     flex-grow: 1;
 }
 
 .property-title {
-    font-size: 1.4rem;
-    font-weight: bold;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #6b3e26;
 }
 
-.property-price, 
-.property-stock, 
-.property-brand, 
-.property-size {
+.property-price {
+    font-size: 1.1rem;
     font-weight: 600;
+    color: #333;
 }
 
-/* Stock */
 .property-stock.en-stock {
     color: green;
-    font-weight: bold;
+    font-weight: 600;
 }
 
 .property-stock.sin-stock {
     color: red;
-    font-weight: bold;
+    font-weight: 600;
 }
+
+.property-brand,
+.property-size {
+    font-size: 0.95rem;
+    color: #555;
+}
+
+/* Botón de agregar al carrito */
+.agregar-carrito-btn {
+    margin-top: auto;
+    padding: 8px 12px;
+    font-size: 0.95rem;
+    background-color: #b3814d;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    transition: background-color 0.3s;
+}
+
+.agregar-carrito-btn:hover:not(:disabled) {
+    background-color: #9a673c;
+}
+
+.agregar-carrito-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* GRID RESPONSIVO */
+#espacios-populares {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+    padding: 10px;
+}
+
 
 /* ===== BOTÓN AGREGAR AL CARRITO ===== */
 .agregar-carrito-btn {
@@ -357,35 +412,43 @@ footer {
 
 /* ================= MAPA ================= */
 .mapa-container {
-    width: 580px;      
-    min-width: 550px;
+    width: 460px;      
+    min-width: 440px;
     border: 3px solid #d2b48c;
     border-radius: 12px;
     overflow: hidden;
+    margin-top: 80px; /* baja el mapa */
+    background-color: transparent;
 }
 
 .mapa-container iframe {
     width: 100%;
-    height: 550px;     
+    height: 400px;     
     object-fit: cover;
+    border: none;
 }
 
 /* ================= INFORMACIÓN DESTACADA ================= */
+.info-destacada {
+    flex: 1;
+    margin-right: 40px;
+}
+
 .info-destacada h2 {
     color: #b3814d;
-    font-size: 3rem;     
+    font-size: 2.8rem;     
     font-weight: bold;
     animation: fadeInDown 1s;
 }
 
 .info-destacada p {
-    font-size: 1.35rem;   
+    font-size: 1.25rem;   
     line-height: 1.6;
     animation: fadeInUp 1s;
 }
 
 .info-destacada ul {
-    font-size: 1.2rem;   
+    font-size: 1.1rem;   
     animation: fadeIn 1.5s;
 }
 
@@ -439,25 +502,69 @@ footer {
     gap: 20px;
 }
 
+/* ======================= 
+   IMAGEN SUPERIOR DASHBOARD
+======================= */
+.imagen-superior {
+  width: 95%; 
+  margin: 0 auto 2.5rem auto; 
+  overflow: hidden;
+  border-radius: 16px;
+  background: none; 
+  box-shadow: none; 
+}
+
+.imagen-dashboard {
+  width: 100%;
+  height: auto;
+  max-height: 480px; 
+  object-fit: cover; 
+  object-position: center;
+  display: block;
+  background: none; 
+  image-rendering: auto;
+  transition: transform 0.3s ease;
+  border: none; 
+}
+
+.imagen-dashboard:hover {
+  transform: scale(1.02);
+}
+
+
 /* ================= RESPONSIVE ================= */
 @media (max-width: 1024px) {
     .mapa-container {
         width: 100%;
         min-width: auto;
-        height: 400px;
+        height: 360px;
+        margin-top: 30px;
+    }
+
+    .imagen-superior {
+        width: 96%;
+    }
+
+    .imagen-dashboard {
+        max-height: 380px;
     }
 }
 
 @media (max-width: 768px) {
     .d-flex.align-items-start {
         flex-direction: column;
+        align-items: center;
+    }
+
+    .info-destacada {
+        margin-right: 0;
     }
 
     .mapa-container {
         width: 100%;
         min-width: auto;
-        margin-top: 20px;
-        height: 350px;
+        margin-top: 25px;
+        height: 340px;
     }
 
     .info-destacada h2 {
@@ -468,5 +575,10 @@ footer {
     .info-destacada ul {
         font-size: 1.1rem;
     }
+
+    .imagen-dashboard {
+        max-height: 340px;
+    }
 }
+
 

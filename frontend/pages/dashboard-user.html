@@ -51,79 +51,95 @@
     </ul>
 
     <div class="tab-content">
-        <div class="tab-pane fade show active" id="inicio">
-            <div class="d-flex align-items-start mb-4 flex-wrap">
-                <!-- Información destacada -->
-                <div class="info-destacada flex-grow-1 pe-3">
-                    <h2>¡Visitá Nuestro Espacio!</h2>
-                    <p>Estamos ubicados en el corazón de Quilmes, en una zona accesible y cercana al transporte público.</p>
-                    <p>Vení a conocernos, hacé tu pedido presencial o veni a retirar tus productos.</p>
-                    <p><strong>📍 Dirección:</strong> General Paz 717, Quilmes<br>
-                    <strong>🕐 Horarios:</strong> Lunes a Viernes de 9 a 18 hs</p>
-                </div>
+        <!-- DASHBOARD -->
+<div class="tab-pane fade show active" id="inicio">
+    
+    <!-- Imagen superior solo en el Dashboard -->
+    <section class="imagen-superior mb-4">
+        <img src="http://localhost:4000/uploads/portada.jpg" alt="Local Patitas Felices" class="imagen-dashboard">
+    </section>
 
-                <!-- Mapa -->
-                <div class="mapa-container">
-                    <iframe 
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3274.138500650868!2d-58.27348818479278!3d-34.72815268045606!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95a32e4729b41a0f%3A0x66eb8e6f4739df44!2sGral.%20Paz%20717%2C%20B1878%20Quilmes%2C%20Provincia%20de%20Buenos%20Aires!5e0!3m2!1ses!2sar!4v1713193503004!5m2!1ses!2sar" 
-                        allowfullscreen="" 
-                        loading="lazy" 
-                        referrerpolicy="no-referrer-when-downgrade">
-                    </iframe>
-                </div>
-            </div>
-
-            <!-- Sección de contacto natural -->
-            <section class="contacto">
-                <h2 class="text-center">Contactanos</h2>
-                <div class="container contacto-container">
-                    <form class="row g-4 justify-content-center" style="max-width: 900px; width: 100%;">
-                        <div class="col-md-5">
-                            <input type="text" class="form-control form-control-lg" placeholder="Nombre" required>
-                        </div>
-                        <div class="col-md-5">
-                            <input type="text" class="form-control form-control-lg" placeholder="Apellido" required>
-                        </div>
-                        <div class="col-md-10">
-                            <input type="email" class="form-control form-control-lg" placeholder="Email" required>
-                        </div>
-                        <div class="col-md-10">
-                            <textarea class="form-control form-control-lg" rows="5" placeholder="Escribí tu mensaje..." required></textarea>
-                        </div>
-                        <div class="col-12 text-center">
-                            <button type="submit" class="btn btn-primary btn-lg px-5">Enviar</button>
-                        </div>
-                    </form>
-                </div>
-            </section>
+    <!-- Contenedor principal con texto e imagen del mapa -->
+    <div class="d-flex align-items-start mb-4 flex-wrap justify-content-between">
+        <!-- Información destacada -->
+        <div class="info-destacada">
+            <h2>¡Visitá Nuestro Espacio!</h2>
+            <p>Estamos ubicados en el corazón de Quilmes, en una zona accesible y cercana al transporte público.</p>
+            <p>Vení a conocernos, hacé tu pedido presencial o vení a retirar tus productos.</p>
+            <p>
+                <strong>📍 Dirección:</strong> General Paz 717, Quilmes<br>
+                <strong>🕐 Horarios:</strong> Lunes a Viernes de 9 a 18 hs
+            </p>
         </div>
 
-        <div class="tab-pane fade" id="productos">
-            <div class="container main-content d-flex">
-                <aside class="sidebar-filtros me-3">
-                    <h2>Filtros</h2>
-                    <h3>Tipo de mascota</h3>
-                    <button class="filter-mascota-btn selected" data-mascota="todos">Todos</button>
-                    <button class="filter-mascota-btn" data-mascota="perro">Perro</button>
-                    <button class="filter-mascota-btn" data-mascota="gato">Gato</button>
-
-                    <h3>Tamaño</h3>
-                    <button class="filter-tamaño-btn selected" data-tamaño="todos">Todos</button>
-                    <button class="filter-tamaño-btn" data-tamaño="pequeño">Pequeño</button>
-                    <button class="filter-tamaño-btn" data-tamaño="mediano">Mediano</button>
-                    <button class="filter-tamaño-btn" data-tamaño="grande">Grande</button>
-
-                    <h3>Categoría</h3>
-                    <button class="filter-categoria-btn selected" data-categoria="todos">Todos</button>
-                    <button class="filter-categoria-btn" data-categoria="alimento">Alimentos</button>
-                    <button class="filter-categoria-btn" data-categoria="juguete">Juguetes</button>
-                </aside>
-
-                <div class="properties-grid flex-grow-1" id="espacios-populares">
-                </div>
-            </div>
+        <!-- Mapa a la derecha -->
+        <div class="mapa-container">
+            <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3274.138500650868!2d-58.27348818479278!3d-34.72815268045606!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95a32e4729b41a0f%3A0x66eb8e6f4739df44!2sGral.%20Paz%20717%2C%20B1878%20Quilmes%2C%20Provincia%20de%20Buenos%20Aires!5e0!3m2!1ses!2sar!4v1713193503004!5m2!1ses!2sar" 
+                allowfullscreen="" 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
         </div>
     </div>
+
+    <!-- Sección de contacto -->
+    <section class="contacto">
+        <h2 class="text-center">Contactanos</h2>
+        <div class="container contacto-container">
+            <form class="row g-4 justify-content-center" style="max-width: 900px; width: 100%;">
+                <div class="col-md-5">
+                    <input type="text" class="form-control form-control-lg" placeholder="Nombre" required>
+                </div>
+                <div class="col-md-5">
+                    <input type="text" class="form-control form-control-lg" placeholder="Apellido" required>
+                </div>
+                <div class="col-md-10">
+                    <input type="email" class="form-control form-control-lg" placeholder="Email" required>
+                </div>
+                <div class="col-md-10">
+                    <textarea class="form-control form-control-lg" rows="5" placeholder="Escribí tu mensaje..." required></textarea>
+                </div>
+                <div class="col-12 text-center">
+                    <button type="submit" class="btn btn-primary btn-lg px-5">Enviar</button>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>
+
+        <!-- PRODUCTOS -->
+<div class="tab-pane fade" id="productos">
+    <div class="container main-content d-flex">
+        <aside class="sidebar-filtros me-3">
+            <h2>Filtros</h2>
+            <h3>Tipo de mascota</h3>
+            <button class="filter-mascota-btn selected" data-mascota="todos">Todos</button>
+            <button class="filter-mascota-btn" data-mascota="perro">Perro</button>
+            <button class="filter-mascota-btn" data-mascota="gato">Gato</button>
+
+            <h3>Tamaño</h3>
+            <button class="filter-tamaño-btn selected" data-tamaño="todos">Todos</button>
+            <button class="filter-tamaño-btn" data-tamaño="pequeño">Pequeño</button>
+            <button class="filter-tamaño-btn" data-tamaño="mediano">Mediano</button>
+            <button class="filter-tamaño-btn" data-tamaño="grande">Grande</button>
+
+            <h3>Categoría</h3>
+            <button class="filter-categoria-btn selected" data-categoria="todos">Todos</button>
+            <button class="filter-categoria-btn" data-categoria="alimento">Alimentos</button>
+            <button class="filter-categoria-btn" data-categoria="juguete">Juguetes</button>
+        </aside>
+
+        <div class="flex-grow-1">
+            <!-- Título de la sección de productos -->
+            <h2 class="productos-titulo mb-3">Nuestros Productos</h2>
+
+            <!-- Contenedor de productos -->
+            <div class="properties-grid" id="espacios-populares"></div>
+        </div>
+    </div>
+</div>
+
 
     <footer class="mt-4">
         <div class="footer-links"></div>
