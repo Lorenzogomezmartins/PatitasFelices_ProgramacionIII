@@ -228,6 +228,63 @@ async function eliminarProducto(id) {
   }
 }
 
+//actualizar producto
+async function actualizarProducto() {
+  try {
+    const _id = document.getElementById("inputCodigoProducto")?.value.trim();
+    const nombre = document.getElementById("inputNombreProducto")?.value.trim();
+    const marca = document.getElementById("inputMarca")?.value.trim();
+    const categoria = document.getElementById("inputCategoria")?.value?.trim();
+    const tamano = document.getElementById("inputTamaño")?.value?.trim();
+    const tipo_mascota = document.getElementById("inputTipoDeMascota")?.value?.trim();
+    const precioStr = document.getElementById("inputPrecio")?.value;
+    const stockStr = document.getElementById("inputStock")?.value;
+
+    if (!_id) {
+      mostrarMensaje("⚠️ Debe especificar el código del producto a actualizar", "error");
+      return;
+    }
+
+    console.log("🟡 Ejecutando actualizarProducto()");
+
+    const precio = parseFloat(precioStr);
+    const stock = parseInt(stockStr) || 0;
+    const activo = document.getElementById("inputActivo")?.checked ?? true;
+    const inputFoto = document.getElementById("inputFoto");
+
+    // Construir FormData
+    const formData = new FormData();
+    formData.append("nombre", nombre);
+    formData.append("marca", marca);
+    formData.append("categoria", categoria);
+    formData.append("tamano", tamano);
+    formData.append("tipo_mascota", tipo_mascota);
+    if (!isNaN(precio)) formData.append("precio", precio);
+    if (!isNaN(stock)) formData.append("stock", stock);    
+    formData.append("activo", activo);
+    if (inputFoto?.files?.length > 0) {
+      formData.append("url", inputFoto.files[0]);
+    }
+
+    const res = await fetch(`${API_PRODUCTOS}/modificar/${_id}`, {
+      method: "PUT",
+      body: formData,
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) throw new Error(data.msg || "Error al actualizar producto");
+
+    mostrarMensaje("✅ Producto actualizado correctamente", "success");
+    document.getElementById("frmFormulario").reset();
+    removeImage();
+    cargarProductosAdmin();
+  } catch (error) {
+    console.error("❌ Error al actualizar producto:", error);
+    mostrarMensaje(`❌ ${error.message}`, "error");
+  }
+}
+
 /* ==========================================
    FORMULARIO EDICIÓN
 ========================================== */
@@ -369,6 +426,7 @@ async function cargarEstadisticas() {
   contenedor.innerHTML = `<p>Cargando estadísticas...</p>`;
 
   try {
+    // Obtener productos
     const responseProd = await fetch(API_PRODUCTOS);
     const dataProd = await responseProd.json();
     if (!dataProd.ok || !dataProd.productos) throw new Error(dataProd.message || "Error al obtener productos");
@@ -378,45 +436,65 @@ async function cargarEstadisticas() {
       return;
     }
 
+    // Precio promedio
     const totalPrecios = productos.reduce((sum, p) => sum + (p.precio || 0), 0);
     const promedioPrecio = totalPrecios / productos.length;
-    const prodMasCaro = productos.reduce((max, p) => p.precio > max.precio ? p : max, productos[0]);
-    const prodMasBarato = productos.reduce((min, p) => p.precio < min.precio ? p : min, productos[0]);
-    const prodMasVendido = productos.reduce((max, p) => (p.vendidos || 0) > (max.vendidos || 0) ? p : max, productos[0]);
-    const totalVentas = productos.reduce((sum, p) => sum + (p.vendidos || 0), 0);
 
+    // Producto mas caro
+    const prodMasCaro = productos.reduce((max, p) => p.precio > max.precio ? p : max, productos[0]);
+
+    // Producto mas barato
+    const prodMasBarato = productos.reduce((min, p) => p.precio < min.precio ? p : min, productos[0]);
+
+    // Producto mas vendido
+    const responseProdMasVendido = await fetch("http://localhost:4000/api/usuarios/obtenerProdMasVendido");
+    const dataProdMasVendido = await responseProdMasVendido.json();
+    let prodMasVendidoNombre = "Sin ventas registradas";
+    let cantProdMasVendido = 0;
+
+    if (dataProdMasVendido.ok && dataProdMasVendido.productoMasVendido) {
+      const prodMasVendidoId = dataProdMasVendido.productoMasVendido.idProducto;
+      cantProdMasVendido = dataProdMasVendido.productoMasVendido.totalVendido;
+
+      const productoEncontrado = productos.find(p => p._id === prodMasVendidoId);
+      
+      if (productoEncontrado) {
+        prodMasVendidoNombre = productoEncontrado.nombre;
+      }
+    }    
+
+    // Total de ventas
+    const response = await fetch(`http://localhost:4000/api/usuarios/obtenerCantidadTickets`);
+    const data = await response.json();
+    const totalVentas = data.ok ? data.totalTickets : 0;
+
+    // Obtener cantidad de usuarios
     const responseUsers = await fetch("http://localhost:4000/api/usuarios");
     const dataUsers = await responseUsers.json();
     const cantidadUsuarios = dataUsers.ok && dataUsers.usuarios ? dataUsers.usuarios.length : 0;
 
+    // Construir tarjetas de estadísticas
     const stats = [
       { titulo: "Precio promedio", valor: `$${promedioPrecio.toFixed(2)}` },
-      { titulo: "Producto más caro", valor: `${prodMasCaro.nombre} ($${prodMasCaro.precio?.toLocaleString()})` },
-      { titulo: "Producto más barato", valor: `${prodMasBarato.nombre} ($${prodMasBarato.precio?.toLocaleString()})` },
-      { titulo: "Más vendido", valor: `${prodMasVendido.nombre} (${prodMasVendido.vendidos || 0} ventas)` },
+      { titulo: "Producto mas caro", valor: `${prodMasCaro.nombre} ($${prodMasCaro.precio.toLocaleString()})` },
+      { titulo: "Producto mas barato", valor: `${prodMasBarato.nombre} ($${prodMasBarato.precio.toLocaleString()})` },
+      { titulo: "Producto mas vendido", valor: `${prodMasVendidoNombre} (${cantProdMasVendido || 0} ventas)` },
       { titulo: "Total de ventas", valor: `${totalVentas}` },
       { titulo: "Cantidad de usuarios", valor: `${cantidadUsuarios}` }
     ];
 
     contenedor.innerHTML = `
-      <div class="row g-3 mt-3">
-        ${stats.map(stat => `
-          <div class="col-md-4">
-            <div style="
-              background-color: #b3814d;
-              color: white;
-              border-radius: 12px;
-              box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-              padding: 20px;
-              text-align: center;
-            ">
-              <h6 style="font-weight:600; margin-bottom:8px;">${stat.titulo}</h6>
-              <p style="font-size:1.2rem; margin:0;">${stat.valor}</p>
-            </div>
+    <div class="row g-3 mt-3 stats-container justify-content-center">
+      ${stats.map(stat => `
+        <div class="col-md-4">
+          <div class="stat-card"> 
+            <h6 class="stat-title">${stat.titulo}</h6>
+            <p class="stat-value">${stat.valor}</p>
           </div>
-        `).join('')}
-      </div>
-    `;
+        </div>
+      `).join('')}
+    </div>
+  `;
 
   } catch (error) {
     console.error("❌ Error al cargar estadísticas:", error);

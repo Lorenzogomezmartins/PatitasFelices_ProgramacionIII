@@ -6,6 +6,8 @@ const listadoUsuarios = require('../controllers/usuario/ListadoUsuarios.js');
 const agregarTicket = require('../controllers/usuario/AgregarTicket.js');
 const eliminarUsuario = require('../controllers/usuario/EliminarUsuario.js');
 const modificarUsuario = require('../controllers/usuario/ModificarUsuario.js');
+const obtenerCantidadTickets = require('../controllers/usuario/ObtenerCantidadTickets.js');
+const obtenerProductoMasVendido = require('../controllers/usuario/ObtenerProdMasVendido.js');
 const obtenerTickets = require('../controllers/usuario/ObtenerTickets.js');
 const obtenerUsuarioPorId = require('../controllers/usuario/ObtenerUsuarioporID.js');
 const obtenerUsuarioPorNombreApellido = require('../controllers/usuario/ObtenerUsuarioPorNyA');
@@ -21,6 +23,8 @@ router.get('/buscar/:nombre/:apellido', obtenerUsuarioPorNombreApellido);
 
 // Tickets
 router.get('/obtenerTickets', obtenerTickets);
+router.get('/obtenerProdMasVendido', obtenerProductoMasVendido);
+router.get('/obtenerCantidadTickets', obtenerCantidadTickets);
 router.put('/agregarTicket/:id', agregarTicket);
 
 // Usuarios individuales

@@ -147,23 +147,6 @@ header {
   transform: scale(1.05);
   box-shadow: var(--hover-shadow);
 }
-/* Estilo para el botón de agregar producto usando su ID */
-#btnAgregarProducto {
-  background: linear-gradient(135deg, #b3814d, #d4a470);
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 0.6rem 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-#btnAgregarProducto:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-}
-
 
 /* ========== FORMULARIO DE PRODUCTOS ========== */
 #frmFormulario {
@@ -424,6 +407,35 @@ header {
 }
 .form-control{
   background-color: #ffffff00;
+}
+
+.stat-card {
+    background-color: var(--primary-color); 
+    color: var(--white);                    
+    border-radius: 12px;                    
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15); 
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-3px); 
+    box-shadow: var(--hover-shadow); 
+}
+
+.stat-card-title {
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 1rem;
+    line-height: 1.2;
+}
+
+.stat-card-value {
+    font-size: 1.5rem; 
+    font-weight: 700;
+    margin: 0;
+    line-height: 1;
 }
 
 /* ========== DARK MODE ========== */
