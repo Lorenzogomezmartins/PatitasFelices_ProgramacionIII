@@ -29,20 +29,20 @@ window.apiClient = {
  * ADMINISTRADORES
  * =============================== */
 getAdmins() {
-  return this.fetchAPI("admin"); // GET /api/admin
-},
-getAdminPorId(id) {
-  return this.fetchAPI(`admin/${id}`);
-},
-crearAdmin(data) {
-  return this.fetchAPI("admin", { method: "POST", body: JSON.stringify(data) });
-},
-actualizarAdmin(id, data) {
-  return this.fetchAPI(`admin/${id}`, { method: "PUT", body: JSON.stringify(data) });
-},
-eliminarAdmin(id) {
-  return this.fetchAPI(`admin/${id}`, { method: "DELETE" });
-},
+    return this.fetchAPI("admin"); // GET /api/admin
+  },
+  getAdminPorId(id) {
+    return this.fetchAPI(`admin/${id}`);
+  },
+  crearAdmin(data) {
+    return this.fetchAPI("admin", { method: "POST", body: JSON.stringify(data) });
+  },
+  actualizarAdmin(id, data) {
+    return this.fetchAPI(`admin/${id}`, { method: "PUT", body: JSON.stringify(data) });
+  },
+  eliminarAdmin(id) {
+    return this.fetchAPI(`admin/${id}`, { method: "DELETE" });
+  },
 
   /** ===============================
    * PRODUCTOS

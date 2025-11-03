@@ -264,7 +264,9 @@ header {
 }
 
 /* Botones del formulario */
-#btnAgregar, #btnModificar {
+button,
+.button,
+.btn { 
   background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
   color: var(--white);
   border: none;
@@ -273,13 +275,21 @@ header {
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+  appearance: none; 
+  text-decoration: none; 
+  display: inline-block; 
 }
 
-#btnAgregar:hover, #btnModificar:hover {
+button:hover,
+button:focus,
+.button:hover,
+.button:focus,
+.btn:hover,
+.btn:focus {
   transform: scale(1.05);
-  box-shadow: var(--hover-shadow);
+  box-shadow: var(--hover-shadow, 0 8px 16px rgba(0, 0, 0, 0.1));
+  outline: none;
 }
-
 #btnLimpiar {
   background: linear-gradient(135deg, #6b7280, #4b5563);
   color: var(--white);
