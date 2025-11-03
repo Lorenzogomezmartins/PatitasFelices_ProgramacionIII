@@ -8,6 +8,7 @@ async function handleAdminLogin(event) {
   const nombre = nameInput.value.trim();
   const password = passwordInput.value.trim();
 
+
   if (!nombre || !password) {
     alert("Por favor, ingresa tu nombre y contraseña.");
     return;
@@ -26,17 +27,18 @@ async function handleAdminLogin(event) {
     });
 
     const data = await respuesta.json();
+    console.log("Respuesta del backend:", data);
 
     if (!respuesta.ok || !data.ok) {
       throw new Error(data.mensaje || "Error al iniciar sesión.");
     }
 
-    // 🟢 Guardar datos en localStorage
-    const admin = data.admin;
-    localStorage.setItem("adminLogeado", JSON.stringify(admin));
+    // 🟢 Guardar datos y token
+    localStorage.setItem("adminLogeado", JSON.stringify(data.admin));
+    localStorage.setItem("token", data.token);
 
-    // Redirigir según el rol
-    if (admin.rol === "superadmin") {
+    // Redirigir según rol
+    if (data.admin.rol === "superadmin") {
       window.location.href = "../pages/dashboard-superadmin.html";
     } else {
       window.location.href = "../pages/dashboard-admin.html";
@@ -44,6 +46,7 @@ async function handleAdminLogin(event) {
 
   } catch (error) {
     alert(`Error: ${error.message}`);
+    console.error(error);
   } finally {
     loginBtn.textContent = "Iniciar sesión";
     loginBtn.disabled = false;
