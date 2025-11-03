@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 // Servir imágenes estáticamente
-app.use('/uploads', express.static('uploads'));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Rutas principales
 app.use('/api', RoutesMain);
@@ -29,14 +29,12 @@ app.get('/', (req, res) => {
 // Función principal para conectar MongoDB y arrancar servidor
 async function main() {
   try {
-    // Conectar a MongoDB
     await mongoose.connect(process.env.MONGO_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
     console.log('✅ MongoDB conectado correctamente.');
 
-    // Arrancar servidor
     app.listen(PORT, () => {
       console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
     });

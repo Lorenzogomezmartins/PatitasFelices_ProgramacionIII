@@ -9,7 +9,6 @@ const actualizarProducto = require('../controllers/productos/ActualizarProductos
 const eliminarProducto = require('../controllers/productos/EliminarProducto');
 
 // Middlewares
-const validarProducto = require('../middlewares/validarProducto');
 const upload = require('../middlewares/multerUpload'); 
 
 // RUTAS CRUD DE PRODUCTOS
@@ -24,7 +23,7 @@ router.get('/obtenerporcodigo/:id', obtenerProductoPorCodigo);
 router.post('/', upload.single('url'), crearProducto);
 
 // Actualizar producto (si querés reemplazar imagen, se hace también con multer)
-router.put('/modificar/:id', upload.single('url'), validarProducto, actualizarProducto);
+router.put('/modificar/:id', upload.single('url'), actualizarProducto);
 
 // Eliminar producto
 router.delete('/:id', eliminarProducto);
