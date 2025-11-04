@@ -1,3 +1,26 @@
+// Middleware de Validación de Producto
+//
+// Descripción:
+// Valida los datos enviados para crear o actualizar un producto
+// usando express-validator.
+//
+// Campos validados:
+// - codigo: obligatorio, 3-20 caracteres
+// - nombre: obligatorio, 3-100 caracteres
+// - marca: obligatorio, 2-50 caracteres
+// - categoria: obligatorio, 'alimento' o 'juguete'
+// - tipo_mascota: obligatorio, 'perro' o 'gato'
+// - tamaño: opcional, 'pequeño', 'mediano' o 'grande'
+// - precio: obligatorio, número > 0
+// - stock: opcional, entero >= 0
+// - activo: opcional, booleano
+// - urls: obligatorio, array con al menos una URL
+//
+// Funcionalidad:
+// - Si hay errores, responde con status 400 y detalles de validación
+// - Si todo es correcto, llama a next() para continuar
+
+
 const { body, validationResult } = require('express-validator');
 
 const validarProducto = [

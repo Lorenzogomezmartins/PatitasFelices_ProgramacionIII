@@ -1,3 +1,15 @@
+// Configuración de Multer para Subida de Imágenes
+//
+// Descripción:
+// Permite subir imágenes al servidor y guardarlas en la carpeta /uploads.
+//
+// Funcionalidades:
+// - Carpeta de destino: /uploads (se crea si no existe)
+// - Nombres de archivo únicos: timestamp + número aleatorio + extensión original
+// - Filtro de archivos: solo permite imágenes JPEG, JPG, PNG y WEBP
+// - Uso: se exporta la instancia 'upload' para usar como middleware en rutas
+
+
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');

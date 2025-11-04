@@ -1,3 +1,18 @@
+// Función: eliminarUsuario
+//
+// Descripción:
+// Elimina un usuario de la base de datos según su ID.
+//
+// Parámetros esperados:
+// - req.params.id: String, ID del usuario a eliminar
+//
+// Funcionamiento:
+// - Busca y elimina el usuario por ID usando findByIdAndDelete
+// - Si no existe, responde con 404 (Usuario no encontrado)
+// - Si se elimina correctamente, responde con mensaje de éxito
+// - Maneja errores generales con status 500
+
+
 const Usuario = require('../../models/usuario');
 
 const eliminarUsuario = async (req, res) => {

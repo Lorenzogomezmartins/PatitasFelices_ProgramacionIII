@@ -1,3 +1,15 @@
+// Modelo Usuario
+// Representa a los usuarios registrados en Patitas Felices.
+// Campos:
+// - nombre: String, obligatorio, mínimo 2 caracteres
+// - apellido: String, obligatorio, mínimo 2 caracteres
+// - fechaIngreso: Date, fecha de registro, por defecto ahora, inmutable
+// - tickets: Array de objetos (historial de compras), cada ticket incluye:
+//    - productos: Array de objetos con referencia a Producto y cantidad
+//    - total: Number, obligatorio, no negativo
+//    - fechaDeCompra: Date, obligatorio, por defecto ahora
+
+
 const mongoose = require('mongoose');
 
 const usuarioSchema = new mongoose.Schema(

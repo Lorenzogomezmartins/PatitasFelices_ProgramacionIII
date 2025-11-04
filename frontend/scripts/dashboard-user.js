@@ -1,3 +1,14 @@
+// PANEL PARA  USUARIOS
+//
+// Funcionalidad:
+// - Carga y muestra productos activos desde la API en tarjetas dinámicas.
+// - Permite filtrar productos por categoría, tipo de mascota y tamaño.
+// - Normaliza textos para evitar problemas con mayúsculas o acentos.
+// - Maneja el carrito de compras en localStorage, sumando cantidad si el producto ya existe.
+// - Muestra stock disponible y deshabilita botón si no hay stock.
+// - Maneja logout de usuario y redirección a login.
+// - Muestra mensajes de error cuando falla la carga de productos.
+
 const API_URL = "http://localhost:4000/api/productos";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -11,7 +22,7 @@ let filtroCategoria = "todos";
 let filtroTipoMascota = "todos";
 let filtroTamano = "todos";
 
-// Función para normalizar textos (minúscula, sin tildes)
+// Función para normalizar textos 
 function normalizar(texto) {
   return texto?.toString().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
@@ -161,7 +172,7 @@ function inicializarFiltros() {
     btn.addEventListener("click", () => {
       btnTamano.forEach(b => b.classList.remove("selected"));
       btn.classList.add("selected");
-      filtroTamano = btn.dataset["tamaño"]; // usar ["tamaño"] por la ñ
+      filtroTamano = btn.dataset["tamaño"]; 
       cargarProductos();
     });
   });

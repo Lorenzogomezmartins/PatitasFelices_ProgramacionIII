@@ -1,4 +1,15 @@
-// ListadoUsuarios.js
+// Función: listadoUsuarios
+//
+// Descripción:
+// Obtiene la lista de todos los usuarios registrados.
+//
+// Funcionamiento:
+// - Recupera todos los usuarios de la base de datos
+// - Solo devuelve los campos: nombre, apellido y fechaIngreso
+// - Responde con JSON que incluye array de usuarios
+// - Maneja errores generales con status 500
+
+
 const Usuario = require('../../models/usuario');
 
 const listadoUsuarios = async (req, res) => {

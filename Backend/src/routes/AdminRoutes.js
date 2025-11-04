@@ -1,3 +1,18 @@
+// Rutas Administradores
+//
+// Descripción:
+// Archivo de enrutamiento que centraliza las operaciones sobre
+// administradores del sistema.
+//
+// Funciones incluidas:
+// - CrearAdmin        → crea un nuevo administrador
+// - ObtenerAdmins     → lista todos los administradores
+// - ObtenerAdminPorId → obtiene un administrador específico por ID
+// - ActualizarAdmin   → modifica datos de un administrador
+// - EliminarAdmin     → elimina un administrador
+// - LoginAdmin        → permite iniciar sesión de admin/superadmin
+
+
 const express = require('express');
 const router = express.Router();
 const CrearAdmin = require('../controllers/admin/CrearAdmin');

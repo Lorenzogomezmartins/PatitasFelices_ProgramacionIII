@@ -1,3 +1,20 @@
+// Función: obtenerProductos
+//
+// Descripción:
+// Recupera todos los productos de la base de datos, con soporte
+// para filtros opcionales mediante query params.
+//
+// Query params opcionales:
+// - categoria: Filtra por categoría ('alimento', 'juguete', 'todos')
+// - tipo_mascota: Filtra por tipo de mascota ('perro', 'gato', 'todos')
+// - tamano: Filtra por tamaño ('pequeño', 'mediano', 'grande', 'todos')
+//
+// Funcionamiento:
+// - Aplica filtros solo si se proporcionan y no son 'todos'
+// - Devuelve lista de productos y total en JSON
+// - Maneja errores generales con status 500
+
+
 const Producto = require('../../models/producto');
 
 const obtenerProductos = async (req, res) => {

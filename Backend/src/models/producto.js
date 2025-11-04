@@ -1,3 +1,18 @@
+// Modelo Producto
+// Representa los productos disponibles en Patitas Felices.
+// Campos:
+// - _id: String, obligatorio, 3-20 caracteres (código del producto)
+// - nombre: String, obligatorio, 3-100 caracteres
+// - categoria: String, 'alimento' o 'juguete', obligatorio
+// - tipo_mascota: String, 'perro' o 'gato', obligatorio
+// - precio: Number, obligatorio, mayor a 0
+// - marca: String, obligatorio, 2-50 caracteres
+// - urls: Array de Strings, obligatorio, al menos una URL de imagen
+// - stock: Number, por defecto 0, no negativo
+// - activo: Boolean, por defecto true
+// - tamano: String, 'pequeño', 'mediano' o 'grande', obligatorio
+
+
 const mongoose = require('mongoose');
 
 const productoSchema = new mongoose.Schema({

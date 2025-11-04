@@ -1,3 +1,16 @@
+// LOGIN DE ADMIN/SUPERADMIN
+//
+// Funcionalidad:
+// - Permite que los administradores inicien sesión mediante nombre y contraseña.
+// - Valida que ambos campos estén completos antes de enviar la petición.
+// - Deshabilita el botón de login mientras se procesa la solicitud y muestra mensaje de carga.
+// - Hace POST a la API para autenticar al admin.
+// - Guarda en localStorage los datos del admin y el token JWT recibido.
+// - Redirige automáticamente al dashboard correspondiente según el rol (admin o superadmin).
+// - Si el admin ya estaba logueado, redirige directamente al dashboard correspondiente.
+// - Configura habilitación/deshabilitación del botón de login según inputs.
+// - Redirección rápida al dashboard-superadmin al hacer doble click en el logo.
+
 async function handleAdminLogin(event) {
   event.preventDefault();
 
@@ -33,7 +46,7 @@ async function handleAdminLogin(event) {
       throw new Error(data.mensaje || "Error al iniciar sesión.");
     }
 
-    // 🟢 Guardar datos y token
+    // Guardar datos y token
     localStorage.setItem("adminLogeado", JSON.stringify(data.admin));
     localStorage.setItem("token", data.token);
 

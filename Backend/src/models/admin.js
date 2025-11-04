@@ -1,3 +1,14 @@
+// Modelo Admin
+// Representa a los administradores del sistema (admin / superadmin).
+// Campos:
+// - nombre: String, obligatorio, 2-100 caracteres
+// - email: String, obligatorio, único, formato de correo
+// - password: String, obligatorio, 4-255 caracteres, se guarda en hash
+// - rol: String, 'admin' o 'superadmin', por defecto 'admin'
+// - activo: Boolean, por defecto true
+// - productos: Array de ObjectId, referencia a Productos
+
+
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 

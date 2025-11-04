@@ -1,3 +1,21 @@
+// Función: obtenerUsuarioPorNombreApellido
+//
+// Descripción:
+// Busca un usuario en la base de datos por su nombre y apellido.
+//
+// Parámetros esperados:
+// - req.params.nombre: String, nombre del usuario
+// - req.params.apellido: String, apellido del usuario
+//
+// Funcionamiento:
+// - Valida que nombre y apellido estén presentes
+// - Intenta búsqueda exacta (case-sensitive)
+// - Si no encuentra, realiza búsqueda case-insensitive usando regex
+// - Si no existe, responde con 404 y muestra los valores buscados
+// - Si se encuentra, devuelve el objeto usuario en JSON
+// - Maneja errores generales con status 500
+
+
 const Usuario = require('../../models/usuario');
 
 const obtenerUsuarioPorNombreApellido = async (req, res) => {

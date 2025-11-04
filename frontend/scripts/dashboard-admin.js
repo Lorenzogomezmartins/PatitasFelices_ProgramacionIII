@@ -1,6 +1,13 @@
-/* ========================================== 
-   DASHBOARD ADMIN - PRODUCTOS
-========================================== */
+// PANEL PARA ADMINISTRADORES
+//
+// Funcionalidad:
+// - Maneja la carga, filtrado, creación, edición y eliminación
+//   de productos desde la interfaz de administrador.
+// - Muestra tickets de usuarios con paginación y modal de detalles.
+// - Calcula y muestra estadísticas de productos y usuarios.
+// - Maneja imagen de producto con vista previa y eliminación.
+// - Logout del administrador.
+
 const API_PRODUCTOS = "http://localhost:4000/api/productos";
 
 // Variables globales de filtros
@@ -8,7 +15,7 @@ let filtroCategoria = "todos";
 let filtroTipoMascota = "todos";
 let filtroTamano = "todos";
 
-// Función para normalizar textos (minúscula y sin tildes)
+// Función para normalizar textos 
 function normalizar(texto) {
   return texto?.toString().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
@@ -305,7 +312,7 @@ async function actualizarProducto() {
    FORMULARIO EDICIÓN
 ========================================== */
 function abrirFormularioEdicion(producto) {
-  document.getElementById("inputCodigoProducto").value = producto._id; // CORREGIDO
+  document.getElementById("inputCodigoProducto").value = producto._id; 
   document.getElementById("inputNombreProducto").value = producto.nombre;
   document.getElementById("inputMarca").value = producto.marca || "";
   document.getElementById("inputCategoria").value = producto.categoria || "";
@@ -326,7 +333,7 @@ function abrirFormularioEdicion(producto) {
     img.style.display = "block";
 
     preview.src = urlCompleta;
-    preview.style.display = "block"; // si querés mostrar el preview
+    preview.style.display = "block"; 
     document.getElementById("upload-placeholder").style.display = "none";
   }
 }
@@ -467,7 +474,7 @@ async function mostrarModal(ticket) {
       const prodId = p.prod?._id;
       if (!prodId) continue;
 
-      // 🚨 Cambiar aquí la URL
+
       const resp = await fetch(`http://localhost:4000/api/productos/obtenerporcodigo/${prodId}`);
 
       if (!resp.ok) {

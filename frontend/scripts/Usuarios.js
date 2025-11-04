@@ -1,20 +1,29 @@
-/* ==========================================
-   DASHBOARD ADMIN - USUARIOS
-========================================== */
+// DASHBOARD ADMIN - USUARIOS
+// Funcionalidad general:
+// - Carga, crea y elimina usuarios desde la API.
+// - Muestra mensajes de éxito y error.
+// - Permite cerrar sesión (logout).
+// - Pensado para el panel de administración de usuarios.
+//
+// Dependencias / Requisitos:
+// - Un contenedor en HTML con id="divListadoUsuarios".
+// - Un formulario con id="frmFormulario" y campos inputNombre y inputApellido.
+// - Botón con id="btnAgregar" para crear usuario.
+// - Botón con id="logout-btn" para cerrar sesión.
+// - Bootstrap y Bootstrap Icons para estilos de tabla y botones.
+
 const API_USUARIOS = "http://localhost:4000/api/usuarios";
 
-/* ==========================================
-   DOCUMENT READY
-========================================== */
+
 document.addEventListener("DOMContentLoaded", () => {
   cargarUsuarios();
   inicializarFormUsuario();
   inicializarLogout();
 });
 
-/* ==========================================
+/*
    CARGAR USUARIOS
-========================================== */
+*/
 async function cargarUsuarios() {
   const contenedor = document.getElementById("divListadoUsuarios");
   if (!contenedor) return console.error("No existe el contenedor 'divListadoUsuarios'");
@@ -72,11 +81,11 @@ async function cargarUsuarios() {
   }
 }
 
-/* ==========================================
+/*
    CREAR USUARIO
-========================================== */
+*/
 function inicializarFormUsuario() {
-  const btnAgregar = document.getElementById("btnAgregar"); // coincide con tu HTML
+  const btnAgregar = document.getElementById("btnAgregar"); 
   if (!btnAgregar) return;
 
   btnAgregar.addEventListener("click", async (e) => {
@@ -91,7 +100,7 @@ function inicializarFormUsuario() {
     }
 
     try {
-      // 🔹 Cambiado a /login
+     
       const res = await fetch(`${API_USUARIOS}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -102,7 +111,7 @@ function inicializarFormUsuario() {
       if (!res.ok || !data.ok) throw new Error(data.error || "Error al crear usuario");
 
       mostrarMensaje(`✅ Usuario ${nombre} agregado correctamente`, "success");
-      document.getElementById("frmFormulario").reset(); // coincide con tu HTML
+      document.getElementById("frmFormulario").reset(); 
       cargarUsuarios();
 
     } catch (error) {
@@ -112,9 +121,9 @@ function inicializarFormUsuario() {
   });
 }
 
-/* ==========================================
+/* 
    ELIMINAR USUARIO
-========================================== */
+*/
 async function eliminarUsuario(id) {
   if (!id) return mostrarMensaje("⚠️ ID inválido", "error");
   if (!confirm("¿Desea eliminar este usuario?")) return;
@@ -134,9 +143,9 @@ async function eliminarUsuario(id) {
   }
 }
 
-/* ==========================================
+/* 
    MENSAJES
-========================================== */
+*/
 function mostrarMensaje(texto, tipo) {
   const div = document.createElement("div");
   div.textContent = texto;
@@ -149,9 +158,9 @@ function mostrarMensaje(texto, tipo) {
   setTimeout(() => div.remove(), 3000);
 }
 
-/* ==========================================
+/* 
    LOGOUT
-========================================== */
+*/
 function inicializarLogout() {
   const logoutBtn = document.getElementById("logout-btn");
   if (logoutBtn) {

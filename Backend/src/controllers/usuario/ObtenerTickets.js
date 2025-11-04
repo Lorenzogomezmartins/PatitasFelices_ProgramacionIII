@@ -1,3 +1,22 @@
+// Función: obtenerTickets
+//
+// Descripción:
+// Obtiene tickets de todos los usuarios de manera paginada,
+// mostrando los más recientes primero.
+//
+// Query params:
+// - page: Número de página (opor defecto 1)
+//
+// Funcionamiento:
+// - Pipeline de agregación en MongoDB:
+//     1. $unwind sobre el array 'tickets' de cada usuario
+//     2. $sort descendente por 'tickets.fechaDeCompra'
+//     3. $skip y $limit para paginación (5 tickets por página)
+//     4. $project para devolver solo campos necesarios: usuarioId, nombreUsuario, apellidoUsuario, fechaDeCompra, productos, total
+// - Responde con JSON que incluye página actual y array de tickets
+// - Maneja errores generales con status 500
+
+
 const Usuario = require('../../models/usuario');
 
 const obtenerTickets = async (req, res) => {

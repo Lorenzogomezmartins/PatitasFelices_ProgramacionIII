@@ -1,7 +1,21 @@
-/**
- * CrearUsuario.js
- * Crea un usuario al hacer login, si no existe.
- */
+// Función: crearUsuario
+//
+// Descripción:
+// Crea un usuario nuevo si no existe, utilizado típicamente al
+// hacer login por primera vez.
+//
+// Parámetros esperados en req.body:
+// - nombre: String, obligatorio
+// - apellido: String, obligatorio
+//
+// Funcionamiento:
+// - Valida que nombre y apellido estén presentes
+// - Busca si ya existe un usuario con el mismo nombre y apellido
+// - Si no existe, lo crea
+// - Responde con el objeto usuario y mensaje de éxito
+// - Maneja errores generales con status 500
+
+
 
 const Usuario = require('../../models/usuario');
 

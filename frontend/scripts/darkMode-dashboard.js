@@ -1,3 +1,13 @@
+// Modo Oscuro
+//
+// Funcionalidad:
+// - Alterna entre modo oscuro y claro.
+// - Persiste la preferencia en localStorage.
+// - Cambia colores de body, labels, inputs y tablas.
+// - Botón #dark-mode-toggle alterna el modo.
+// - Se aplica al cargar la página.
+
+
 function actualizarTextoBotonDark() {
   const btn = document.getElementById("dark-mode-toggle");
   if (!btn) return;

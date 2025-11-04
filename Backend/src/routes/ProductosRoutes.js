@@ -1,3 +1,19 @@
+// Rutas Productos
+//
+// Descripción:
+// Archivo de enrutamiento para manejar operaciones sobre productos
+// de PatitasFelices. Centraliza las funciones CRUD y manejo de imágenes.
+//
+// Funciones incluidas:
+// - crearProducto           → crea un nuevo producto con imagen
+// - obtenerProductos        → lista todos los productos
+// - obtenerProductoPorCodigo → obtiene un producto por su código (_id)
+// - actualizarProducto      → modifica un producto y su imagen opcional
+// - eliminarProducto        → elimina un producto
+//
+// Middleware:
+// - upload (Multer) para manejo de imágenes locales
+
 const express = require('express');
 const router = express.Router();
 

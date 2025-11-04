@@ -1,3 +1,20 @@
+// Servidor Backend de PatitasFelices
+//
+// Descripción:
+// Inicializa el servidor Express, conecta con MongoDB y define 
+// rutas y middleware principales.
+//
+// Funcionalidades principales:
+// - Conexión a MongoDB usando mongoose con URI desde .env
+// - Middleware:
+//     - express.json() y express.urlencoded() para parseo de JSON y forms
+//     - cors() para habilitar solicitudes desde otros dominios
+// - Servir imágenes estáticamente desde /uploads
+// - Rutas principales montadas en /api (RoutesMain)
+// - Ruta de prueba en /
+// - Inicio del servidor en puerto definido por process.env.PORT o 4000
+
+
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');

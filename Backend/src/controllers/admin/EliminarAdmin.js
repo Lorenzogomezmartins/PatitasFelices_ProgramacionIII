@@ -1,3 +1,17 @@
+// Función: eliminarAdmin
+//
+// Descripción:
+// Elimina un administrador existente de la base de datos.
+//
+// Parámetros esperados:
+// - req.params.id: String (ID del administrador a eliminar)
+//
+// Funcionamiento:
+// - Busca al administrador por su ID en la base de datos
+// - Si no existe, responde con código 404 y mensaje de error
+// - Si existe, lo elimina utilizando deleteOne()
+// - Responde con mensaje de éxito al eliminarlo
+// - En caso de error, responde con código 500 y mensaje correspondiente
 const Admin = require('../../models/admin');
 
 const eliminarAdmin = async (req, res) => {

@@ -1,3 +1,27 @@
+// Función: actualizarProducto
+//
+// Descripción:
+// Actualiza los datos de un producto existente en la base de datos.
+//
+// Parámetros esperados en req.body (todos opcionales):
+// - nombre: String
+// - categoria: String ('alimento' o 'juguete')
+// - tipo_mascota: String ('perro' o 'gato')
+// - precio: Number
+// - marca: String
+// - stock: Number
+// - activo: Boolean
+// - tamano: String ('pequeño', 'mediano', 'grande')
+// - req.file: Imagen subida (opcional)
+//
+// Funcionamiento:
+// - Busca el producto por ID (req.params.id)
+// - Construye un objeto solo con los campos enviados
+// - Si se sube una nueva imagen, reemplaza la anterior; si no, se preserva la existente
+// - Actualiza el producto con runValidators para respetar las validaciones del esquema
+// - Responde con mensaje de éxito y producto actualizado
+
+
 const Producto = require("../../models/producto");
 
 const actualizarProducto = async (req, res) => {

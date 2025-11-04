@@ -1,8 +1,32 @@
+// Función: crearProducto
+//
+// Descripción:
+// Crea un nuevo producto en la base de datos, incluyendo soporte
+// para subir una imagen mediante Multer.
+//
+// Parámetros esperados en req.body (todos obligatorios):
+// - _id: String (código del producto)
+// - nombre: String
+// - categoria: String ('alimento' o 'juguete')
+// - tipo_mascota: String ('perro' o 'gato')
+// - precio: Number
+// - marca: String
+// - stock: Number
+// - activo: Boolean (opcional, por defecto true)
+// - tamano: String ('pequeño', 'mediano', 'grande')
+// - req.file: Imagen subida (obligatoria)
+//
+// Funcionamiento:
+// - Valida que todos los campos obligatorios estén presentes
+// - Construye la URL de la imagen a partir del archivo subido
+// - Crea la instancia de Producto y la guarda en la base de datos
+// - Maneja errores de validación y errores generales
+// - Responde con 201 y el producto creado en caso de éxito
+
+
 const Producto = require('../../models/producto');
 
-/**
- * Crear un nuevo producto con soporte para una imagen subida con Multer.
- */
+
 const crearProducto = async (req, res) => {
   try {
     // Extraer datos del cuerpo y limpiar strings

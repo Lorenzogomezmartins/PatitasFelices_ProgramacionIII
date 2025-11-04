@@ -1,4 +1,22 @@
-let adminActualId = null; // almacena el ID del admin que se está editando
+// Archivo: adminDashboard.js
+//
+// Descripción:
+// Gestiona la interfaz de administradores en el frontend. Permite crear, editar,
+// actualizar y eliminar administradores, mostrar la lista en tabla y mostrar
+// mensajes de estado flotantes.
+//
+// Variables:
+// - adminActualId: ID del admin que se está editando
+//
+// Funcionalidades:
+// - Crear admin: valida campos, llama al backend y recarga la tabla
+// - Modificar admin: edita admin seleccionado y actualiza su fila
+// - Cargar admins: obtiene admins del backend y genera tabla dinámica
+// - Cargar admin en formulario: rellena inputs para edición
+// - Eliminar admin: confirma y elimina admin, recarga tabla
+// - Mensajes flotantes: muestra alertas por 3 segundos
+
+let adminActualId = null; 
 
 document.addEventListener("DOMContentLoaded", () => {
   cargarAdmins();
@@ -10,32 +28,39 @@ document.addEventListener("DOMContentLoaded", () => {
   // ----------------------
   // AGREGAR ADMIN
   // ----------------------
-  btnAgregarAdmin.addEventListener("click", async () => {
-    const nombre = document.getElementById("inputNombreAdmin").value.trim();
-    const email = document.getElementById("inputEmailAdmin").value.trim();
-    const password = document.getElementById("inputPasswordAdmin").value;
-    const rol = document.getElementById("inputRolAdmin").value;
+ btnAgregarAdmin.addEventListener("click", async () => {
+  const nombre = document.getElementById("inputNombreAdmin").value.trim();
+  const email = document.getElementById("inputEmailAdmin").value.trim();
+  const password = document.getElementById("inputPasswordAdmin").value;
+  const rol = document.getElementById("inputRolAdmin").value;
 
-    if (!nombre || !email || !password || !rol) {
-      mostrarMensaje("Todos los campos son obligatorios", "error");
-      return;
+  // Validación de campos obligatorios
+  if (!nombre || !email || !password || !rol) {
+    mostrarMensaje("Todos los campos son obligatorios", "error");
+    return;
+  }
+
+  try {
+    // Llamada al backend para crear admin
+    const response = await apiClient.crearAdmin({ nombre, email, password, rol });
+
+    // Verificación de error devuelto por el backend
+    if (response.mensaje && response.mensaje.toLowerCase().includes("error")) {
+      throw new Error(response.mensaje);
     }
 
-    try {
-      const response = await apiClient.crearAdmin({ nombre, email, password, rol });
-      if (!response.ok) throw new Error(response.mensaje || "Error al crear admin");
+    // Si todo sale bien
+    mostrarMensaje("✅ Administrador creado correctamente", "success");
+    frmAdmins.reset();      
+    cargarAdmins();          
 
-      mostrarMensaje("✅ Administrador creado correctamente", "success");
-      frmAdmins.reset();
-      cargarAdmins();
-    } catch (error) {
-      console.error("❌ Error al crear admin:", error);
-      mostrarMensaje(`❌ ${error.message}`, "error");
-    }
-  });
-
+  } catch (error) {
+    console.error("❌ Error al crear admin:", error);
+    mostrarMensaje(`❌ ${error.message}`, "error");
+  }
+});
   // ----------------------
-  // MODIFICAR ADMIN (sin password)
+  // MODIFICAR ADMIN 
   // ----------------------
   btnActualizarAdmin.addEventListener("click", async () => {
     if (!adminActualId) {

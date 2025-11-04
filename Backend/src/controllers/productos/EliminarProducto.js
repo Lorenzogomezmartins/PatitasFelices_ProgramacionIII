@@ -1,3 +1,18 @@
+// Función: eliminarProducto
+//
+// Descripción:
+// Elimina un producto de la base de datos según su código (_id).
+//
+// Parámetros esperados:
+// - req.params.id: String, código del producto a eliminar
+//
+// Funcionamiento:
+// - Busca y elimina el producto por _id usando findOneAndDelete
+// - Si no existe, responde con 404 (Producto no encontrado)
+// - Si se elimina correctamente, responde con mensaje de éxito
+// - Maneja errores generales con status 500
+
+
 const Producto = require('../../models/producto');
 
 const eliminarProducto = async (req, res) => {

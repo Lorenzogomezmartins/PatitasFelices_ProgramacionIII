@@ -1,6 +1,18 @@
-/**
- * Obtener un producto por su código
- */
+// Función: obtenerProductoPorCodigo
+//
+// Descripción:
+// Recupera un producto de la base de datos según su código (_id).
+//
+// Parámetros esperados:
+// - req.params.id: String, código del producto a buscar
+//
+// Funcionamiento:
+// - Busca el producto por _id usando findById
+// - Si no existe, responde con 404 (Producto no encontrado)
+// - Si se encuentra, devuelve el objeto producto en JSON
+// - Maneja errores generales con status 500
+
+
 const Producto = require('../../models/producto');
 
 const obtenerProductoPorCodigo = async (req, res) => {

@@ -1,3 +1,14 @@
+// Conexión a MongoDB
+// Función para conectar la aplicación a la base de datos PatitasFelices.
+// Uso de mongoose.connect con configuración moderna.
+//
+// - process.env.MONGO_URI: URL de conexión a MongoDB
+// - useNewUrlParser: true, para usar el nuevo parser de URL
+// - useUnifiedTopology: true, para la nueva gestión de topología
+//
+// En caso de error, muestra mensaje y detiene la aplicación.
+
+
 const mongoose = require('mongoose');
 
 const connectDB = async () => {

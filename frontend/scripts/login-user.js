@@ -1,6 +1,13 @@
-// -------------------------------------------------------------
-// Lógica de Login/Creación de Usuario
-// -------------------------------------------------------------
+// LOGIN / CREACIÓN DE USUARIO
+//
+// Funcionalidad:
+// - Permite que un usuario ingrese con nombre y apellido.
+// - Si el usuario no existe, se crea automáticamente (upsert).
+// - Valida que ambos campos estén completos antes de enviar la solicitud.
+// - Deshabilita el botón de continuar mientras se procesa la petición.
+// - Guarda los datos del usuario en localStorage al iniciar sesión.
+// - Redirige automáticamente al dashboard de usuario.
+// - Habilita/deshabilita el botón de continuar según si los inputs están completos.
 
 async function handleUserLogin(event) {
     event.preventDefault();
@@ -21,8 +28,7 @@ async function handleUserLogin(event) {
     continueBtn.disabled = true;
 
     try {
-        // La ruta del backend está configurada para CREAR o LOGGEAR.
-        // Se asume que el controlador 'crearUsuario' maneja el "upsert" (creación si no existe, o retorno si sí existe).
+    
         const API_URL_LOGIN = "http://localhost:4000/api/usuarios/login"; 
         
         const respuesta = await fetch(API_URL_LOGIN, {
@@ -36,17 +42,17 @@ async function handleUserLogin(event) {
         const data = await respuesta.json();
 
         if (!respuesta.ok || !data.ok) {
-            // Muestra el error devuelto por el servidor
+           
             throw new Error(data.error || "Error al iniciar sesión.");
         }
 
-        // 🟢 Éxito: Guardar información del usuario loggeado/creado en localStorage
+        //Éxito: Guardar información del usuario loggeado/creado en localStorage
         const usuarioLoggeado = data.usuario; 
         
         // Guardar como JSON en localStorage
         localStorage.setItem("usuarioLoggeado", JSON.stringify(usuarioLoggeado));
         
-        // 3. Redirigir al dashboard
+        // Redirigir al dashboard
         window.location.href = "../pages/dashboard-user.html"; 
 
     } catch (error) {

@@ -1,3 +1,13 @@
+// MODO OSCURO / CLARO EN LOGIN
+//
+// Funcionalidad:
+// - Permite alternar entre modo oscuro y claro en la página de login.
+// - Cambia colores de fondo, textos, bordes y sombras de inputs, botones,
+//   navbar, cuadros de login, info-box y elementos secundarios (ej. test-user).
+// - Guarda la preferencia del usuario en localStorage.
+// - Actualiza el texto del botón según el modo activo.
+// - Se aplica automáticamente el modo guardado al cargar la página.
+
 function actualizarTextoBotonDark() {
   const btn = document.getElementById("dark-mode-toggle");
   if (!btn) return;

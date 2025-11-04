@@ -1,3 +1,24 @@
+// --------------------------------------------------------------
+// Función: actualizarAdmin
+//
+// Descripción:
+// Actualiza los datos de un administrador existente en la base de datos.
+//
+// Parámetros esperados en req.body:
+// - nombre: String 
+// - email: String 
+// - password: String ( se guarda en hash si se proporciona)
+// - rol: String ('admin' o 'superadmin')
+// - activo: Boolean 
+//
+// Funcionamiento:
+// - Busca al administrador por ID (req.params.id)
+// - Si no existe, responde con 404
+// - Si se proporciona contraseña, la encripta con bcrypt
+// - Actualiza los campos proporcionados y guarda los cambios
+// - Responde con mensaje de éxito y objeto admin actualizado
+// --------------------------------------------------------------
+
 const Admin = require('../../models/admin');
 const bcrypt = require('bcryptjs');
 

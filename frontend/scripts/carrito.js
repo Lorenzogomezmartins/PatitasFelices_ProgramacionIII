@@ -1,6 +1,17 @@
-// =====================
-// Modo Oscuro - Persistencia
-// =====================
+// Carrito y Tickets - Dashboard Usuario
+//
+// Maneja:
+// - Modo oscuro con persistencia en localStorage
+// - Carrito de compras: agregar, eliminar, modificar cantidades, vaciar
+// - Confirmación de compra: envía ticket al backend y muestra ticket
+// - Visualización y descarga de ticket en PDF
+// - Navegación: botón "Seguir comprando" al dashboard
+//
+// Dependencias: html2pdf.js para generar PDF
+
+
+
+// Funciones de Carrito
 function aplicarModoOscuro() {
   const modoOscuroGuardado = localStorage.getItem("theme") === "dark";
   const root = document.documentElement;
@@ -48,9 +59,8 @@ document.addEventListener("DOMContentLoaded", () => {
     .addEventListener("click", descargarPDF);
 });
 
-// =====================
+
 // Funciones de Carrito
-// =====================
 function obtenerCarrito() {
   const carritoJSON = localStorage.getItem("carrito");
   return carritoJSON ? JSON.parse(carritoJSON) : [];
@@ -130,9 +140,8 @@ function vaciarCarrito() {
   mostrarCarrito();
 }
 
-// =====================
+
 // Confirmar Compra (Guarda Ticket en Backend y Muestra Ticket)
-// =====================
 async function confirmarCompra() {
   const carrito = obtenerCarrito();
   if (carrito.length === 0) {
@@ -188,9 +197,8 @@ async function confirmarCompra() {
   }
 }
 
-// =====================
+
 // Función para mostrar ticket
-// =====================
 function mostrarTicket(usuario, carrito, total) {
   const overlay = document.getElementById("overlay");
   const ticket = document.getElementById("ticket");
@@ -238,9 +246,7 @@ function mostrarTicket(usuario, carrito, total) {
   document.getElementById("descargar-pdf-btn").style.display = "inline-block";
 }
 
-// =====================
-// Otros
-// =====================
+
 function cerrarTicket() {
   document.getElementById("overlay").style.display = "none";
   document.getElementById("ticket").style.display = "none";
@@ -271,7 +277,6 @@ function descargarPDF() {
 
 
 
-// ====== Botón "Seguir comprando" ======
 function volverAlDashboard() {
   window.location.href = "../pages/dashboard-user.html";
 }

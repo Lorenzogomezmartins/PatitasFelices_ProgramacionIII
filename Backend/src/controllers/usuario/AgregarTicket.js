@@ -1,3 +1,22 @@
+// Función: agregarTicket
+//
+// Descripción:
+// Agrega un nuevo ticket (compra) al historial de un usuario.
+//
+// Parámetros:
+// - req.params.id: String, ID del usuario
+// - req.body:
+//    - productos: Array de objetos con referencia a Producto y cantidad
+//    - total: Number, total de la compra
+//
+// Funcionamiento:
+// - Valida que exista la lista de productos y que el total sea positivo
+// - Busca al usuario por ID
+// - Construye un nuevo ticket con fecha de compra actual
+// - Agrega el ticket al array de tickets del usuario y guarda cambios
+// - Responde con 201 y lista de tickets actualizada
+
+
 const Usuario = require('../../models/usuario');
 
 const agregarTicket = async (req, res) => {
