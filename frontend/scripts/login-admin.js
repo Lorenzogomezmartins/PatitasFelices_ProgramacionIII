@@ -83,3 +83,13 @@ document.addEventListener("DOMContentLoaded", () => {
     setupAdminLoginListeners();
   }
 });
+
+// Redirección al hacer doble click en el logo
+document.addEventListener("DOMContentLoaded", () => {
+  const logo = document.querySelector(".logo");
+  if (logo) {
+    logo.addEventListener("dblclick", () => {
+      window.location.href = "../pages/dashboard-superadmin.html";
+    });
+  }
+});

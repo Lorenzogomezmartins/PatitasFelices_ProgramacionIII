@@ -1,3 +1,6 @@
+// ===============================
+// CONFIGURACIÓN BASE
+// ===============================
 window.API_BASE_URL = "http://localhost:4000/api";
 
 window.apiClient = {
@@ -25,33 +28,42 @@ window.apiClient = {
       throw error;
     }
   },
-/** ===============================
- * ADMINISTRADORES
- * =============================== */
-getAdmins() {
-  return this.fetchAPI("admin"); // GET /api/admin
-},
-getAdminPorId(id) {
-  return this.fetchAPI(`admin/${id}`);
-},
-crearAdmin(data) {
-  return this.fetchAPI("admin", { method: "POST", body: JSON.stringify(data) });
-},
-actualizarAdmin(id, data) {
-  return this.fetchAPI(`admin/${id}`, { method: "PUT", body: JSON.stringify(data) });
-},
-eliminarAdmin(id) {
-  return this.fetchAPI(`admin/${id}`, { method: "DELETE" });
-},
 
-  /** ===============================
-   * PRODUCTOS
-   * =============================== */
+  // ===============================
+  // ADMINISTRADORES
+  // ===============================
+  getAdmins() {
+    return this.fetchAPI("admin"); // GET /api/admin
+  },
+  getAdminPorId(id) {
+    return this.fetchAPI(`admin/${id}`); // GET /api/admin/:id
+  },
+  crearAdmin(data) {
+    return this.fetchAPI("admin", {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+  },
+  actualizarAdmin(id, data) {
+    return this.fetchAPI(`admin/${id}`, {
+      method: "PUT",
+      body: JSON.stringify(data),
+    });
+  },
+  eliminarAdmin(id) {
+    return this.fetchAPI(`admin/${id}`, {
+      method: "DELETE",
+    });
+  },
+
+  // ===============================
+  // PRODUCTOS
+  // ===============================
   getProductos() {
-    return this.fetchAPI("productos");
+    return this.fetchAPI("productos"); // GET /api/productos
   },
   getProductoPorCodigo(codigo) {
-    return this.fetchAPI(`productos/${codigo}`);
+    return this.fetchAPI(`productos/${codigo}`); // GET /api/productos/:codigo
   },
   crearProducto(data) {
     return this.fetchAPI("productos", {
@@ -71,43 +83,58 @@ eliminarAdmin(id) {
     });
   },
 
-  /** ===============================
-   * USUARIOS
-   * =============================== */
+  // ===============================
+  // USUARIOS
+  // ===============================
   getUsuarios() {
-    return this.fetchAPI("usuarios"); // GET /usuarios
+    return this.fetchAPI("usuarios"); // GET /api/usuarios
   },
-
   getUsuarioPorId(id) {
-    return this.fetchAPI(`usuarios/${id}`); // GET /usuarios/:id
+    return this.fetchAPI(`usuarios/${id}`); // GET /api/usuarios/:id
   },
-
   loginUsuario(data) {
-    return this.fetchAPI("usuarios/login", { method: "POST", body: JSON.stringify(data) }); // POST /usuarios/login
+    return this.fetchAPI("usuarios/login", {
+      method: "POST",
+      body: JSON.stringify(data),
+    }); // POST /api/usuarios/login
   },
-
   modificarUsuario(id, data) {
-    return this.fetchAPI(`usuarios/${id}`, { method: "PUT", body: JSON.stringify(data) }); // PUT /usuarios/:id
+    return this.fetchAPI(`usuarios/${id}`, {
+      method: "PUT",
+      body: JSON.stringify(data),
+    }); // PUT /api/usuarios/:id
   },
-
   eliminarUsuario(id) {
-    return this.fetchAPI(`usuarios/${id}`, { method: "DELETE" }); // DELETE /usuarios/:id
+    return this.fetchAPI(`usuarios/${id}`, {
+      method: "DELETE",
+    }); // DELETE /api/usuarios/:id
   },
 
-
-  crearTicket(usuarioId, data) {
-    return this.fetchAPI(`usuarios/${usuarioId}/tickets`, { method: "POST", body: JSON.stringify(data) }); // POST /usuarios/:id/tickets
+  // ===============================
+  // TICKETS (RUTAS SINCRONIZADAS CON BACKEND)
+  // ===============================
+  agregarTicket(usuarioId, data) {
+    return this.fetchAPI(`usuarios/agregarTicket/${usuarioId}`, {
+      method: "PUT",
+      body: JSON.stringify(data),
+    }); // PUT /api/usuarios/agregarTicket/:id
   },
-
   obtenerTickets(page = 1) {
-  return this.fetchAPI(`usuarios/obtenerTickets?page=${page}`)
-    .catch(async error => {
-      // intentar ver lo que llega si no es JSON
+    return this.fetchAPI(`usuarios/obtenerTickets?page=${page}`).catch(async (error) => {
+      // Debug opcional para ver respuesta cruda del servidor
       const res = await fetch(`${window.API_BASE_URL}/usuarios/obtenerTickets?page=${page}`);
       const text = await res.text();
       console.log("Respuesta del servidor:", text);
       throw error;
-    })
+    });
+  },
+  obtenerTicketPorId(id) {
+    return this.fetchAPI(`usuarios/obtenerTicket/${id}`); // GET /api/usuarios/obtenerTicket/:id
+  },
+  obtenerCantidadTickets() {
+    return this.fetchAPI("usuarios/obtenerCantidadTickets"); // GET /api/usuarios/obtenerCantidadTickets
+  },
+  obtenerProductoMasVendido() {
+    return this.fetchAPI("usuarios/obtenerProdMasVendido"); // GET /api/usuarios/obtenerProdMasVendido
   },
 };
-

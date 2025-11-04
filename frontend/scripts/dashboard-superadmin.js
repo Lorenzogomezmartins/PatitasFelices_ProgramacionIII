@@ -169,7 +169,7 @@ function cargarAdminEnFormulario(admin) {
 }
 
 // ----------------------
-// ACTUALIZAR FILA DE ADMIN (sin recargar toda la tabla)
+// ACTUALIZAR FILA DE ADMIN
 // ----------------------
 function actualizarFilaAdmin(adminActualizado) {
   const filas = document.querySelectorAll("#divListadoAdmins tbody tr");

@@ -386,7 +386,11 @@ async function cargarTickets() {
       table.innerHTML = `
         <thead class="table-dark">
           <tr>
-            <th>Usuario</th><th>Fecha de compra</th><th>Productos</th><th>Total</th>
+            <th>Usuario</th>
+            <th>Fecha de compra</th>
+            <th>Productos</th>
+            <th>Total</th>
+            <th>Acciones</th>
           </tr>
         </thead>
         <tbody></tbody>
@@ -404,8 +408,19 @@ async function cargarTickets() {
       const productos = ticket.productos
         .map(p => `${p.prod?._id || "?"} (x${p.prod?.cantidad || 0})`)
         .join(", ");
-      tr.innerHTML = `<td>${usuario}</td><td>${fecha}</td><td>${productos}</td><td>${total}</td>`;
+      
+      tr.innerHTML = `
+        <td>${usuario}</td>
+        <td>${fecha}</td>
+        <td>${productos}</td>
+        <td>${total}</td>
+        <td><button class="btn btn-sm btn-primary btn-detalles">Detalles</button></td>
+      `;
+
       tbody.appendChild(tr);
+
+      // Listener para el botón Detalles
+      tr.querySelector(".btn-detalles").addEventListener("click", () => mostrarModal(ticket));
     });
 
     currentPage++;
@@ -415,6 +430,58 @@ async function cargarTickets() {
     contenedor.innerHTML = `<p style="color:red; font-weight:bold;">Error al cargar tickets: ${error.message}</p>`;
   }
 }
+
+async function mostrarModal(ticket) {
+  document.getElementById("modalUsuario").textContent = `${ticket.nombreUsuario} ${ticket.apellidoUsuario}`;
+  document.getElementById("modalFecha").textContent = new Date(ticket.fechaDeCompra).toLocaleString();
+  document.getElementById("modalTotal").textContent = ticket.total;
+
+  const ulProductos = document.getElementById("modalProductos");
+  ulProductos.innerHTML = "";
+
+  for (const p of ticket.productos) {
+    try {
+      const prodId = p.prod?._id;
+      if (!prodId) continue;
+
+      // 🚨 Cambiar aquí la URL
+      const resp = await fetch(`http://localhost:4000/api/productos/obtenerporcodigo/${prodId}`);
+
+      if (!resp.ok) {
+        const li = document.createElement("li");
+        li.textContent = `Producto con ID ${prodId} no encontrado (HTTP ${resp.status})`;
+        ulProductos.appendChild(li);
+        continue;
+      }
+
+      const data = await resp.json();
+
+      if (data.ok && data.producto) {
+        const producto = data.producto;
+        const li = document.createElement("li");
+        li.innerHTML = `
+          <strong>Nombre:</strong> ${producto.nombre} |
+          <strong>Precio:</strong> $${producto.precio} |
+          <strong>Tamaño:</strong> ${producto.tamano || "-"} |
+          <strong>Cantidad comprada:</strong> ${p.prod.cantidad}
+        `;
+        ulProductos.appendChild(li);
+      }
+
+    } catch (error) {
+      const li = document.createElement("li");
+      li.textContent = `Error al obtener producto: ${error.message}`;
+      ulProductos.appendChild(li);
+    }
+  }
+
+  const modal = new bootstrap.Modal(document.getElementById("modalTicket"));
+  modal.show();
+}
+
+
+
+
 
 /* ==========================================
    ESTADÍSTICAS DE PRODUCTOS Y USUARIOS
