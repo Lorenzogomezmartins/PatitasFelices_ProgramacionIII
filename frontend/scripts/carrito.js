@@ -11,7 +11,35 @@
 
 
 
-// Funciones de Carrito
+document.addEventListener("DOMContentLoaded", () => {
+  // Inicialización
+  aplicarModoOscuro();
+  mostrarCarrito();
+
+  const btnVaciar = document.getElementById("vaciar-carrito-btn");
+  if (btnVaciar) {
+    btnVaciar.addEventListener("click", () => {
+      if (confirm("¿Seguro que quieres vaciar el carrito?")) {
+        vaciarCarrito();
+      }
+    });
+  }
+
+  const btnConfirmar = document.getElementById("confirmar-compra-btn");
+  if (btnConfirmar) btnConfirmar.addEventListener("click", confirmarCompra);
+
+  const btnCerrarTicket = document.getElementById("cerrar-ticket-btn");
+  if (btnCerrarTicket) btnCerrarTicket.addEventListener("click", cerrarTicket);
+
+  const btnDescargarPDF = document.getElementById("descargar-pdf-btn");
+  if (btnDescargarPDF) btnDescargarPDF.addEventListener("click", descargarPDF);
+
+  const btnVolver = document.getElementById("btn-volver");
+  if (btnVolver) btnVolver.addEventListener("click", volverAlDashboard);
+});
+
+
+// Modo Oscuro - Persistencia
 function aplicarModoOscuro() {
   const modoOscuroGuardado = localStorage.getItem("theme") === "dark";
   const root = document.documentElement;
@@ -37,27 +65,6 @@ function aplicarModoOscuro() {
     document.body.classList.remove("dark-mode");
   }
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-  aplicarModoOscuro();
-  mostrarCarrito();
-
-  document.getElementById("vaciar-carrito-btn").addEventListener("click", () => {
-    if (confirm("¿Seguro que quieres vaciar el carrito?")) {
-      vaciarCarrito();
-    }
-  });
-
-  document
-    .getElementById("confirmar-compra-btn")
-    .addEventListener("click", confirmarCompra);
-  document
-    .getElementById("cerrar-ticket-btn")
-    .addEventListener("click", cerrarTicket);
-  document
-    .getElementById("descargar-pdf-btn")
-    .addEventListener("click", descargarPDF);
-});
 
 
 // Funciones de Carrito
@@ -140,7 +147,6 @@ function vaciarCarrito() {
   mostrarCarrito();
 }
 
-
 // Confirmar Compra (Guarda Ticket en Backend y Muestra Ticket)
 async function confirmarCompra() {
   const carrito = obtenerCarrito();
@@ -162,7 +168,10 @@ async function confirmarCompra() {
     }
   }));
 
-  const total = carrito.reduce((sum, item) => sum + Number(item.precio) * Number(item.cantidad), 0);
+  const total = carrito.reduce(
+    (sum, item) => sum + Number(item.precio) * Number(item.cantidad),
+    0
+  );
 
   try {
     const respuesta = await fetch(
@@ -180,15 +189,22 @@ async function confirmarCompra() {
       throw new Error(data.error || "Error al agregar el ticket");
     }
 
-    // Actualizamos los tickets en localStorage
+    await fetch("http://localhost:4000/api/productos/restarStock", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        productos: carrito.map(item => ({
+          id: item._id,
+          cantidad: item.cantidad
+        }))
+      })
+    });
+
     usuario.tickets = data.tickets;
     localStorage.setItem("usuarioLoggeado", JSON.stringify(usuario));
 
-    // Mostrar ticket en pantalla
     mostrarTicket(usuario, carrito, total);
 
-    // Vaciar carrito
-    vaciarCarrito();
     mostrarCarrito();
 
   } catch (error) {
@@ -246,42 +262,99 @@ function mostrarTicket(usuario, carrito, total) {
   document.getElementById("descargar-pdf-btn").style.display = "inline-block";
 }
 
-
+// Otros
 function cerrarTicket() {
   document.getElementById("overlay").style.display = "none";
   document.getElementById("ticket").style.display = "none";
   location.reload();
+  vaciarCarrito();
 }
 
-function descargarPDF() {
-  const element = document.getElementById("ticket");
+async function descargarPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({
+    orientation: "portrait",
+    unit: "mm",
+    format: "a4"
+  });
 
-  // Forzar que esté visible temporalmente
-  element.style.display = "block";
+  // Obtener datos
+  const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+  const usuario = JSON.parse(localStorage.getItem("usuarioLoggeado"));
+  const fecha = new Date().toLocaleString("es-AR");
 
-  html2pdf()
-    .set({
-      margin: 0.5,
-      filename: "ticket_reserva.pdf",
-      image: { type: "jpeg", quality: 0.98 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
-    })
-    .from(element)
-    .save()
-    .then(() => {
-      // Restaurar display original
-      element.style.display = "none";
-    });
+  if (!usuario || !usuario.nombre) {
+    alert("No hay usuario logueado.");
+    return;
+  }
+
+  if (carrito.length === 0) {
+    alert("El carrito está vacío, no se puede generar el ticket.");
+    return;
+  }
+
+  // 🔹 Logo
+  const logoUrl = "../imagenes/Logo.png"; // ruta relativa desde tu HTML
+  const img = new Image();
+  img.src = logoUrl;
+
+  // Esperar que cargue antes de usarlo
+  await new Promise((resolve, reject) => {
+    img.onload = resolve;
+    img.onerror = reject;
+  });
+
+  // Agregar logo (x, y, ancho, alto)
+  doc.addImage(img, "PNG", 15, 10, 30, 25);
+
+  // Encabezado
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(20);
+  doc.text("TICKET DE COMPRA", 105, 25, { align: "center" });
+
+  doc.setFontSize(11);
+  doc.text(`Cliente: ${usuario.nombre}`, 20, 45);
+  doc.text(`Fecha: ${fecha}`, 20, 52);
+
+  // Tabla
+  let y = 65;
+  doc.setFillColor(230, 230, 230);
+  doc.rect(20, y, 170, 10, "F");
+
+  doc.setFont("helvetica", "bold");
+  doc.text("Producto", 25, y + 7);
+  doc.text("Cantidad", 110, y + 7);
+  doc.text("Precio", 155, y + 7);
+
+  y += 12;
+  doc.setFont("helvetica", "normal");
+
+  let total = 0;
+  carrito.forEach((item) => {
+    const precioTotal = Number(item.precio) * Number(item.cantidad);
+    total += precioTotal;
+
+    doc.rect(20, y, 170, 10);
+    doc.text(String(item.nombre), 25, y + 7);
+    doc.text(String(item.cantidad), 120, y + 7);
+    doc.text(`ARS ${precioTotal.toFixed(2)}`, 155, y + 7);
+    y += 10;
+  });
+
+  y += 10;
+  doc.setFont("helvetica", "bold");
+  doc.text(`Total a pagar: ARS ${total.toFixed(2)}`, 20, y);
+
+  y += 10;
+  doc.setFont("helvetica", "italic");
+  doc.setFontSize(10);
+  doc.text("¡Gracias por su compra!", 105, y, { align: "center" });
+
+  doc.save(`ticket_${usuario.nombre.replace(/\s+/g, "_")}.pdf`);
 }
-
 
 
 function volverAlDashboard() {
   window.location.href = "../pages/dashboard-user.html";
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  const btnVolver = document.getElementById("btn-volver");
-  if (btnVolver) btnVolver.addEventListener("click", volverAlDashboard);
-});
