@@ -29,6 +29,16 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Botón modificar producto
+  const btnActualizarProducto = document.getElementById("btnModificarProd");
+  if (btnActualizarProducto) {
+    btnActualizarProducto.type = "button";
+    btnActualizarProducto.addEventListener("click", async function(event) {
+      event.preventDefault();
+      await actualizarProducto();
+    });
+  }
+
   // Manejo de imagen
   const inputFoto = document.getElementById("inputFoto");
   if (inputFoto) inputFoto.addEventListener("change", handleImageUpload);
@@ -239,6 +249,8 @@ async function actualizarProducto() {
     const tipo_mascota = document.getElementById("inputTipoDeMascota")?.value?.trim();
     const precioStr = document.getElementById("inputPrecio")?.value;
     const stockStr = document.getElementById("inputStock")?.value;
+    const activo = document.getElementById("inputActivo")?.checked ?? true;
+    const inputFoto = document.getElementById("inputFoto");
 
     if (!_id) {
       mostrarMensaje("⚠️ Debe especificar el código del producto a actualizar", "error");
@@ -249,36 +261,40 @@ async function actualizarProducto() {
 
     const precio = parseFloat(precioStr);
     const stock = parseInt(stockStr) || 0;
-    const activo = document.getElementById("inputActivo")?.checked ?? true;
-    const inputFoto = document.getElementById("inputFoto");
 
-    // Construir FormData
+    // Construir FormData solo con los campos modificados
     const formData = new FormData();
-    formData.append("nombre", nombre);
-    formData.append("marca", marca);
-    formData.append("categoria", categoria);
-    formData.append("tamano", tamano);
-    formData.append("tipo_mascota", tipo_mascota);
+    if (nombre) formData.append("nombre", nombre);
+    if (marca) formData.append("marca", marca);
+    if (categoria) formData.append("categoria", categoria);
+    if (tamano) formData.append("tamano", tamano);
+    if (tipo_mascota) formData.append("tipo_mascota", tipo_mascota);
     if (!isNaN(precio)) formData.append("precio", precio);
-    if (!isNaN(stock)) formData.append("stock", stock);    
+    if (!isNaN(stock)) formData.append("stock", stock);
     formData.append("activo", activo);
     if (inputFoto?.files?.length > 0) {
       formData.append("url", inputFoto.files[0]);
     }
 
-    const res = await fetch(`${API_PRODUCTOS}/modificar/${_id}`, {
+    // Debug
+    for (let [key, value] of formData.entries()) {
+      console.log("FormData:", key, value);
+    }
+
+    const res = await fetch(`http://localhost:4000/api/productos/modificar/${_id}`, {
       method: "PUT",
       body: formData,
     });
 
     const data = await res.json();
 
-    if (!res.ok) throw new Error(data.msg || "Error al actualizar producto");
+    if (!res.ok) throw new Error(data.mensaje || "Error al actualizar producto");
 
     mostrarMensaje("✅ Producto actualizado correctamente", "success");
     document.getElementById("frmFormulario").reset();
     removeImage();
     cargarProductosAdmin();
+
   } catch (error) {
     console.error("❌ Error al actualizar producto:", error);
     mostrarMensaje(`❌ ${error.message}`, "error");
@@ -301,12 +317,19 @@ function abrirFormularioEdicion(producto) {
 
   if (producto.urls?.length > 0) {
     const img = document.getElementById("foto_img");
-    img.src = producto.urls[0];
+    const preview = document.getElementById("upload-placeholder");
+
+    // URL completa
+    const urlCompleta = `http://localhost:4000${producto.urls[0]}`;
+
+    img.src = urlCompleta;
     img.style.display = "block";
+
+    preview.src = urlCompleta;
+    preview.style.display = "block"; // si querés mostrar el preview
     document.getElementById("upload-placeholder").style.display = "none";
   }
 }
-
 /* ==========================================
    MENSAJES
 ========================================== */

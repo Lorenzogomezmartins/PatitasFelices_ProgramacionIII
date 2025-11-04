@@ -238,7 +238,7 @@ h1 {
 }
 
 /* ========== DARK MODE ========== */
-body.dark-mode {
+/* body.dark-mode {
   background-color: #000000ce !important;
   color: #ffffff !important;
 }
@@ -307,4 +307,4 @@ body.dark-mode #confirmar-compra-btn {
 
 body.dark-mode .btn-eliminar {
   background: linear-gradient(135deg, #8b0000, #6b0000);
-}
+} */

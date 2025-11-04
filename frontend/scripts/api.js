@@ -28,6 +28,27 @@ window.apiClient = {
       throw error;
     }
   },
+<<<<<<< HEAD
+=======
+/** ===============================
+ * ADMINISTRADORES
+ * =============================== */
+getAdmins() {
+    return this.fetchAPI("admin"); // GET /api/admin
+  },
+  getAdminPorId(id) {
+    return this.fetchAPI(`admin/${id}`);
+  },
+  crearAdmin(data) {
+    return this.fetchAPI("admin", { method: "POST", body: JSON.stringify(data) });
+  },
+  actualizarAdmin(id, data) {
+    return this.fetchAPI(`admin/${id}`, { method: "PUT", body: JSON.stringify(data) });
+  },
+  eliminarAdmin(id) {
+    return this.fetchAPI(`admin/${id}`, { method: "DELETE" });
+  },
+>>>>>>> 19cda9e6265daf3dddbef51d163305fddd42d2fb
 
   // ===============================
   // ADMINISTRADORES
