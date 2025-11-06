@@ -42,7 +42,7 @@ h1 {
   margin-bottom: 1rem;
 }
 
-#carrito-tabla th, 
+#carrito-tabla th,
 #carrito-tabla td {
   padding: 1rem;
   text-align: center;
@@ -236,75 +236,3 @@ h1 {
   transform: scale(1.05);
   opacity: 0.9;
 }
-
-/* ========== DARK MODE ========== */
-/* body.dark-mode {
-  background-color: #000000ce !important;
-  color: #ffffff !important;
-}
-
-body.dark-mode h1 {
-  color: #c89a64;
-}
-
-body.dark-mode .carrito-container {
-  background-color: #0f0f0f !important;
-  border: 1px solid #333;
-}
-
-body.dark-mode #carrito-tabla th {
-  background: #524123ff !important;
-  color: #ffffff;
-}
-
-body.dark-mode #carrito-tabla td {
-  background: #111111;
-  color: #ffffff;
-  border-bottom: 1px solid #2b2b2b;
-}
-
-body.dark-mode #carrito-tabla tr:hover {
-  background-color: rgba(82, 65, 35, 0.12) !important;
-}
-
-body.dark-mode .resumen {
-  color: #c89a64;
-}
-
-body.dark-mode .cantidad-input {
-  background-color: #1a1a1a;
-  color: #ffffff;
-  border-color: #333;
-}
-
-body.dark-mode .cantidad-input:focus {
-  border-color: #c89a64;
-}
-
-body.dark-mode #ticket {
-  background-color: #0f0f0f !important;
-  color: #ffffff;
-  border: 1px solid #333;
-}
-
-body.dark-mode #ticket h3 {
-  color: #c89a64;
-}
-
-body.dark-mode .ticket-item {
-  border-bottom: 1px solid #2b2b2b;
-}
-
-body.dark-mode #overlay {
-  background: rgba(0, 0, 0, 0.85);
-}
-
-body.dark-mode .btn-volver,
-body.dark-mode #vaciar-carrito-btn,
-body.dark-mode #confirmar-compra-btn {
-  background-color: #524123ff !important;
-}
-
-body.dark-mode .btn-eliminar {
-  background: linear-gradient(135deg, #8b0000, #6b0000);
-} */

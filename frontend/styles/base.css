@@ -1,0 +1,112 @@
+:root {
+  --primary-color: #b3814d;
+  --primary-light: #c6965f;
+  --bg-color: #e6d3b7;
+  --text-dark: #1f2937;
+  --text-light: #6b7280;
+  --white: #ffffff;
+  --gray-border: #d1d5db;
+  --hover-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* BASE GLOBAL */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-dark);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* TITULOS Y LABELS */
+h1, h2, h3, h4 {
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+}
+
+label, .form-label, .label-text {
+  color: var(--text-dark);
+  font-weight: 600;
+}
+
+/* INPUTS */
+input, select, textarea {
+  background: var(--white);
+  border: 1px solid var(--gray-border);
+  border-radius: 8px;
+  padding: 8px 12px;
+  transition: all 0.3s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--primary-color);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(179, 129, 77, 0.25);
+}
+
+/* BOTONES */
+button, .btn {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+  color: var(--white);
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover, .btn:hover {
+  transform: scale(1.05);
+  box-shadow: var(--hover-shadow);
+}
+
+/* TABLAS */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--white);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+th {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+  color: var(--white);
+  padding: 10px;
+}
+
+td {
+  padding: 10px;
+  border-bottom: 1px solid var(--gray-border);
+}
+
+tr:hover td {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* MODAL */
+.modal {
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+}
+
+.modal-content {
+  background: var(--white);
+  color: var(--text-dark);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: var(--hover-shadow);
+  width: 90%;
+  max-width: 500px;
+}

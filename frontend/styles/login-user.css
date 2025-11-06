@@ -35,50 +35,8 @@ header {
 
 .navbar {
   display: flex;
-  justify-content: space-between; /* logo izquierda, links derecha */
-  align-items: center; /* centrado vertical */
-  height: 80px;
-}
-
-/* Logo */:root {
-  --primary-color: #b3814d;
-  --primary-light: #b3814d;
-  --bg-color: #e6d3b7;
-  --text-dark: #1f2937;
-  --text-light: #6b7280;
-  --white: #ffffff;
-  --gray-border: #d1d5db;
-}
-
-/* ===== GLOBAL ===== */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: var(--bg-color);
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-/* ===== HEADER ===== */
-header {
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-  padding: 0.5rem 2rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-
-.navbar {
-  display: flex;
-  justify-content: space-between; /* logo izquierda, links derecha */
-  align-items: center; /* centrado vertical */
+  justify-content: space-between;
+  align-items: center;
   height: 80px;
 }
 
@@ -89,7 +47,7 @@ header {
 }
 
 .logo {
-  width: 90px; /* tamaño visible */
+  width: 90px;
   height: auto;
 }
 
@@ -138,7 +96,7 @@ header {
   width: 90%;
 }
 
-/* Caja informativa arriba - ancho completo */
+/* Caja informativa arriba */
 .info-box-top {
   background: white;
   border-radius: 1rem;
@@ -160,7 +118,7 @@ header {
   line-height: 1.6;
 }
 
-/* Caja de login centrada */
+/* Caja de login */
 .login-box {
   background: white;
   border-radius: 1rem;
@@ -233,178 +191,6 @@ header {
   background-color: #cbd5e1;
   cursor: not-allowed;
 }
-
-
-/* ===== RESPONSIVE ===== */
-@media (max-width: 768px) {
-  .navbar {
-    flex-direction: column;
-    height: auto;
-    gap: 1rem;
-    padding: 1rem 0;
-  }
-
-  .container {
-    width: 95%;
-    margin: 1rem auto;
-  }
-  
-  .login-box {
-    max-width: 100%;
-  }
-}
-
-.logo-container {
-  display: flex;
-  align-items: center;
-}
-
-.logo {
-  width: 90px; /* tamaño visible */
-  height: auto;
-}
-
-.logo-text {
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: var(--white);
-  text-decoration: none;
-  cursor: default;
-  transition: transform 0.3s;
-}
-
-.logo-text:hover {
-  transform: scale(1.02);
-}
-
-/* ===== NAV LINKS ===== */
-.nav-links {
-  display: flex;
-  gap: 1.5rem;
-  align-items: center;
-}
-
-.nav-links a {
-  color: var(--white);
-  text-decoration: none;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  position: relative;
-}
-
-.nav-links a:hover {
-  transform: scale(1.05);
-}
-
-/* ===== CONTAINER ===== */
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2rem;
-  padding: 2rem 1rem;
-  flex: 1;
-  max-width: 900px;
-  margin: 0 auto;
-  width: 90%;
-}
-
-/* Caja informativa arriba - ancho completo */
-.info-box-top {
-  background: white;
-  border-radius: 1rem;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  padding: 2rem;
-  text-align: center;
-}
-
-.info-box-top h2 {
-  color: #111827;
-  margin-bottom: 1rem;
-  font-size: 1.5rem;
-}
-
-.info-box-top p {
-  color: #4b5563;
-  margin-bottom: 0;
-  line-height: 1.6;
-}
-
-/* Caja de login centrada */
-.login-box {
-  background: white;
-  border-radius: 1rem;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 400px;
-  padding: 2rem;
-  text-align: center;
-}
-
-.login-box h1 {
-  margin-bottom: 0.5rem;
-  color: #111827;
-  font-size: 1.875rem;
-}
-
-.login-box p {
-  color: #6b7280;
-  margin-bottom: 1.5rem;
-}
-
-/* Formulario */
-.form {
-  text-align: left;
-}
-
-.form label {
-  display: block;
-  font-size: 0.875rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-  color: #4b5563;
-}
-
-.form input[type="text"] {
-  width: 100%;
-  padding: 0.75rem 1rem;
-  border: 1px solid #d1d5db;
-  border-radius: 0.5rem;
-  outline: none;
-  transition: border-color 0.3s;
-  margin-bottom: 1rem;
-}
-
-.form input:focus {
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
-}
-
-.form button {
-  margin-top: 1rem;
-  width: 100%;
-  padding: 0.75rem 1rem;
-  font-size: 1.1rem;
-  font-weight: bold;
-  background-color: #2563eb;
-  color: white;
-  border: none;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-}
-
-.form button:hover {
-  background-color: #1d4ed8;
-  transform: scale(1.02);
-}
-
-.form button:disabled {
-  background-color: #cbd5e1;
-  cursor: not-allowed;
-}
-
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {

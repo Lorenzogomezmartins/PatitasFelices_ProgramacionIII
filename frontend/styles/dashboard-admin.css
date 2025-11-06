@@ -1,29 +1,4 @@
-:root {
-  --primary-color: #b3814d;
-  --primary-light: #b3814d;
-  --bg-color: #e6d3b7;
-  --text-dark: #1f2937;
-  --text-light: #6b7280;
-  --white: #ffffff;
-  --gray-border: #d1d5db;
-  --hover-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-}
-
-/* ========== GLOBAL ========== */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-body {
-  background-color: var(--bg-color);
-  color: var(--text-dark);
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-/* ========== HEADER ========== */
+/* ===== HEADER ===== */
 header {
   background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
   padding: 0.5rem 2rem;
@@ -32,7 +7,7 @@ header {
   top: 0;
   z-index: 100;
 }
- 
+
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -48,32 +23,41 @@ header {
   transition: transform 0.3s;
 }
 
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 75px;
+  height: auto;
+  display: block;
+}
+
+.logo-text {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--white);
+  text-decoration: none;
+  transition: transform 0.3s ease;
+}
+
 .logo-text:hover {
   transform: scale(1.02);
 }
 
-.logo-container {
-    display: flex;
-    align-items: center;
-}
-
-.logo {
-    width: 75px;
-    height: auto;
-    display: block;
-}
-#text-admin{
+#text-admin {
   font-size: 1.2rem;
   font-weight: 800;
   letter-spacing: 0.5px;
   text-transform: uppercase;
 }
 
-/* ========== NAVIGATION ========== */
+/* ===== NAVIGATION ===== */
 #dashboardTabs {
-  background: rgba(179, 129, 77, 0.7);
+  background: var(--primary-color);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(209, 213, 219, 0.3);
+  border: 1px solid var(--gray-border);
   border-radius: 16px;
   padding: 15px;
   margin: 25px auto;
@@ -83,7 +67,6 @@ header {
   flex-wrap: wrap;
   gap: 12px;
 }
-
 #dashboardTabs .nav-link {
   background-color: var(--bg-color);
   color: var(--text-dark);
@@ -102,59 +85,25 @@ header {
   box-shadow: 0 4px 12px var(--primary-light);
 }
 
-#dashboardTabs .nav-link:hover {
-  background-color: rgba(0, 0, 0, 0.03);
+/* ===== ACTIONS ===== */
+.admin-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-bottom: 1rem;
 }
 
-/* ========== CARDS ========== */
-.card, .property-card {
-  background-color: var(--white);
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
-  border: 1px solid var(--gray-border);
-}
-
-.card:hover, .property-card:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--hover-shadow);
-}
-
-.card-title, .property-title {
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: var(--text-dark);
-}
-
-.card-subtitle, .property-location {
-  font-size: 1.1rem;
-  color: var(--text-light);
-}
-
-/* ========== BUTTONS ========== */
-#logout-btn, .btn-reservar, .search-btn, .filter-btn-open {
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-  color: var(--white);
-  border: none;
+.admin-actions .btn {
+  padding: 0.7rem 1.3rem;
   border-radius: 8px;
-  padding: 0.6rem 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
 }
 
-#logout-btn:hover, .btn-reservar:hover, .search-btn:hover, .filter-btn-open:hover {
-  transform: scale(1.05);
-  box-shadow: var(--hover-shadow);
-}
-
-/* ========== FORMULARIO DE PRODUCTOS ========== */
+/* ===== FORMULARIO ===== */
 #frmFormulario {
   background-color: var(--white);
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   padding: 1.5rem;
-  transition: background-color 0.3s ease;
 }
 
 .form-label {
@@ -168,6 +117,7 @@ header {
   border-radius: 8px;
   padding: 0.6rem 0.75rem;
   transition: all 0.3s ease;
+  background-color: #fff;
 }
 
 .form-control:focus {
@@ -176,7 +126,10 @@ header {
   outline: none;
 }
 
-/* Contenedor de imagen */
+.bg-info-subtle {
+    background-color: #e6d3b7 !important;
+}
+/* ===== IMAGEN UPLOAD ===== */
 .image-upload-container {
   position: relative;
   width: 150px;
@@ -250,7 +203,6 @@ header {
   background-color: rgba(220, 53, 69, 1);
   transform: scale(1.1);
 }
-
 /* Layout de ID e Imagen */
 .id-image-row {
   display: flex;
@@ -263,59 +215,7 @@ header {
   flex: 1;
 }
 
-/* Botones del formulario */
-button,
-.button,
-.btn { 
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-  color: var(--white);
-  border: none;
-  border-radius: 8px;
-  padding: 0.6rem 1.2rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  appearance: none; 
-  text-decoration: none; 
-  display: inline-block; 
-}
-
-button:hover,
-button:focus,
-.button:hover,
-.button:focus,
-.btn:hover,
-.btn:focus {
-  transform: scale(1.05);
-  box-shadow: var(--hover-shadow, 0 8px 16px rgba(0, 0, 0, 0.1));
-  outline: none;
-}
-#btnLimpiar {
-  background: linear-gradient(135deg, #6b7280, #4b5563);
-  color: var(--white);
-  border: none;
-  border-radius: 8px;
-  padding: 0.6rem 1.2rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-#btnLimpiar:hover {
-  transform: scale(1.05);
-  opacity: 0.9;
-}
-
-/* ========== CONTENEDOR DE LISTADO ========== */
-#divListado {
-  background-color: var(--white) !important;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  padding: 1.5rem;
-  transition: background-color 0.3s ease;
-}
-
-/* ========== TABLES ========== */
+/* ===== TABLAS ===== */
 .table, table {
   width: 100%;
   border-collapse: collapse;
@@ -323,268 +223,101 @@ button:focus,
   overflow: hidden;
   font-size: 0.95rem;
   background-color: var(--white);
-  transition: background-color 0.3s ease;
 }
 
 .table th, table th {
   text-align: left;
-  padding: 0.75rem 0.75rem;
+  padding: 0.75rem;
   font-weight: 600;
   border: 1px solid var(--gray-border);
-  transition: all 0.3s ease;
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+  color: var(--white);
 }
 
 .table td, table td {
   padding: 0.6rem 0.75rem;
   border: 1px solid var(--gray-border);
   vertical-align: middle;
-  transition: all 0.3s ease;
 }
 
-.table tbody tr, table tbody tr {
-  transition: background-color 0.2s ease;
+.table tbody tr:hover {
+  background: rgba(179, 129, 77, 0.08);
 }
 
-.table tbody tr:hover, table tbody tr:hover {
-  background: rgba(179,129,77,0.08);
-}
-
-.table thead th, table thead th {
+/* ===== BOTONES ===== */
+button,
+.btn {
   background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
   color: var(--white);
-}
-
-/* Botones dentro de la tabla */
-.table .btn, table .btn {
-  padding: 0.4rem 0.8rem;
-  font-size: 0.875rem;
-  border-radius: 6px;
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
   transition: all 0.3s ease;
 }
 
-.btnSeleccionar {
-  background-color: transparent;
-  border: 1px solid var(--primary-color);
-  color: var(--primary-color);
+button:hover,
+.btn:hover {
+  transform: scale(1.05);
+  box-shadow: var(--hover-shadow);
 }
 
-.btnSeleccionar:hover {
-  background-color: var(--primary-color);
-  color: var(--white);
+/* Reset gris */
+button[type="reset"],
+.btn[type="reset"]{
+  background: #9ca3af;      
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+}
+button[type="reset"]:hover,
+.btn[type="reset"]:hover{
   transform: scale(1.05);
 }
 
-.btnEliminar {
-  background-color: transparent;
-  border: 1px solid #dc3545;
-  color: #dc3545;
-}
 
-.btnEliminar:hover {
-  background-color: #dc3545;
-  color: var(--white);
-  transform: scale(1.05);
-}
-
-/* ========== ROW LAYOUT ========== */
-.row {
-  display: flex;
-  gap: 1rem;
-  margin: 0;
-}
-
-.col-5, .col-7 {
-  padding: 0;
-}
-
-.bg-info-subtle {
-  background-color: transparent !important;
-}
-
+/* ===== FILTROS Y ESTADÍSTICAS ===== */
 .filtros-container {
-  background-color: #000000;
+  background-color: var(--white);
   border: 1px solid var(--gray-border);
+  border-color: #f3f4f6;
   border-radius: 12px;
   padding: 1rem 1.5rem;
   margin: 1.5rem auto;
   max-width: 95%;
   display: flex;
   justify-content: center;
-  align-items: center;
   flex-wrap: wrap;
   gap: 1rem;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
-}
-.form-control{
-  background-color: #ffffff00;
 }
 
 .stat-card {
-    background-color: var(--primary-color); 
-    color: var(--white);                    
-    border-radius: 12px;                    
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15); 
-    padding: 20px;
-    text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: var(--primary-color);
+  color: var(--white);
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .stat-card:hover {
-    transform: translateY(-3px); 
-    box-shadow: var(--hover-shadow); 
+  transform: translateY(-3px);
+  box-shadow: var(--hover-shadow);
 }
 
-.stat-card-title {
-    font-weight: 600;
-    margin-bottom: 8px;
-    font-size: 1rem;
-    line-height: 1.2;
-}
-
-.stat-card-value {
-    font-size: 1.5rem; 
-    font-weight: 700;
-    margin: 0;
-    line-height: 1;
-}
-
-/* ========== DARK MODE ========== */
-body.dark-mode {
-  background-color: #000000 !important;
-  color: #ffffff !important;
-}
-
-body.dark-mode header,
-body.dark-mode nav,
-body.dark-mode footer,
-body.dark-mode #dashboardTabs,
-body.dark-mode .bg-light {
-  background-color: #00000000 !important;
-  border-color: #333 !important;
-  color: #ffffff !important;
-}
-
-body.dark-mode .card {
-  background-color: #000000 !important;
-  border-color: #333 !important;
-  color: #ffffff !important;
-}
-
-body.dark-mode .card-title,
-body.dark-mode .card-subtitle {
-  color: #ffffff !important;
-}
-
-/* Formulario en modo oscuro */
-body.dark-mode #frmFormulario {
-  background-color: #0f0f0f !important;
-  border: 1px solid #333;
-}
-
-body.dark-mode #frmFormulario .form-label {
-  color: #ffffff;
-}
-
-body.dark-mode #frmFormulario .form-control {
-  background-color: #1a1a1a;
-  color: #000000;
-  border-color: #747474;
-}
-body.dark-mode #frmFormulario .form-control:focus {
-  border-color: #c89a64;
-  box-shadow: 0 0 0 0.2rem rgba(200, 154, 100, 0.25);
-}
-
-body.dark-mode #frmFormulario .form-control:disabled,
-body.dark-mode #frmFormulario .form-control[readonly] {
-  background-color: #2a2a2a;
-  color: #888;
-}
-
-/* Listado en modo oscuro */
-body.dark-mode #divListadoUsuarios {
-  background-color: #0f0f0f !important;
-  border: 1px solid #333;
-}
-body.dark-mode #divListadoAdmins {
-  background-color: #0f0f0f !important;
-  border: 1px solid #333;
-}
-body.dark-mode #divListado {
-  background-color: #0f0f0f !important;
-  border: 1px solid #333;
-}
-
-/* Botones en modo oscuro */
-body.dark-mode .btn,
-body.dark-mode .search-btn,
-body.dark-mode .filter-btn-open,
-body.dark-mode .btn-reservar,
-body.dark-mode #logout-btn,
-body.dark-mode #btnAgregar,
-body.dark-mode #btnModificar {
-  background-color: #524123ff !important;
-  color: #ffffff !important;
-  border: none;
-}
-
-body.dark-mode #btnLimpiar {
-  background: linear-gradient(135deg, #3a3a3a, #2a2a2a);
-}
-
-/* Tablas en modo oscuro */
-body.dark-mode .table, body.dark-mode table {
-  background-color: #0f0f0f;
-  color: #ffffff;
-  border-color: #2b2b2b;
-}
-
-body.dark-mode .table th, body.dark-mode table th {
-  background: #524123ff !important;
-  color: #ffffff;
-  border: 1px solid #2b2b2b;
-}
-
-body.dark-mode .table td, body.dark-mode table td {
-  background: #111111;
-  color: #ffffff;
-  border: 1px solid #2b2b2b;
-}
-
-body.dark-mode .table tbody tr:hover,
-body.dark-mode table tbody tr:hover {
-  background: rgba(82,65,35,0.12) !important;
-}
-
-/* Botones de tabla en modo oscuro */
-body.dark-mode .btnSeleccionar {
-  border-color: #c89a64;
-  color: #c89a64;
-  background-color: transparent;
-}
-
-body.dark-mode .btnSeleccionar:hover {
-  background-color: #524123ff;
-  color: #ffffff;
-}
-
-body.dark-mode .btnEliminar {
-  border-color: #dc3545;
-  color: #dc3545;
-  background-color: transparent;
-}
-
-body.dark-mode .btnEliminar:hover {
-  background-color: #8b0000;
-  color: #ffffff;
-}
-
-/* ========== RESPONSIVE ========== */
+/* ===== RESPONSIVE ===== */
 @media (max-width: 992px) {
   .row {
     flex-direction: column;
   }
-  
+
   .col-5, .col-7 {
     width: 100%;
   }
@@ -608,14 +341,12 @@ body.dark-mode .btnEliminar:hover {
     font-size: 0.9rem;
   }
 
-  .table, table {
+  .table {
     font-size: 0.85rem;
   }
 
-  .table th, table th,
-  .table td, table td {
+  .table th,
+  .table td {
     padding: 0.5rem;
   }
 }
-
-
