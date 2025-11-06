@@ -16,9 +16,11 @@ const API_USUARIOS = "http://localhost:4000/api/usuarios";
 
 
 document.addEventListener("DOMContentLoaded", () => {
+  // Cargar usuarios
   cargarUsuarios();
+  // Inicializar formulario de creación de usuario
   inicializarFormUsuario();
-  inicializarLogout();
+
 });
 
 /*
@@ -158,15 +160,3 @@ function mostrarMensaje(texto, tipo) {
   setTimeout(() => div.remove(), 3000);
 }
 
-/* 
-   LOGOUT
-*/
-function inicializarLogout() {
-  const logoutBtn = document.getElementById("logout-btn");
-  if (logoutBtn) {
-    logoutBtn.addEventListener("click", () => {
-      localStorage.removeItem("adminLogeado");
-      window.location.href = "../pages/Login-admin.html";
-    });
-  }
-}

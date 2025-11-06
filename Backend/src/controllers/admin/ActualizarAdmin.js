@@ -24,7 +24,7 @@ const bcrypt = require('bcryptjs');
 
 const actualizarAdmin = async (req, res) => {
   try {
-    const { nombre, email, password, rol, activo } = req.body;
+    const { nombre, email, password, rol } = req.body;
     const admin = await Admin.findById(req.params.id);
 
     if (!admin) {
@@ -35,11 +35,9 @@ const actualizarAdmin = async (req, res) => {
     if (password) {
       admin.password = await bcrypt.hash(password, 10);
     }
-
     if (nombre) admin.nombre = nombre;
     if (email) admin.email = email;
     if (rol) admin.rol = rol;
-    if (activo !== undefined) admin.activo = activo;
 
     await admin.save();
     res.status(200).json({ mensaje: 'Administrador actualizado con éxito.', admin });

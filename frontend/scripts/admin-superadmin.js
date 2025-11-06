@@ -1,5 +1,3 @@
-// Archivo: adminDashboard.js
-//
 // Descripción:
 // Gestiona la interfaz de administradores en el frontend. Permite crear, editar,
 // actualizar y eliminar administradores, mostrar la lista en tabla y mostrar
@@ -15,6 +13,7 @@
 // - Cargar admin en formulario: rellena inputs para edición
 // - Eliminar admin: confirma y elimina admin, recarga tabla
 // - Mensajes flotantes: muestra alertas por 3 segundos
+const API_ADMIN = "http://localhost:4000/api/admin";
 
 let adminActualId = null; 
 
@@ -22,13 +21,27 @@ document.addEventListener("DOMContentLoaded", () => {
   cargarAdmins();
 
   const btnAgregarAdmin = document.getElementById("btnAgregarAdmin");
-  const frmAdmins = document.getElementById("frmAdmins");
-  const btnActualizarAdmin = document.getElementById("btnActualizarAdmin");
+  if (btnAgregarAdmin) {
+    btnAgregarAdmin.type = "button";
+    btnAgregarAdmin.addEventListener("click", async function(event) {
+      event.preventDefault();
+      await crearAdmin();
+    });
+  }
 
-  // ----------------------
-  // AGREGAR ADMIN
-  // ----------------------
- btnAgregarAdmin.addEventListener("click", async () => {
+  const btnActualizarAdmin = document.getElementById("btnActualizarAdmin");
+  if (btnActualizarAdmin) {
+    btnActualizarAdmin.type = "button";
+    btnActualizarAdmin.addEventListener("click", async function(event) {
+      event.preventDefault();
+      await actualizarAdmin();
+    });
+  }
+});
+
+
+//crear administrador
+async function crearAdmin() {
   const nombre = document.getElementById("inputNombreAdmin").value.trim();
   const email = document.getElementById("inputEmailAdmin").value.trim();
   const password = document.getElementById("inputPasswordAdmin").value;
@@ -41,72 +54,64 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   try {
-    // Llamada al backend para crear admin
-    const response = await apiClient.crearAdmin({ nombre, email, password, rol });
-
-    // Verificación de error devuelto por el backend
-    if (response.mensaje && response.mensaje.toLowerCase().includes("error")) {
-      throw new Error(response.mensaje);
-    }
+    const res = await fetch(API_ADMIN, { method: "POST", body: JSON.stringify({ nombre, email, password, rol }), headers: { "Content-Type": "application/json" } });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.mensaje || "Error al crear admin");
 
     // Si todo sale bien
     mostrarMensaje("✅ Administrador creado correctamente", "success");
-    frmAdmins.reset();      
+    document.getElementById("frmAdmins").reset();
     cargarAdmins();          
 
   } catch (error) {
     console.error("❌ Error al crear admin:", error);
     mostrarMensaje(`❌ ${error.message}`, "error");
   }
-});
-  // ----------------------
-  // MODIFICAR ADMIN 
-  // ----------------------
-  btnActualizarAdmin.addEventListener("click", async () => {
-    if (!adminActualId) {
-      mostrarMensaje("No hay administrador seleccionado", "error");
-      return;
-    }
+};
 
+// actualizar administrador
+async function actualizarAdmin() {
+    const _id = adminActualId;
     const nombre = document.getElementById("inputNombreAdmin").value.trim();
     const email = document.getElementById("inputEmailAdmin").value.trim();
+    const password = document.getElementById("inputPasswordAdmin").value;
     const rol = document.getElementById("inputRolAdmin").value;
 
     if (!nombre || !email || !rol) {
       mostrarMensaje("Nombre, Email y Rol son obligatorios", "error");
       return;
     }
+    if (!_id) {
+      mostrarMensaje("No hay administrador seleccionado", "error");
+      return;
+    }
 
     try {
-      const payload = { nombre, email, rol };
-      const response = await apiClient.actualizarAdmin(adminActualId, payload);
-
-      if (!response.ok) {
-        throw new Error(response.mensaje || "Error desconocido al actualizar admin");
-      }
-
       mostrarMensaje("✅ Administrador actualizado correctamente", "success");
-      frmAdmins.reset();
+      document.getElementById("frmAdmins").reset();
       btnActualizarAdmin.style.display = "none";
+      const res = await fetch(`${API_ADMIN}/${_id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json", // 👈 FALTABA ESTO
+        },
+        body: JSON.stringify({ nombre, email, password, rol }),
+      });      
+      const data = await res.json();
+
+      if (!res.ok) throw new Error(data.mensaje || "Error al actualizar producto");
+
 
       // Actualiza solo la fila correspondiente en la tabla
-      actualizarFilaAdmin(response.admin);
+      actualizarFilaAdmin(data.admin);
 
       adminActualId = null;
     } catch (error) {
       console.error("Error al actualizar admin:", error);
       mostrarMensaje(`❌ ${error.message}`, "error");
     }
-  });
+  };
 
-  // ----------------------
-  // LIMPIAR FORMULARIO
-  // ----------------------
-  frmAdmins.addEventListener("reset", () => {
-    if (btnActualizarAdmin) btnActualizarAdmin.style.display = "none";
-    adminActualId = null;
-  });
-});
 
 // CARGAR ADMIN EN LA TABLA
 async function cargarAdmins() {
@@ -114,7 +119,8 @@ async function cargarAdmins() {
   contenedor.innerHTML = `<p>Cargando administradores...</p>`;
 
   try {
-    const data = await apiClient.getAdmins();
+    const response = await fetch(API_ADMIN);
+    const data = await response.json();
     if (!data.ok || !data.usuarios || data.usuarios.length === 0) {
       contenedor.innerHTML = `<p style="color:red;">No hay administradores disponibles.</p>`;
       return;
@@ -173,9 +179,7 @@ async function cargarAdmins() {
   }
 }
 
-// ----------------------
 // CARGAR ADMIN EN FORMULARIO
-// ----------------------
 function cargarAdminEnFormulario(admin) {
   const inputNombre = document.getElementById("inputNombreAdmin");
   const inputEmail = document.getElementById("inputEmailAdmin");
@@ -193,9 +197,7 @@ function cargarAdminEnFormulario(admin) {
   adminActualId = admin._id;
 }
 
-// ----------------------
 // ACTUALIZAR FILA DE ADMIN
-// ----------------------
 function actualizarFilaAdmin(adminActualizado) {
   const filas = document.querySelectorAll("#divListadoAdmins tbody tr");
   filas.forEach(fila => {
@@ -206,17 +208,27 @@ function actualizarFilaAdmin(adminActualizado) {
     }
   });
 }
+
 // ELIMINAR ADMIN
 async function eliminarAdmin(adminId) {
   if (!confirm("¿Desea eliminar este administrador?")) return;
 
   try {
-    await apiClient.eliminarAdmin(adminId);
-    mostrarMensaje("Administrador eliminado correctamente", "success");
+    const res = await fetch(`${API_ADMIN}/${adminId}`, { method: "DELETE" });
+    const data = await res.json();
+
+    // Validación de respuesta coherente con el backend
+    if (!res.ok || data.ok === false) {
+      const mensajeError =
+        data.mensaje || data.error || "Error al eliminar administrador.";
+      throw new Error(mensajeError);
+    }
+
+    mostrarMensaje("✅ Administrador eliminado correctamente", "success");
     cargarAdmins();
   } catch (error) {
-    console.error("Error al eliminar admin:", error);
-    mostrarMensaje(`${error.message}`, "error");
+    console.error("❌ Error al eliminar admin:", error);
+    mostrarMensaje(`❌ ${error.message}`, "error");
   }
 }
 
@@ -232,3 +244,4 @@ function mostrarMensaje(texto, tipo) {
   document.body.appendChild(div);
   setTimeout(() => div.remove(), 3000);
 }
+

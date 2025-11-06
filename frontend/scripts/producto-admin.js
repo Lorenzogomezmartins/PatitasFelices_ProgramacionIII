@@ -1,30 +1,15 @@
-// PANEL PARA ADMINISTRADORES
+// PANEL PARA ADMINISTRADORES(manejo de productos)
 //
 // Funcionalidad:
 // - Maneja la carga, filtrado, creación, edición y eliminación
 //   de productos desde la interfaz de administrador.
-// - Muestra tickets de usuarios con paginación y modal de detalles.
-// - Calcula y muestra estadísticas de productos y usuarios.
 // - Maneja imagen de producto con vista previa y eliminación.
-// - Logout del administrador.
-
 const API_PRODUCTOS = "http://localhost:4000/api/productos";
 
-// Variables globales de filtros
-let filtroCategoria = "todos";
-let filtroTipoMascota = "todos";
-let filtroTamano = "todos";
-
-// Función para normalizar textos 
-function normalizar(texto) {
-  return texto?.toString().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-}
 
 document.addEventListener("DOMContentLoaded", () => {
+  // Cargar productos en el panel admin
   cargarProductosAdmin();
-  cargarTickets();
-  inicializarLogout();
-  cargarEstadisticas();
 
   // Botón Agregar producto
   const btnAgregarProducto = document.getElementById("btnAgregarProducto");
@@ -59,41 +44,18 @@ document.addEventListener("DOMContentLoaded", () => {
     inputBuscarCodigo.addEventListener("input", () => cargarProductosAdmin());
   }
 
-  // Botón Ver más tickets
-  const btnVerMas = document.getElementById("btnVerMasTickets");
-  if (btnVerMas) btnVerMas.addEventListener("click", cargarTickets);
 });
 
-/* ==========================================
-   INICIALIZAR FILTROS (SELECTS)
-========================================== */
-function inicializarFiltrosSelects() {
-  const selectCategoria = document.getElementById("filtroCategoria");
-  const selectMascota = document.getElementById("filtroMascota");
-  const selectTamano = document.getElementById("filtroTamaño");
-  const btnLimpiarFiltros = document.getElementById("btnLimpiarFiltros");
 
-  if (selectCategoria) selectCategoria.addEventListener("change", () => { filtroCategoria = selectCategoria.value; cargarProductosAdmin(); });
-  if (selectMascota) selectMascota.addEventListener("change", () => { filtroTipoMascota = selectMascota.value; cargarProductosAdmin(); });
-  if (selectTamano) selectTamano.addEventListener("change", () => { filtroTamano = selectTamano.value; cargarProductosAdmin(); });
-
-  if (btnLimpiarFiltros) {
-    btnLimpiarFiltros.addEventListener("click", () => {
-      filtroCategoria = "todos"; filtroTipoMascota = "todos"; filtroTamano = "todos";
-      if (selectCategoria) selectCategoria.value = "todos";
-      if (selectMascota) selectMascota.value = "todos";
-      if (selectTamano) selectTamano.value = "todos";
-      cargarProductosAdmin();
-    });
-  }
+// Función para normalizar textos 
+function normalizar(texto) {
+  return texto?.toString().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
 
-/* ==========================================
-   CARGAR PRODUCTOS
-========================================== */
+// Funcion para cargar y mostrar productos en el panel admin
 async function cargarProductosAdmin() {
-  const contenedor = document.getElementById("divListado");
-  if (!contenedor) return console.error("❌ No existe el contenedor 'divListado'");
+  const contenedor = document.getElementById("divListadoProd");
+  if (!contenedor) return console.error("❌ No existe el contenedor 'divListadoProd'");
 
   contenedor.innerHTML = `<p>Cargando productos...</p>`;
 
@@ -158,9 +120,7 @@ async function cargarProductosAdmin() {
   }
 }
 
-/* ==========================================
-   CREAR PRODUCTO
-========================================== */
+// Crear producto
 async function crearProducto() {
   const _id = document.getElementById("inputCodigoProducto")?.value.trim();
   const nombre = document.getElementById("inputNombreProducto")?.value.trim();
@@ -208,7 +168,7 @@ async function crearProducto() {
   formData.append("stock", stock.toString());
   formData.append("activo", activo.toString());
   formData.append("url", inputFoto.files[0]);
-
+ 
   // Enviar al backend
   try {
     const res = await fetch(API_PRODUCTOS, { method: "POST", body: formData });
@@ -216,7 +176,7 @@ async function crearProducto() {
     if (!res.ok) throw new Error(data.mensaje || "Error al crear producto");
 
     mostrarMensaje("✅ Producto agregado correctamente", "success");
-    document.getElementById("frmFormulario").reset();
+    document.getElementById("frmFormProd").reset();
     removeImage();
     cargarProductosAdmin();
   } catch (error) {
@@ -225,9 +185,7 @@ async function crearProducto() {
   }
 }
 
-/* ==========================================
-   ELIMINAR PRODUCTO
-========================================== */
+// Eliminar producto
 async function eliminarProducto(id) {
   if (!id) return mostrarMensaje("⚠️ ID inválido", "error");
   if (!confirm("¿Desea eliminar este producto?")) return;
@@ -298,7 +256,7 @@ async function actualizarProducto() {
     if (!res.ok) throw new Error(data.mensaje || "Error al actualizar producto");
 
     mostrarMensaje("✅ Producto actualizado correctamente", "success");
-    document.getElementById("frmFormulario").reset();
+    document.getElementById("frmFormProd").reset();
     removeImage();
     cargarProductosAdmin();
 
@@ -308,9 +266,7 @@ async function actualizarProducto() {
   }
 }
 
-/* ==========================================
-   FORMULARIO EDICIÓN
-========================================== */
+// Abrir formulario de edición con datos del producto
 function abrirFormularioEdicion(producto) {
   document.getElementById("inputCodigoProducto").value = producto._id; 
   document.getElementById("inputNombreProducto").value = producto.nombre;
@@ -337,25 +293,8 @@ function abrirFormularioEdicion(producto) {
     document.getElementById("upload-placeholder").style.display = "none";
   }
 }
-/* ==========================================
-   MENSAJES
-========================================== */
-function mostrarMensaje(texto, tipo) {
-  const div = document.createElement("div");
-  div.textContent = texto;
-  div.className = tipo === "error" ? "alert alert-danger" : "alert alert-success";
-  div.style.position = "fixed";
-  div.style.top = "20px";
-  div.style.right = "20px";
-  div.style.zIndex = "9999";
-  div.style.cursor = "pointer";
-  div.addEventListener("click", () => div.remove());
-  document.body.appendChild(div);
-}
 
-/* ==========================================
-   MANEJO DE IMAGEN
-========================================== */
+// Manejo de imagen
 function handleImageUpload(event) {
   const file = event.target.files[0];
   const img = document.getElementById("foto_img");
@@ -385,227 +324,46 @@ function removeImage() {
   placeholder.style.display = "block";
 }
 
-/* ==========================================
-   Tickets
-========================================== */
-let currentPage = 1;
 
-async function cargarTickets() {
-  const contenedor = document.getElementById("divListadoTickets");
-  const btnVerMas = document.getElementById("btnVerMasTickets");
+// Variables globales de filtros
+let filtroCategoria = "todos";
+let filtroTipoMascota = "todos";
+let filtroTamano = "todos";
 
-  if (!contenedor) return console.error("No existe el contenedor 'divListadoTickets'");
+// Filtros
+function inicializarFiltrosSelects() {
+  const selectCategoria = document.getElementById("filtroCategoria");
+  const selectMascota = document.getElementById("filtroMascota");
+  const selectTamano = document.getElementById("filtroTamaño");
+  const btnLimpiarFiltros = document.getElementById("btnLimpiarFiltros");
 
-  if (currentPage === 1) contenedor.innerHTML = `<p>Cargando tickets...</p>`;
+  if (selectCategoria) selectCategoria.addEventListener("change", () => { filtroCategoria = selectCategoria.value; cargarProductosAdmin(); });
+  if (selectMascota) selectMascota.addEventListener("change", () => { filtroTipoMascota = selectMascota.value; cargarProductosAdmin(); });
+  if (selectTamano) selectTamano.addEventListener("change", () => { filtroTamano = selectTamano.value; cargarProductosAdmin(); });
 
-  try {
-    const response = await fetch(`http://localhost:4000/api/usuarios/obtenerTickets?page=${currentPage}`);
-    const data = await response.json();
-
-    if (!data.ok || !data.tickets || data.tickets.length === 0) {
-      if (currentPage === 1) contenedor.innerHTML = `<p style="color:red;">No hay tickets registrados.</p>`;
-      else if (btnVerMas) { btnVerMas.disabled = true; btnVerMas.textContent = "No hay más tickets"; }
-      return;
-    }
-
-    if (currentPage === 1) {
-      contenedor.innerHTML = "";
-      const table = document.createElement("table");
-      table.id = "tablaTickets";
-      table.className = "table table-striped table-hover table-sm";
-      table.innerHTML = `
-        <thead class="table-dark">
-          <tr>
-            <th>Usuario</th>
-            <th>Fecha de compra</th>
-            <th>Productos</th>
-            <th>Total</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      `;
-      contenedor.appendChild(table);
-    }
-
-    const tbody = document.querySelector("#tablaTickets tbody");
-
-    data.tickets.forEach(ticket => {
-      const tr = document.createElement("tr");
-      const usuario = `${ticket.nombreUsuario} ${ticket.apellidoUsuario}`;
-      const fecha = new Date(ticket.fechaDeCompra).toLocaleString();
-      const total = `${ticket.total}`;
-      const productos = ticket.productos
-        .map(p => `${p.prod?._id || "?"} (x${p.prod?.cantidad || 0})`)
-        .join(", ");
-      
-      tr.innerHTML = `
-        <td>${usuario}</td>
-        <td>${fecha}</td>
-        <td>${productos}</td>
-        <td>${total}</td>
-        <td><button class="btn btn-sm btn-primary btn-detalles">Detalles</button></td>
-      `;
-
-      tbody.appendChild(tr);
-
-      // Listener para el botón Detalles
-      tr.querySelector(".btn-detalles").addEventListener("click", () => mostrarModal(ticket));
+  if (btnLimpiarFiltros) {
+    btnLimpiarFiltros.addEventListener("click", () => {
+      filtroCategoria = "todos"; filtroTipoMascota = "todos"; filtroTamano = "todos";
+      if (selectCategoria) selectCategoria.value = "todos";
+      if (selectMascota) selectMascota.value = "todos";
+      if (selectTamano) selectTamano.value = "todos";
+      cargarProductosAdmin();
     });
-
-    currentPage++;
-
-  } catch (error) {
-    console.error("Error al cargar tickets:", error);
-    contenedor.innerHTML = `<p style="color:red; font-weight:bold;">Error al cargar tickets: ${error.message}</p>`;
   }
 }
 
-async function mostrarModal(ticket) {
-  document.getElementById("modalUsuario").textContent = `${ticket.nombreUsuario} ${ticket.apellidoUsuario}`;
-  document.getElementById("modalFecha").textContent = new Date(ticket.fechaDeCompra).toLocaleString();
-  document.getElementById("modalTotal").textContent = ticket.total;
-
-  const ulProductos = document.getElementById("modalProductos");
-  ulProductos.innerHTML = "";
-
-  for (const p of ticket.productos) {
-    try {
-      const prodId = p.prod?._id;
-      if (!prodId) continue;
-
-
-      const resp = await fetch(`http://localhost:4000/api/productos/obtenerporcodigo/${prodId}`);
-
-      if (!resp.ok) {
-        const li = document.createElement("li");
-        li.textContent = `Producto con ID ${prodId} no encontrado (HTTP ${resp.status})`;
-        ulProductos.appendChild(li);
-        continue;
-      }
-
-      const data = await resp.json();
-
-      if (data.ok && data.producto) {
-        const producto = data.producto;
-        const li = document.createElement("li");
-        li.innerHTML = `
-          <strong>Nombre:</strong> ${producto.nombre} |
-          <strong>Precio:</strong> $${producto.precio} |
-          <strong>Tamaño:</strong> ${producto.tamano || "-"} |
-          <strong>Cantidad comprada:</strong> ${p.prod.cantidad}
-        `;
-        ulProductos.appendChild(li);
-      }
-
-    } catch (error) {
-      const li = document.createElement("li");
-      li.textContent = `Error al obtener producto: ${error.message}`;
-      ulProductos.appendChild(li);
-    }
-  }
-
-  const modal = new bootstrap.Modal(document.getElementById("modalTicket"));
-  modal.show();
+// Mensajes
+function mostrarMensaje(texto, tipo) {
+  const div = document.createElement("div");
+  div.textContent = texto;
+  div.className = tipo === "error" ? "alert alert-danger" : "alert alert-success";
+  div.style.position = "fixed";
+  div.style.top = "20px";
+  div.style.right = "20px";
+  div.style.zIndex = "9999";
+  div.style.cursor = "pointer";
+  div.addEventListener("click", () => div.remove());
+  document.body.appendChild(div);
 }
 
-
-
-
-
-/* ==========================================
-   ESTADÍSTICAS DE PRODUCTOS Y USUARIOS
-========================================== */
-async function cargarEstadisticas() {
-  const contenedor = document.getElementById("estadisticas");
-  if (!contenedor) return;
-
-  contenedor.innerHTML = `<p>Cargando estadísticas...</p>`;
-
-  try {
-    // Obtener productos
-    const responseProd = await fetch(API_PRODUCTOS);
-    const dataProd = await responseProd.json();
-    if (!dataProd.ok || !dataProd.productos) throw new Error(dataProd.message || "Error al obtener productos");
-    const productos = dataProd.productos;
-    if (productos.length === 0) {
-      contenedor.innerHTML = `<p style="color:red;">No hay productos para calcular estadísticas.</p>`;
-      return;
-    }
-
-    // Precio promedio
-    const totalPrecios = productos.reduce((sum, p) => sum + (p.precio || 0), 0);
-    const promedioPrecio = totalPrecios / productos.length;
-
-    // Producto mas caro
-    const prodMasCaro = productos.reduce((max, p) => p.precio > max.precio ? p : max, productos[0]);
-
-    // Producto mas barato
-    const prodMasBarato = productos.reduce((min, p) => p.precio < min.precio ? p : min, productos[0]);
-
-    // Producto mas vendido
-    const responseProdMasVendido = await fetch("http://localhost:4000/api/usuarios/obtenerProdMasVendido");
-    const dataProdMasVendido = await responseProdMasVendido.json();
-    let prodMasVendidoNombre = "Sin ventas registradas";
-    let cantProdMasVendido = 0;
-
-    if (dataProdMasVendido.ok && dataProdMasVendido.productoMasVendido) {
-      const prodMasVendidoId = dataProdMasVendido.productoMasVendido.idProducto;
-      cantProdMasVendido = dataProdMasVendido.productoMasVendido.totalVendido;
-
-      const productoEncontrado = productos.find(p => p._id === prodMasVendidoId);
-      
-      if (productoEncontrado) {
-        prodMasVendidoNombre = productoEncontrado.nombre;
-      }
-    }    
-
-    // Total de ventas
-    const response = await fetch(`http://localhost:4000/api/usuarios/obtenerCantidadTickets`);
-    const data = await response.json();
-    const totalVentas = data.ok ? data.totalTickets : 0;
-
-    // Obtener cantidad de usuarios
-    const responseUsers = await fetch("http://localhost:4000/api/usuarios");
-    const dataUsers = await responseUsers.json();
-    const cantidadUsuarios = dataUsers.ok && dataUsers.usuarios ? dataUsers.usuarios.length : 0;
-
-    // Construir tarjetas de estadísticas
-    const stats = [
-      { titulo: "Precio promedio", valor: `$${promedioPrecio.toFixed(2)}` },
-      { titulo: "Producto mas caro", valor: `${prodMasCaro.nombre} ($${prodMasCaro.precio.toLocaleString()})` },
-      { titulo: "Producto mas barato", valor: `${prodMasBarato.nombre} ($${prodMasBarato.precio.toLocaleString()})` },
-      { titulo: "Producto mas vendido", valor: `${prodMasVendidoNombre} (${cantProdMasVendido || 0} ventas)` },
-      { titulo: "Total de ventas", valor: `${totalVentas}` },
-      { titulo: "Cantidad de usuarios", valor: `${cantidadUsuarios}` }
-    ];
-
-    contenedor.innerHTML = `
-    <div class="row g-3 mt-3 stats-container justify-content-center">
-      ${stats.map(stat => `
-        <div class="col-md-4">
-          <div class="stat-card"> 
-            <h6 class="stat-title">${stat.titulo}</h6>
-            <p class="stat-value">${stat.valor}</p>
-          </div>
-        </div>
-      `).join('')}
-    </div>
-  `;
-
-  } catch (error) {
-    console.error("❌ Error al cargar estadísticas:", error);
-    contenedor.innerHTML = `<p style="color:red; font-weight:bold;">Error al cargar estadísticas: ${error.message}</p>`;
-  }
-}
-
-/* ==========================================
-   LOGOUT
-========================================== */
-function inicializarLogout() {
-  const logoutBtn = document.getElementById("logout-btn");
-  if (logoutBtn) logoutBtn.addEventListener("click", () => {
-    localStorage.removeItem("adminLogeado");
-    window.location.href = "../pages/Login-admin.html";
-  });
-}
+  

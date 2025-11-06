@@ -194,7 +194,7 @@
               </div>
 
               <div class="image-upload-container" onclick="document.getElementById('inputFoto').click()">
-                <button type="button" class="remove-image-btn" onclick="event.stopPropagation(); removeImage()">
+                <button type="button" class="remove-image-btn" onclick="removeImage(event)">                  
                   <i class="bi bi-x"></i>
                 </button>
                 <img src="" id="foto_img" style="display: none" alt="Producto" />
@@ -268,7 +268,7 @@
           </form>
         </div>
 
-        <div id="divListado" class="col-7 bg-light rounded p-2">
+        <div id="divListadoProd" class="col-7 bg-light rounded p-2">
           Listado de productos aquí
         </div>
       </div>
@@ -314,9 +314,10 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="../scripts/Usuarios.js"></script>
-  <script src="../scripts/dashboard-admin.js"></script>
-  <script src="../scripts/darkMode-dashboard.js"></script>
+  <script type="module" src="../scripts/usuarios-admin.js"></script>
+  <script type="module" src="../scripts/funciones-admin.js"></script>
+  <script type="module" src="../scripts/producto-admin.js"></script>
+  <script type="module" src="../scripts/darkMode-dashboard.js"></script>
 
 </body>
 </html>

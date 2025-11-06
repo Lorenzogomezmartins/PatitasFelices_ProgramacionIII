@@ -12,6 +12,7 @@
 // - Si existe, lo elimina utilizando deleteOne()
 // - Responde con mensaje de éxito al eliminarlo
 // - En caso de error, responde con código 500 y mensaje correspondiente
+
 const Admin = require('../../models/admin');
 
 const eliminarAdmin = async (req, res) => {
@@ -19,13 +20,24 @@ const eliminarAdmin = async (req, res) => {
     const admin = await Admin.findById(req.params.id);
 
     if (!admin) {
-      return res.status(404).json({ mensaje: 'Administrador no encontrado.' });
+      return res.status(404).json({
+        ok: false,
+        mensaje: 'Administrador no encontrado.',
+      });
     }
 
     await admin.deleteOne();
-    res.status(200).json({ mensaje: 'Administrador eliminado correctamente.' });
+
+    res.status(200).json({
+      ok: true,
+      mensaje: 'Administrador eliminado correctamente.',
+    });
   } catch (error) {
-    res.status(500).json({ mensaje: 'Error al eliminar administrador.', error: error.message });
+    res.status(500).json({
+      ok: false,
+      mensaje: 'Error al eliminar administrador.',
+      error: error.message,
+    });
   }
 };
 
