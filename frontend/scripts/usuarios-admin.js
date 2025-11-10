@@ -50,7 +50,7 @@ async function cargarUsuarios() {
           <th>Nombre</th>
           <th>Apellido</th>
           <th>Fecha de ingreso</th>
-          <th>Acciones</th>
+          
         </tr>
       </thead>
       <tbody></tbody>
@@ -64,13 +64,8 @@ async function cargarUsuarios() {
         <td>${user.nombre}</td>
         <td>${user.apellido}</td>
         <td>${user.fechaIngreso ? new Date(user.fechaIngreso).toLocaleDateString() : "-"}</td>
-        <td>
-          <button class="btn btn-sm btn-danger eliminar-btn" title="Eliminar usuario">
-            <i class="bi bi-trash"></i>
-          </button>
-        </td>
+    
       `;
-      tr.querySelector(".eliminar-btn").addEventListener("click", () => eliminarUsuario(user._id));
       tbody.appendChild(tr);
     });
 
@@ -126,24 +121,24 @@ function inicializarFormUsuario() {
 /* 
    ELIMINAR USUARIO
 */
-async function eliminarUsuario(id) {
-  if (!id) return mostrarMensaje("⚠️ ID inválido", "error");
-  if (!confirm("¿Desea eliminar este usuario?")) return;
+// async function eliminarUsuario(id) {
+//   if (!id) return mostrarMensaje("⚠️ ID inválido", "error");
+//   if (!confirm("¿Desea eliminar este usuario?")) return;
 
-  try {
-    const res = await fetch(`${API_USUARIOS}/${id}`, { method: "DELETE" });
-    const data = await res.json();
+//   try {
+//     const res = await fetch(`${API_USUARIOS}/${id}`, { method: "DELETE" });
+//     const data = await res.json();
 
-    if (!res.ok || !data.ok) throw new Error(data.error || "Error al eliminar usuario");
+//     if (!res.ok || !data.ok) throw new Error(data.error || "Error al eliminar usuario");
 
-    mostrarMensaje("✅ Usuario eliminado correctamente", "success");
-    cargarUsuarios();
+//     mostrarMensaje("✅ Usuario eliminado correctamente", "success");
+//     cargarUsuarios();
 
-  } catch (error) {
-    console.error("❌ Error al eliminar usuario:", error);
-    mostrarMensaje(`❌ ${error.message}`, "error");
-  }
-}
+//   } catch (error) {
+//     console.error("❌ Error al eliminar usuario:", error);
+//     mostrarMensaje(`❌ ${error.message}`, "error");
+//   }
+// }
 
 /* 
    MENSAJES

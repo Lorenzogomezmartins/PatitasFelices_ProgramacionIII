@@ -23,7 +23,6 @@ const router = express.Router();
 const crearUsuario = require('../controllers/usuario/CrearUsuario.js');
 const listadoUsuarios = require('../controllers/usuario/ListadoUsuarios.js');
 const agregarTicket = require('../controllers/usuario/AgregarTicket.js');
-const eliminarUsuario = require('../controllers/usuario/EliminarUsuario.js');
 const obtenerCantidadTickets = require('../controllers/usuario/ObtenerCantidadTickets.js');
 const obtenerProductoMasVendido = require('../controllers/usuario/ObtenerProdMasVendido.js');
 const obtenerTickets = require('../controllers/usuario/ObtenerTickets.js');
@@ -47,6 +46,5 @@ router.put('/agregarTicket/:id', agregarTicket);
 
 // Usuarios individuales
 router.get('/:id', obtenerUsuarioPorId);
-router.delete('/:id', eliminarUsuario);
 
 module.exports = router;

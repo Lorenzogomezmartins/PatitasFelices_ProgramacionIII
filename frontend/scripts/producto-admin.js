@@ -55,7 +55,7 @@ function normalizar(texto) {
 // Funcion para cargar y mostrar productos en el panel admin
 async function cargarProductosAdmin() {
   const contenedor = document.getElementById("divListadoProd");
-  if (!contenedor) return console.error("❌ No existe el contenedor 'divListadoProd'");
+  if (!contenedor) return console.error("No existe el contenedor 'divListadoProd'");
 
   contenedor.innerHTML = `<p>Cargando productos...</p>`;
 
@@ -103,11 +103,14 @@ async function cargarProductosAdmin() {
         <td>${prod.activo ? "Sí" : "No"}</td>
         <td>
           <button class="btn btn-sm btn-primary editar-btn"><i class="bi bi-pencil"></i></button>
-          <button class="btn btn-sm btn-danger eliminar-btn"><i class="bi bi-trash"></i></button>
+          <button class="btn btn-sm btn-danger estado-btn" data-id="${prod._id}">
+            ${prod.activo ? "Inhabilitar" : "Habilitar"}
+          </button>
         </td>
       `;
       tr.querySelector(".editar-btn").addEventListener("click", () => abrirFormularioEdicion(prod));
-      tr.querySelector(".eliminar-btn").addEventListener("click", () => eliminarProducto(prod._id));
+      const btnEstado = tr.querySelector(".estado-btn");
+      btnEstado.addEventListener("click", () => cambiarEstadoProducto(prod._id, btnEstado));
       tbody.appendChild(tr);
     });
 
@@ -115,8 +118,8 @@ async function cargarProductosAdmin() {
     contenedor.appendChild(table);
 
   } catch (error) {
-    console.error("❌ Error al cargar productos:", error);
-    contenedor.innerHTML = `<p style="color:red; font-weight:bold;">❌ Error al cargar productos: ${error.message}</p>`;
+    console.error("Error al cargar productos:", error);
+    contenedor.innerHTML = `<p style="color:red; font-weight:bold;">Error al cargar productos: ${error.message}</p>`;
   }
 }
 
@@ -175,33 +178,68 @@ async function crearProducto() {
     const data = await res.json();
     if (!res.ok) throw new Error(data.mensaje || "Error al crear producto");
 
-    mostrarMensaje("✅ Producto agregado correctamente", "success");
+    mostrarMensaje("Producto agregado correctamente", "success");
     document.getElementById("frmFormProd").reset();
     removeImage();
     cargarProductosAdmin();
   } catch (error) {
-    console.error("❌ Error al crear producto:", error);
-    mostrarMensaje(`❌ ${error.message}`, "error");
+    console.error("Error al crear producto:", error);
+    mostrarMensaje(`${error.message}`, "error");
+  }
+}
+
+// Cambiar estado (activar/inactivar) producto
+async function cambiarEstadoProducto(id, boton) {
+  if (!id) return mostrarMensaje("⚠️ ID inválido", "error");
+
+  try {
+    const res = await fetch(`${API_PRODUCTOS}/estado/${id}`, { method: "PUT" });
+    const data = await res.json();
+
+    if (!res.ok || !data.ok) {
+      throw new Error(data.error || "No se pudo cambiar el estado del producto");
+    }
+
+    // Actualiza visualmente sin recargar
+    const nuevoEstado = data.producto.nuevoEstado; // "activo" o "inactivo"
+    
+    if (nuevoEstado === "activo") {
+      boton.textContent = "Inhabilitar";
+      boton.classList.remove("btn-success");
+      boton.classList.add("btn-danger");
+      boton.closest("tr").querySelector("td:nth-child(9)").textContent = "Sí";
+    } else {
+      boton.textContent = "Habilitar";
+      boton.classList.remove("btn-danger");
+      boton.classList.add("btn-success");
+      boton.closest("tr").querySelector("td:nth-child(9)").textContent = "No";
+    }
+
+    mostrarMensaje("Estado actualizado correctamente", "success");
+
+  } catch (error) {
+    console.error("Error al cambiar estado:", error);
+    mostrarMensaje(`${error.message}`, "error");
   }
 }
 
 // Eliminar producto
-async function eliminarProducto(id) {
-  if (!id) return mostrarMensaje("⚠️ ID inválido", "error");
-  if (!confirm("¿Desea eliminar este producto?")) return;
+// async function eliminarProducto(id) {
+//   if (!id) return mostrarMensaje("⚠️ ID inválido", "error");
+//   if (!confirm("¿Desea eliminar este producto?")) return;
 
-  try {
-    const res = await fetch(`${API_PRODUCTOS}/${id}`, { method: "DELETE" });
-    const data = await res.json();
-    if (!res.ok || !data.ok) throw new Error(data.error || "Error al eliminar producto");
+//   try {
+//     const res = await fetch(`${API_PRODUCTOS}/${id}`, { method: "DELETE" });
+//     const data = await res.json();
+//     if (!res.ok || !data.ok) throw new Error(data.error || "Error al eliminar producto");
 
-    mostrarMensaje("✅ Producto eliminado correctamente", "success");
-    cargarProductosAdmin();
-  } catch (error) {
-    console.error("❌ Error al eliminar producto:", error);
-    mostrarMensaje(`❌ ${error.message}`, "error");
-  }
-}
+//     mostrarMensaje("Producto eliminado correctamente", "success");
+//     cargarProductosAdmin();
+//   } catch (error) {
+//     console.error("Error al eliminar producto:", error);
+//     mostrarMensaje(`${error.message}`, "error");
+//   }
+// }
 
 //actualizar producto
 async function actualizarProducto() {
@@ -255,14 +293,14 @@ async function actualizarProducto() {
 
     if (!res.ok) throw new Error(data.mensaje || "Error al actualizar producto");
 
-    mostrarMensaje("✅ Producto actualizado correctamente", "success");
+    mostrarMensaje("Producto actualizado correctamente", "success");
     document.getElementById("frmFormProd").reset();
     removeImage();
     cargarProductosAdmin();
 
   } catch (error) {
-    console.error("❌ Error al actualizar producto:", error);
-    mostrarMensaje(`❌ ${error.message}`, "error");
+    console.error("Error al actualizar producto:", error);
+    mostrarMensaje(`${error.message}`, "error");
   }
 }
 

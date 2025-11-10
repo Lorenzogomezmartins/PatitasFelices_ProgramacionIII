@@ -9,7 +9,7 @@
 // - obtenerProductos        → lista todos los productos
 // - obtenerProductoPorCodigo → obtiene un producto por su código (_id)
 // - actualizarProducto      → modifica un producto y su imagen opcional
-// - eliminarProducto        → elimina un producto
+// - cambiarEstadoProd        → elimina un producto
 // - restarStock             → resta stock de productos
 // Middleware:
 // - upload (Multer) para manejo de imágenes locales
@@ -22,7 +22,7 @@ const crearProducto = require('../controllers/productos/CrearProducto');
 const obtenerProductos = require('../controllers/productos/ObtenerProductos');
 const obtenerProductoPorCodigo = require('../controllers/productos/ObtenerProductoPorCodigo');
 const actualizarProducto = require('../controllers/productos/ActualizarProductos');
-const eliminarProducto = require('../controllers/productos/EliminarProducto');
+const cambiarEstadoProd = require('../controllers/productos/CambiarEstadoProd');
 const restarStock = require("../controllers/productos/RestarStock");
 
 
@@ -39,7 +39,7 @@ router.post('/', upload.single('url'), crearProducto);
 
 router.put('/modificar/:id', upload.single('url'), actualizarProducto);
 
-router.delete('/:id', eliminarProducto);
+router.put('/estado/:id', cambiarEstadoProd);
 
 router.put("/restarstock", restarStock);
 
