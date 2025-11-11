@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="frontend/imagenes/Logo.png" width="120" alt="Logo de la veterinaria">
+  <img src="frontend/imágenes/Logo.png" width="120" alt="Logo de la veterinaria">
 </p>
 
 
@@ -125,25 +125,15 @@ mi-proyecto/
 ---
 
 
-## 📫 Contacto
+## 📫 Contactos:
 Lorenzo Gomez Martins
-- 📧  lorenzo@gmail.com
+- 📧  lorenzogomezmartins@gmail.com
 - 💼 [LinkedIn](en/lorenzo-gomez-martins-ab942b299)  
 - 🧠 Portafolio y proyectos: [GitHub](https://github.com/Lorenzogomezmartins)
 
-Santino jonas Fernandez
-- 📧  
+Santino Jonas Fernandez
+- 📧  santinojonasfernandez14@gmail.com
 - 💼 [https://www.linkedin.com/in/santino-fernandez/)  
-- 🧠 Portafolio y proyectos: [GitHub](https://github.com/Lorenzogomezmartins)
+- 🧠 Portafolio y proyectos: [GitHub](https://github.com/santinojfernandezz)
 
 ---
-
-
-
-
-
-
-
-
-
-
