@@ -76,26 +76,25 @@ En PatitasFelices encontrarás todo lo que tu mascota necesita para ser feliz y 
 
 mi-proyecto/
 ├── backend/
-│   ├── node_modules/         # Dependencias del backend
+│   ├── node_modules/
 │   ├── src/
-│   │   ├── config/           # Configuración del servidor y la base de datos
-│   │   ├── controllers/      # Lógica del negocio y controladores
-│   │   ├── middlewares/      # Autenticaciones, validaciones, logs, etc.
-│   │   ├── models/           # Modelos de datos de MongoDB
-│   │   ├── resources/        # Imagenes para Crear Productos
-│   │   └── routes/           # Rutas y endpoints de la API
-│   ├── uploads/              # Carpeta para guardar imágenes subidas
-│   └── server.js             # Punto de entrada principal del servidor
+│   │   ├── config/
+│   │   ├── controllers/
+│   │   ├── middlewares/
+│   │   ├── models/
+│   │   ├── resources/
+│   │   └── routes/
+│   ├── uploads/
+│   └── server.js
 │
 ├── frontend/
-│   ├── imagenes/             # Logos, fotos y recursos gráficos
-│   ├── pages/                # Páginas HTML (admin, cliente, etc.)
-│   ├── scripts/              # Lógica JavaScript (fetch, DOM, eventos)
-│   └── styles/               # Estilos CSS
+│   ├── imagenes/
+│   ├── pages/
+│   ├── scripts/
+│   └── styles/
 │
-├── .gitignore                # Archivos y carpetas ignoradas por Git
-└── README.md                 # Documentación del proyecto
-
+├── .gitignore
+└── README.md
 
 ---
 
@@ -135,5 +134,6 @@ Santino Jonas Fernandez
 - 📧  santinojonasfernandez14@gmail.com
 - 💼 [https://www.linkedin.com/in/santino-fernandez/)  
 - 🧠 Portafolio y proyectos: [GitHub](https://github.com/santinojfernandezz)
+
 
 ---
