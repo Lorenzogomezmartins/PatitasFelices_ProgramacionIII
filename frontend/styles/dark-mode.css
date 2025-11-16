@@ -77,6 +77,12 @@ body.dark-mode .form-container {
   box-shadow: var(--hover-shadow);
   padding: 1.5rem;
 }
+body.dark-mode #dashboardTabs{
+  background-color: #756446ff;
+}
+body.dark-mode .property-card {
+  background: linear-gradient(to bottom, #756446ff, rgb(129, 122, 109));
+}
 
 body.dark-mode .bg-light,
 body.dark-mode .bg-info-subtle {
