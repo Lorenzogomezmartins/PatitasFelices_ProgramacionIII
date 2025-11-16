@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="frontend/imágenes/Logo.png" width="120" alt="Logo de la veterinaria">
+  <img src="frontend/imagenes/Logo.png" width="120" alt="Logo de la veterinaria">
 </p>
 
 
@@ -74,27 +74,29 @@ En PatitasFelices encontrarás todo lo que tu mascota necesita para ser feliz y 
 
 ## 🧱 Estructura del Proyecto
 
+```bash
 mi-proyecto/
 ├── backend/
-│   ├── node_modules/
+│   ├── node_modules/         # Dependencias del backend
 │   ├── src/
-│   │   ├── config/
-│   │   ├── controllers/
-│   │   ├── middlewares/
-│   │   ├── models/
-│   │   ├── resources/
-│   │   └── routes/
-│   ├── uploads/
-│   └── server.js
+│   │   ├── config/           # Configuración del servidor y la base de datos
+│   │   ├── controllers/      # Lógica del negocio y controladores
+│   │   ├── middlewares/      # Autenticaciones, validaciones, logs, etc.
+│   │   ├── models/           # Modelos de datos de MongoDB
+│   │   ├── resources/        # Imagenes para Crear Productos
+│   │   └── routes/           # Rutas y endpoints de la API
+│   ├── uploads/              # Carpeta para guardar imágenes subidas
+│   └── server.js             # Punto de entrada principal del servidor
 │
 ├── frontend/
-│   ├── imagenes/
-│   ├── pages/
-│   ├── scripts/
-│   └── styles/
+│   ├── imagenes/             # Logos, fotos y recursos gráficos
+│   ├── pages/                # Páginas HTML (admin, cliente, etc.)
+│   ├── scripts/              # Lógica JavaScript (fetch, DOM, eventos)
+│   └── styles/               # Estilos CSS
 │
-├── .gitignore
-└── README.md
+├── .gitignore                # Archivos ignorados por Git
+└── README.md                 # Documentación del proyecto
+```
 
 ---
 
@@ -137,3 +139,4 @@ Santino Jonas Fernandez
 
 
 ---
+
