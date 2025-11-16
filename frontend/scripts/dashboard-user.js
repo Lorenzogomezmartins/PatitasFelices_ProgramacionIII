@@ -15,6 +15,13 @@ document.addEventListener("DOMContentLoaded", () => {
   cargarProductos();
   inicializarLogout();
   inicializarFiltros();
+  const usuario = JSON.parse(localStorage.getItem("usuarioLoggeado"));
+
+  if (!usuario) {
+    alert("Debes iniciar sesión.");
+    window.location.href = "../pages/login-user.html";
+    return;
+  }
 });
 
 // Variables de filtros seleccionados

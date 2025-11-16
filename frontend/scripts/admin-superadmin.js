@@ -37,6 +37,14 @@ document.addEventListener("DOMContentLoaded", () => {
       await actualizarAdmin();
     });
   }
+  const token = localStorage.getItem("token");
+  const admin = JSON.parse(localStorage.getItem("adminLogeado"));
+
+  if (!token || !admin) {
+    alert("Debes iniciar sesión.");
+    window.location.href = "../pages/login-admin.html";
+    return;
+  }
 });
 
 

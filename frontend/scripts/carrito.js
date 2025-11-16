@@ -15,7 +15,13 @@ document.addEventListener("DOMContentLoaded", () => {
   // Inicialización
   aplicarModoOscuro();
   mostrarCarrito();
+  const usuario = JSON.parse(localStorage.getItem("usuarioLoggeado"));
 
+  if (!usuario) {
+    alert("Debes iniciar sesión.");
+    window.location.href = "../pages/login-user.html";
+    return;
+  }
   const btnVaciar = document.getElementById("vaciar-carrito-btn");
   if (btnVaciar) {
     btnVaciar.addEventListener("click", () => {

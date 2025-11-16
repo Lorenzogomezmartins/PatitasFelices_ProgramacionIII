@@ -12,6 +12,14 @@ const API_PRODUCTOS = "http://localhost:4000/api/productos";
 let currentPage = 1;
 
 document.addEventListener("DOMContentLoaded", () => {
+  const token = localStorage.getItem("token");
+  const admin = JSON.parse(localStorage.getItem("adminLogeado"));
+
+  if (!token || !admin) {
+    alert("Debes iniciar sesión.");
+    window.location.href = "../pages/login-admin.html";
+    return;
+  }
   cargarEstadisticas();
   inicializarLogout();
   cargarTickets();
