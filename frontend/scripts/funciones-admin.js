@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const btnVerMas = document.getElementById("btnVerMasTickets");
   if (btnVerMas) btnVerMas.addEventListener("click", cargarTickets);
 
-  // 🩶 FIX warning aria-hidden del modal
+
   const modalTicket = document.getElementById("modalTicket");
   if (modalTicket) {
     modalTicket.addEventListener("hidden.bs.modal", () => {
@@ -274,7 +274,7 @@ async function cargarEstadisticas() {
           </div>`).join('')}
       </div>`;
   } catch (error) {
-    console.error("❌ Error al cargar estadísticas:", error);
+    console.error(" Error al cargar estadísticas:", error);
     contenedor.innerHTML = `<p style="color:red; font-weight:bold;">Error: ${error.message}</p>`;
   }
 }

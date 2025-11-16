@@ -36,7 +36,7 @@ const crearAdmin = async (req, res) => {
 
     res.status(201).json({ ok: true, mensaje: 'Administrador creado con éxito.', admin: nuevoAdmin });
   } catch (error) {
-    console.error("❌ Error al crear administrador:", error);
+    console.error(" Error al crear administrador:", error);
     res.status(500).json({ ok: false, mensaje: 'Error al crear administrador.', error: error.message });
   }
 };

@@ -73,8 +73,8 @@ async function cargarUsuarios() {
     contenedor.appendChild(table);
 
   } catch (error) {
-    console.error("❌ Error al cargar usuarios:", error);
-    contenedor.innerHTML = `<p style="color:red; font-weight:bold;">❌ Error al cargar usuarios: ${error.message}</p>`;
+    console.error(" Error al cargar usuarios:", error);
+    contenedor.innerHTML = `<p style="color:red; font-weight:bold;"> Error al cargar usuarios: ${error.message}</p>`;
   }
 }
 
@@ -107,38 +107,16 @@ function inicializarFormUsuario() {
 
       if (!res.ok || !data.ok) throw new Error(data.error || "Error al crear usuario");
 
-      mostrarMensaje(`✅ Usuario ${nombre} agregado correctamente`, "success");
+      mostrarMensaje(` Usuario ${nombre} agregado correctamente`, "success");
       document.getElementById("frmFormulario").reset(); 
       cargarUsuarios();
 
     } catch (error) {
-      console.error("❌ Error al crear usuario:", error);
-      mostrarMensaje(`❌ ${error.message}`, "error");
+      console.error(" Error al crear usuario:", error);
+      mostrarMensaje(` ${error.message}`, "error");
     }
   });
 }
-
-/* 
-   ELIMINAR USUARIO
-*/
-// async function eliminarUsuario(id) {
-//   if (!id) return mostrarMensaje("⚠️ ID inválido", "error");
-//   if (!confirm("¿Desea eliminar este usuario?")) return;
-
-//   try {
-//     const res = await fetch(`${API_USUARIOS}/${id}`, { method: "DELETE" });
-//     const data = await res.json();
-
-//     if (!res.ok || !data.ok) throw new Error(data.error || "Error al eliminar usuario");
-
-//     mostrarMensaje("✅ Usuario eliminado correctamente", "success");
-//     cargarUsuarios();
-
-//   } catch (error) {
-//     console.error("❌ Error al eliminar usuario:", error);
-//     mostrarMensaje(`❌ ${error.message}`, "error");
-//   }
-// }
 
 /* 
    MENSAJES

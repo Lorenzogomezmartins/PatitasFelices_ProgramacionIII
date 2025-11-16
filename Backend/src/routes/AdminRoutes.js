@@ -10,7 +10,7 @@ const ActualizarAdmin = require('../controllers/admin/ActualizarAdmin');
 const EliminarAdmin = require('../controllers/admin/EliminarAdmin');
 const LoginAdmin = require('../controllers/admin/LoginAdmin');
 
-// LOGIN (sin protección)
+// LOGIN 
 router.post('/login', LoginAdmin);
 
 // TODO LO DEMÁS → REQUIERE TOKEN

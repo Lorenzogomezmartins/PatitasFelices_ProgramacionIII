@@ -50,13 +50,13 @@ async function main() {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-    console.log('✅ MongoDB conectado correctamente.');
+    console.log(' MongoDB conectado correctamente.');
 
     app.listen(PORT, () => {
-      console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
+      console.log(` Servidor corriendo en http://localhost:${PORT}`);
     });
   } catch (err) {
-    console.error('❌ Error al conectar con MongoDB:', err.message);
+    console.error(' Error al conectar con MongoDB:', err.message);
     process.exit(1);
   }
 }

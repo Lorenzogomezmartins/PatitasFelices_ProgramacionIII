@@ -32,12 +32,12 @@ const crearProducto = async (req, res) => {
     // Extraer datos del cuerpo y limpiar strings
     let { _id, nombre, categoria, tipo_mascota, precio, marca, stock, activo, tamano } = req.body;
 
-_id = _id?.trim();
-nombre = nombre?.trim();
-marca = marca?.trim();
-categoria = categoria?.trim();
-tipo_mascota = tipo_mascota?.trim();
-tamano = tamano?.trim();
+    _id = _id?.trim();
+    nombre = nombre?.trim();
+    marca = marca?.trim();
+    categoria = categoria?.trim();
+    tipo_mascota = tipo_mascota?.trim();
+    tamano = tamano?.trim();
 
 
     // Parsear valores numéricos
@@ -57,13 +57,13 @@ tamano = tamano?.trim();
       !tamano || !tamano.length ||
       isNaN(precio)
     ) {
-      console.warn("⚠️ Campos inválidos:", { _id, nombre, marca, categoria, tipo_mascota, tamano, precio });
+      console.warn(" Campos inválidos:", { _id, nombre, marca, categoria, tipo_mascota, tamano, precio });
       return res.status(400).json({ mensaje: 'Todos los campos son obligatorios.' });
     }
 
     // Verificar que se haya subido una imagen
     if (!req.file) {
-      console.warn("⚠️ No se recibió imagen en la solicitud.");
+      console.warn(" No se recibió imagen en la solicitud.");
       return res.status(400).json({ mensaje: 'Debe subir al menos una imagen del producto.' });
     }
 
@@ -87,16 +87,16 @@ tamano = tamano?.trim();
     // Guardar en la base de datos
     await nuevoProducto.save();
 
-    console.log("✅ Producto guardado correctamente:", nuevoProducto);
+    console.log(" Producto guardado correctamente:", nuevoProducto);
 
     res.status(201).json({
       ok: true,
-      mensaje: '✅ Producto creado correctamente.',
+      mensaje: ' Producto creado correctamente.',
       producto: nuevoProducto,
     });
 
   } catch (error) {
-    console.error('❌ Error al crear producto:', error);
+    console.error('rror al crear producto:', error);
 
     if (error.name === 'ValidationError') {
       const errores = Object.values(error.errors).map(err => err.message).join(', ');

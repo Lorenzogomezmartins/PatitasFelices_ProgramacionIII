@@ -67,13 +67,13 @@ async function crearAdmin() {
     if (!res.ok) throw new Error(data.mensaje || "Error al crear admin");
 
     // Si todo sale bien
-    mostrarMensaje("✅ Administrador creado correctamente", "success");
+    mostrarMensaje(" Administrador creado correctamente", "success");
     document.getElementById("frmAdmins").reset();
     cargarAdmins();          
 
   } catch (error) {
-    console.error("❌ Error al crear admin:", error);
-    mostrarMensaje(`❌ ${error.message}`, "error");
+    console.error(" Error al crear admin:", error);
+    mostrarMensaje(` ${error.message}`, "error");
   }
 };
 
@@ -95,7 +95,7 @@ async function actualizarAdmin() {
     }
 
     try {
-      mostrarMensaje("✅ Administrador actualizado correctamente", "success");
+      mostrarMensaje(" Administrador actualizado correctamente", "success");
       document.getElementById("frmAdmins").reset();
       btnActualizarAdmin.style.display = "none";
       const res = await fetch(`${API_ADMIN}/${_id}`, {
@@ -116,7 +116,7 @@ async function actualizarAdmin() {
       adminActualId = null;
     } catch (error) {
       console.error("Error al actualizar admin:", error);
-      mostrarMensaje(`❌ ${error.message}`, "error");
+      mostrarMensaje(` ${error.message}`, "error");
     }
   };
 
@@ -182,8 +182,8 @@ async function cargarAdmins() {
     contenedor.appendChild(table);
 
   } catch (error) {
-    console.error("❌ Error al cargar administradores:", error);
-    contenedor.innerHTML = `<p style="color:red;">❌ Error: ${error.message}</p>`;
+    console.error(" Error al cargar administradores:", error);
+    contenedor.innerHTML = `<p style="color:red;"> Error: ${error.message}</p>`;
   }
 }
 
@@ -232,11 +232,11 @@ async function eliminarAdmin(adminId) {
       throw new Error(mensajeError);
     }
 
-    mostrarMensaje("✅ Administrador eliminado correctamente", "success");
+    mostrarMensaje(" Administrador eliminado correctamente", "success");
     cargarAdmins();
   } catch (error) {
-    console.error("❌ Error al eliminar admin:", error);
-    mostrarMensaje(`❌ ${error.message}`, "error");
+    console.error(" Error al eliminar admin:", error);
+    mostrarMensaje(` ${error.message}`, "error");
   }
 }
 

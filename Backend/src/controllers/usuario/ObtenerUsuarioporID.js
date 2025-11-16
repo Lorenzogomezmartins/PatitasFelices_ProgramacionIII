@@ -39,7 +39,7 @@ const obtenerUsuarioPorId = async (req, res) => {
     // Éxito
     res.json({ ok: true, usuario });
   } catch (error) {
-    console.error('❌ Error al obtener usuario por ID:', error);
+    console.error(' Error al obtener usuario por ID:', error);
     // Error de servidor (500)
     res.status(500).json({ ok: false, error: 'Error interno al obtener usuario' });
   }

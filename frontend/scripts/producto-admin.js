@@ -136,7 +136,7 @@ async function crearProducto() {
 
   // Validación de campos obligatorios
   if (!_id || !nombre || !marca || !categoria || !tamano || !tipo_mascota) {
-    mostrarMensaje("⚠️ Todos los campos son obligatorios", "error");
+    mostrarMensaje("Todos los campos son obligatorios", "error");
     return;
   }
 
@@ -144,7 +144,7 @@ async function crearProducto() {
   const precio = parseFloat(precioStr);
   const stock = parseInt(stockStr) || 0;
   if (isNaN(precio)) {
-    mostrarMensaje("⚠️ El precio debe ser un número válido", "error");
+    mostrarMensaje(" El precio debe ser un número válido", "error");
     return;
   }
 
@@ -155,7 +155,7 @@ async function crearProducto() {
   // Validar que se haya seleccionado una imagen
   const inputFoto = document.getElementById("inputFoto");
   if (!inputFoto?.files?.length) {
-    mostrarMensaje("⚠️ Debe seleccionar una imagen", "error");
+    mostrarMensaje(" Debe seleccionar una imagen", "error");
     return;
   }
 
@@ -190,7 +190,7 @@ async function crearProducto() {
 
 // Cambiar estado (activar/inactivar) producto
 async function cambiarEstadoProducto(id, boton) {
-  if (!id) return mostrarMensaje("⚠️ ID inválido", "error");
+  if (!id) return mostrarMensaje("ID inválido", "error");
 
   try {
     const res = await fetch(`${API_PRODUCTOS}/estado/${id}`, { method: "PUT" });
@@ -223,23 +223,6 @@ async function cambiarEstadoProducto(id, boton) {
   }
 }
 
-// Eliminar producto
-// async function eliminarProducto(id) {
-//   if (!id) return mostrarMensaje("⚠️ ID inválido", "error");
-//   if (!confirm("¿Desea eliminar este producto?")) return;
-
-//   try {
-//     const res = await fetch(`${API_PRODUCTOS}/${id}`, { method: "DELETE" });
-//     const data = await res.json();
-//     if (!res.ok || !data.ok) throw new Error(data.error || "Error al eliminar producto");
-
-//     mostrarMensaje("Producto eliminado correctamente", "success");
-//     cargarProductosAdmin();
-//   } catch (error) {
-//     console.error("Error al eliminar producto:", error);
-//     mostrarMensaje(`${error.message}`, "error");
-//   }
-// }
 
 //actualizar producto
 async function actualizarProducto() {
@@ -256,11 +239,11 @@ async function actualizarProducto() {
     const inputFoto = document.getElementById("inputFoto");
 
     if (!_id) {
-      mostrarMensaje("⚠️ Debe especificar el código del producto a actualizar", "error");
+      mostrarMensaje(" Debe especificar el código del producto a actualizar", "error");
       return;
     }
 
-    console.log("🟡 Ejecutando actualizarProducto()");
+    console.log(" Ejecutando actualizarProducto()");
 
     const precio = parseFloat(precioStr);
     const stock = parseInt(stockStr) || 0;

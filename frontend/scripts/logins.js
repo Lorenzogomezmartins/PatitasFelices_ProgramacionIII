@@ -27,7 +27,7 @@ function aplicarModoOscuroLogin(activar) {
   const testUser = document.querySelector(".test-user");
 
   if (activar) {
-    // 🟣 Activar modo oscuro
+    //  Activar modo oscuro
     root.style.setProperty("--primary-color", "#756446ff");
     root.style.setProperty("--primary-light", "#645a49ff");
     root.style.setProperty("--bg-color", "#000000");
@@ -121,7 +121,7 @@ function aplicarModoOscuroLogin(activar) {
     }
 
   } else {
-    // 🟠 Volver al modo claro
+    //  Volver al modo claro
     root.style.setProperty("--primary-color", "#b3814d");
     root.style.setProperty("--primary-light", "#b3814d");
     root.style.setProperty("--bg-color", "#e6d3b7");

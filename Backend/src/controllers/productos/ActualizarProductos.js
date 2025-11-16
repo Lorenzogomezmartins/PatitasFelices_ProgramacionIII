@@ -69,12 +69,12 @@ const actualizarProducto = async (req, res) => {
 
     res.json({
       ok: true,
-      mensaje: "✅ Producto actualizado correctamente.",
+      mensaje: " Producto actualizado correctamente.",
       producto: productoActualizado,
     });
 
   } catch (error) {
-    console.error("❌ Error al actualizar producto:", error);
+    console.error(" Error al actualizar producto:", error);
     res.status(500).json({
       ok: false,
       mensaje: "Error al actualizar producto",

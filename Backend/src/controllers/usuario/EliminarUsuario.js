@@ -28,7 +28,7 @@ const eliminarUsuario = async (req, res) => {
       mensaje: 'Usuario eliminado correctamente'
     });
   } catch (error) {
-    console.error('❌ Error al eliminar usuario:', error);
+    console.error(' Error al eliminar usuario:', error);
     res.status(500).json({ ok: false, error: 'Error al eliminar usuario' });
   }
 };
