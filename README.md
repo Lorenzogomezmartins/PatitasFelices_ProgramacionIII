@@ -129,7 +129,7 @@ mi-proyecto/
 ## 📫 Contactos:
 Lorenzo Gomez Martins
 - 📧  lorenzogomezmartins@gmail.com
-- 💼 [LinkedIn](en/lorenzo-gomez-martins-ab942b299)  
+- 💼 [LinkedIn](https://www.linkedin.com/in/lorenzo-gomez-martins-ab942b299/)  
 - 🧠 Portafolio y proyectos: [GitHub](https://github.com/Lorenzogomezmartins)
 
 Santino Jonas Fernandez
@@ -139,4 +139,5 @@ Santino Jonas Fernandez
 
 
 ---
+
 
